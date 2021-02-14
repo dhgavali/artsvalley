@@ -1,4 +1,5 @@
 import 'package:artsvalley/views/constants.dart';
+import 'package:artsvalley/views/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -32,8 +33,8 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 10),
               loginButton("Sign Up"),
-              
-              //TODO: here we will create a row which will show the google and facebook icon for sign up purpose. 
+
+              //TODO: here we will create a row which will show the google and facebook icon for sign up purpose.
             ],
           ),
         ),

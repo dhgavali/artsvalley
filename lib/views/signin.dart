@@ -1,4 +1,4 @@
-import 'package:artsvalley/views/constants.dart';
+import 'package:artsvalley/views/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -21,7 +21,7 @@ class _SignInState extends State<SignIn> {
             customInputField("username", Icon(Icons.person)),
             customInputField("password", Icon(Icons.visibility_off)),
             loginButton("Login"),
-        
+
             //TODO: here we will create a row which will show the google and facebook icon for Login purpose.
           ],
         ),
