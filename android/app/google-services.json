@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1032045179686",
+    "project_id": "art-valley",
+    "storage_bucket": "art-valley.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032045179686:android:6cfca39a49a382913107e7",
+        "android_client_info": {
+          "package_name": "com.dhenterprises.artsvalley"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032045179686-bhcj3nih4k8bdd8ak1mq3jl8vadkr0p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dhenterprises.artsvalley",
+            "certificate_hash": "e257abc4aec49f548c91527b45dcadb035b7268e"
+          }
+        },
+        {
+          "client_id": "1032045179686-bct0r09d82pf3pi7l6ap8kr4s0ht6qnv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4ebEHvNK0rDLZxCaZ4P1SJ8ohaXm4mxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032045179686-bct0r09d82pf3pi7l6ap8kr4s0ht6qnv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
