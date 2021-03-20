@@ -31,12 +31,14 @@ class BoxContent extends StatelessWidget {
   }
 }
 
-Widget customInputField(String hintText, Icon customIcon) {
+Widget customInputField(
+    String hintText, Icon customIcon, TextEditingController mycontroller) {
   Icon myIcon = customIcon;
   String hint = hintText;
   return Container(
     margin: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
     child: TextField(
+      controller: mycontroller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
@@ -51,12 +53,12 @@ Widget customInputField(String hintText, Icon customIcon) {
   );
 }
 
-Widget loginButton(String btnText) {
+Widget loginButton(String btnText, Function onpress) {
   return Container(
     width: 160,
     height: 50,
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: onpress,
       child: Text(
         btnText,
         style: TextStyle(fontSize: 20),

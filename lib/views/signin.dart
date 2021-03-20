@@ -7,6 +7,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  TextEditingController usernameController = new TextEditingController();
+  TextEditingController pwdController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,14 +20,20 @@ class _SignInState extends State<SignIn> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            customInputField("username", Icon(Icons.person)),
-            customInputField("password", Icon(Icons.visibility_off)),
-            loginButton("Login"),
+            customInputField(
+                "username", Icon(Icons.person), usernameController),
+            customInputField(
+                "password", Icon(Icons.visibility_off), pwdController),
+            loginButton("Login", checkData),
 
             //TODO: here we will create a row which will show the google and facebook icon for Login purpose.
           ],
         ),
       ),
     );
+  }
+
+  checkData(){
+      
   }
 }

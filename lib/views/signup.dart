@@ -8,6 +8,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  TextEditingController confirmController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,20 +22,13 @@ class _SignUpState extends State<SignUp> {
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Column(
             children: [
+              customInputField("Email Id", Icon(Icons.email), emailController),
               customInputField(
-                "Email Id",
-                Icon(Icons.email),
-              ),
-              customInputField(
-                "Password",
-                Icon(Icons.visibility),
-              ),
-              customInputField(
-                "Confirm Password",
-                Icon(Icons.visibility),
-              ),
+                  "Password", Icon(Icons.visibility), passwordController),
+              customInputField("Confirm Password", Icon(Icons.visibility),
+                  confirmController),
               SizedBox(height: 10),
-              loginButton("Sign Up"),
+              loginButton("Sign Up", validateInputs),
 
               //TODO: here we will create a row which will show the google and facebook icon for sign up purpose.
             ],
@@ -40,5 +36,9 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  validateInputs() {
+    
   }
 }
