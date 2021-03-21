@@ -1,4 +1,3 @@
-import 'package:artsvalley/views/constants.dart';
 import 'package:artsvalley/views/shared_widgets.dart';
 import 'package:flutter/material.dart';
 

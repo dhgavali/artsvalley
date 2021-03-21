@@ -1,3 +1,4 @@
+import 'package:artsvalley/constant/constants.dart';
 import 'package:flutter/material.dart';
 
 class BoxContent extends StatelessWidget {
@@ -55,8 +56,8 @@ Widget customInputField(
 
 Widget loginButton(String btnText, Function onpress) {
   return Container(
-    width: 160,
-    height: 50,
+    width: ProConstants.buttonWidth,
+    height: ProConstants.buttonHeight,
     child: ElevatedButton(
       onPressed: onpress,
       child: Text(
