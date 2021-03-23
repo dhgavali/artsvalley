@@ -1,9 +1,14 @@
-class DataMethods {
-  // final String username;
-  // final String profileUrl;
-  // final String displayName;
-  // final String useremail;
-  // final String uid;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  // addUserRecord() {}
+class DataMethods {
+  final CollectionReference dbconn =
+      FirebaseFirestore.instance.collection("users");
+
+  addUserRecord(Map data) async {
+    try {
+      await dbconn.add(data);
+    } catch (e) {
+      print(e.message());
+    }
+  }
 }

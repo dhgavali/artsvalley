@@ -1,4 +1,4 @@
-import 'package:artsvalley/constant/constants.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/views/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,7 +66,6 @@ class _HomePageState extends State<HomePage> {
               menuItem("About us", Icons.info),
               GestureDetector(
                   onTap: () async {
-                    CircularProgressIndicator();
                     await firebaseAuth.signOut();
                     firebaseAuth.authStateChanges().listen((User user) {
                       if (user == null) {
@@ -142,12 +141,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  // Widget getUsername() {
-  //   Future userdata = FirebaseFirestore.instance
-  //       .collection("users")
-  //       .where("username", isEqualTo: firebaseAuth.currentUser)
-  //       .get();
-  //  FutureBuilder(builder: null)
-  // }
 }

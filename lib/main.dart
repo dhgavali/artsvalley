@@ -17,19 +17,14 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   final SharedPrefsHelper sharedpref = new SharedPrefsHelper();
 
-
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-Future<String> userstatus = sharedpref.getUserStatus();
+    Future<String> userstatus = sharedpref.getUserStatus();
     return MultiProvider(
       providers: [
         Provider<AuthMethods>(
-          create: (_) => AuthMethods(
-            FirebaseAuth.instance,
-            userstatus
-          ),
+          create: (_) => AuthMethods(FirebaseAuth.instance, userstatus),
         ),
         StreamProvider(
           create: (context) => context.read<AuthMethods>().authStateChanges,
@@ -38,9 +33,10 @@ Future<String> userstatus = sharedpref.getUserStatus();
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primaryColor: Colors.amberAccent,
+            primarySwatch: Colors.teal,
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            backgroundColor: Color(0xfff1f1f1)),
+            backgroundColor: Color(0xff212121)),
         home: AuthenticationWrapper(),
         debugShowCheckedModeBanner: false,
       ),

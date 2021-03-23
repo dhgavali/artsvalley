@@ -1,6 +1,6 @@
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/views/home.dart';
-import 'package:artsvalley/views/shared_widgets.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -56,7 +56,7 @@ class ProfilePageState extends State<ProfilePage> {
               child: CircleAvatar(
                 radius: 40,
                 backgroundImage: NetworkImage(widget.profileUrl),
-                backgroundColor: Colors.white24,
+                backgroundColor: Colors.white38,
               ),
             ),
             SizedBox(
@@ -92,7 +92,11 @@ class ProfilePageState extends State<ProfilePage> {
                   numvalue: 2,
                 ),
               ],
-            )
+            ),
+            Divider(
+              color: Colors.grey,
+              thickness: 2.0,
+            ),
           ],
         ),
       ),

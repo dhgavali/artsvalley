@@ -1,4 +1,4 @@
-import 'package:artsvalley/constant/constants.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class BoxContent extends StatelessWidget {
@@ -33,28 +33,34 @@ class BoxContent extends StatelessWidget {
 }
 
 Widget customInputField(
-    String hintText, Icon customIcon, TextEditingController mycontroller) {
-  Icon myIcon = customIcon;
+    String hintText, IconData customIcon, TextEditingController mycontroller,
+    [bool obsecureText = false]) {
+  Icon myIcon = Icon(customIcon, color: Colors.white70);
   String hint = hintText;
   return Container(
     margin: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-    child: TextField(
+    child: TextFormField(
       controller: mycontroller,
+      obscureText: obsecureText,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
+        fillColor: Colors.white,
+        border: OutlineInputBorder(),
+        suffixIcon: GestureDetector(
+          onTap: () {
+            obsecureText ? obsecureText = false : obsecureText = true;
+          },
+          child: myIcon,
         ),
-        suffixIcon: myIcon,
         labelText: hint,
+        labelStyle: TextStyle(color: Colors.white70),
         contentPadding: EdgeInsets.only(left: 25),
       ),
     ),
   );
 }
 
-Widget loginButton(String btnText, Function onpress) {
+Widget loginButton(String btnText, Function onpress, String emailController,
+    String passwordController) {
   return Container(
     width: ProConstants.buttonWidth,
     height: ProConstants.buttonHeight,

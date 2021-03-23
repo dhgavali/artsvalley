@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -30,7 +31,40 @@ class AuthMethods {
     sharedpref.saveDisplayName(googleUser.displayName);
     sharedpref.saveUserPhotoUrl(googleUser.photoUrl);
     sharedpref.isUserLoggedIn("true");
+
+    Map<String, String> data = {
+      "username": googleUser.email.replaceAll("@gmail.com", "").trim(),
+      "useremail": googleUser.email,
+      "displayname": googleUser.displayName,
+      "photourl": googleUser.photoUrl,
+      'userid': googleUser.id,
+    };
+    DataMethods db = new DataMethods();
+    db.addUserRecord(data);
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+//sign in with email and password
+
+  Future<void> signIn({String email, String password}) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      print("Signed in");
+    } on FirebaseAuthException catch (e) {
+       print(e.message);
+    }
+  }
+
+ /// There are a lot of different ways on how you can do exception handling.
+  /// This is to make it as easy as possible but a better way would be to
+  /// use your own custom class that would take the exception and return better
+  /// error messages. That way you can throw, return or whatever you prefer with that instead.
+  Future<void> signUp({String email, String password}) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+        print("Signed Up");
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
+  }
 }
-             

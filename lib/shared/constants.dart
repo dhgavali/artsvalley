@@ -5,6 +5,7 @@ class ProConstants {
   static final double textsize = 16.0;
   static final double headingsize = 22.0;
   static final Color bgcolor = Color(0Xff212121);
+  static final Color shadowColor = Color(0xff303030);
   static final double iconSize = 32.0;
   static final double cardRadius = 10.0;
   static final double buttonWidth = 300.0;

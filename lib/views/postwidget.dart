@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final String profileurl;
   //either we will display a username or full name here
   final String username;
@@ -8,7 +8,6 @@ class PostWidget extends StatelessWidget {
   //it may be string or int. we will use one which works easily and then typecast at server level or at UI level
   final int likescount;
   final String caption;
-
 //This is the constructor for this class which initializes the values that are required to create a post template.
 // These are named parameters so at the time of calling the constructor you will get hint what to pass to the constructor no need to remember.
 // This constructor will be called at homepage inside a streambuilder where a values will be fetched from the datbase and then passed to this constructor.
@@ -19,6 +18,12 @@ class PostWidget extends StatelessWidget {
       this.posturl,
       this.likescount,
       this.caption});
+
+  @override
+  _PostWidgetState createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +35,7 @@ class PostWidget extends StatelessWidget {
           boxShadow: <BoxShadow>[
             BoxShadow(
               offset: Offset(5, 5),
-              color: Color(0xffa3aaaf),
+              color: Color(0xff303030),
               blurRadius: 10,
             ),
           ],
@@ -47,7 +52,7 @@ class PostWidget extends StatelessWidget {
                   //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
                   child: CircleAvatar(
                     backgroundImage: AssetImage(
-                      profileurl,
+                      widget.profileurl,
                     ),
                     backgroundColor: Colors.yellow,
                   ),
@@ -55,7 +60,8 @@ class PostWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   //TODO: The text widget here represents the username. we need to get this from database.
-                  child: Text(username, style: TextStyle(fontSize: 20.0)),
+                  child:
+                      Text(widget.username, style: TextStyle(fontSize: 20.0)),
                 ),
               ],
             ),
@@ -68,7 +74,7 @@ class PostWidget extends StatelessWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
             //TODO: this is the image fetched from the database which is user post.
             child: Image.asset(
-              posturl,
+              widget.posturl,
               fit: BoxFit.cover,
             ),
           ),
@@ -88,13 +94,16 @@ class PostWidget extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.favorite,
-                  size: 40,
-                  color: Colors.redAccent,
+                InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.favorite,
+                    size: 40,
+                    color: Colors.redAccent,
+                  ),
                 ),
                 Text(
-                  likescount.toString(),
+                  widget.likescount.toString(),
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                 )
               ],
@@ -106,7 +115,7 @@ class PostWidget extends StatelessWidget {
             child: Container(
               //TODO: needs to fix this text. When the text is bigger than width we need to adjust it to multiline text. So the text will be displayed on next line automatically. and after 3 lines the readmore button will be shown for the longer captions. So when clicked on readmore text will expand to full size page
               child: Text(
-                caption,
+                widget.caption,
                 overflow: TextOverflow.visible,
               ),
             ),
