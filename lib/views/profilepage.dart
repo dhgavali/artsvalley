@@ -1,6 +1,7 @@
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/settings.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -45,6 +46,14 @@ class ProfilePageState extends State<ProfilePage> {
                 context, MaterialPageRoute(builder: (context) => HomePage()));
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingPage()));
+            },
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),

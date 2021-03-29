@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                   fontSize: ProConstants.headingsize, color: Colors.yellow),
             ),
           ),
-          PostWidget(
+           PostWidget(
             profileurl: "assets/images/logo.png",
             username: "Upendra - project Leader",
             posturl: "assets/images/mug.jpg",

@@ -95,7 +95,9 @@ class _PostWidgetState extends State<PostWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    
+                  },
                   child: Icon(
                     Icons.favorite,
                     size: 40,

@@ -15,15 +15,12 @@ class AuthMethods {
   Future<UserCredential> signInWithGoogle() async {
     //first trigger authentication
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
     //obtain the auth details
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
-
     //create a new credentials
     final GoogleAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-
     //saving the user data to shared preferences
     SharedPrefsHelper sharedpref = new SharedPrefsHelper();
     sharedpref.saveUserEmail(googleUser.email);

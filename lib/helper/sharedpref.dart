@@ -15,7 +15,7 @@ class SharedPrefsHelper {
     await prefs.setString(isUserLoginKey, userstatus);
   }
 
-  Future<void> saveUserEmail(String email) async {
+  Future<void> saveUserEmail(String email) async { 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(userEmailKey, email);
   }
@@ -56,8 +56,10 @@ class SharedPrefsHelper {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(userPhotoUrlKey);
   }
+
   Future<String> getUserStatus() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(isUserLoginKey);
   }
+
 }

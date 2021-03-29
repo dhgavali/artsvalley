@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/providers/update_data_provider.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:artsvalley/views/home.dart';
@@ -28,7 +29,10 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) => context.read<AuthMethods>().authStateChanges,
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UpdateDataProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -19,18 +19,6 @@ class _SignInState extends State<SignIn> {
   TextEditingController pwdController = new TextEditingController();
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return _isLoading
         ? Loading()
@@ -78,9 +66,11 @@ class _SignInState extends State<SignIn> {
                                   _isLoading = false;
                                 });
                                 Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomePage()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
                               } else {
                                 return Center(
                                   child: Text("failed to login"),
@@ -96,15 +86,14 @@ class _SignInState extends State<SignIn> {
                       ),
                       GestureDetector(
                           onTap: () async {
-                            if (mounted) {
-                              setState(() {
-                                _isLoading = true;
-                              });
-                            }
+                            // if (mounted) {
+                            //   setState(() {
+                            //     _isLoading = true;
+                            //   });
+                            // }
                             await context
                                 .read<AuthMethods>()
                                 .signInWithGoogle();
-
                             FirebaseAuth.instance
                                 .authStateChanges()
                                 .listen((User user) {
