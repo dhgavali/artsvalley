@@ -8,6 +8,7 @@ class SharedPrefsHelper {
   static final displayNameKey = "DISPLAYNAME";
   static final userPhotoUrlKey = "PHOTOURL";
   static final isUserLoginKey = "USERLOGIN";
+  static final userIdKey = "USERID";
 
   //setting the user values into the shared preferences
   Future<void> isUserLoggedIn(String userstatus) async {
@@ -33,6 +34,10 @@ class SharedPrefsHelper {
   Future<void> saveUserPhotoUrl(String userPhotoUrl) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(userPhotoUrlKey, userPhotoUrl);
+  }
+  Future<void> saveUserId(String userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(userIdKey, userId);
   }
 
 //methods to get the user data from the shared prefs
@@ -60,6 +65,10 @@ class SharedPrefsHelper {
   Future<String> getUserStatus() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(isUserLoginKey);
+  }
+  Future<String> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(userIdKey);
   }
 
 }

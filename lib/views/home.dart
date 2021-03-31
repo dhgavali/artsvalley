@@ -1,6 +1,6 @@
+import 'package:artsvalley/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/helper/sharedpref.dart';
-import 'package:artsvalley/views/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:artsvalley/views/profilepage.dart';
@@ -21,10 +21,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Home"),
         centerTitle: true,
-        // leading: IconButton(
-        //   icon: Icon(Icons.menu),
-        //   onPressed: () {},
-        // ),
         actions: [
           Container(
             padding: const EdgeInsets.only(
@@ -51,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: Theme(
-        data: Theme.of(context).copyWith(canvasColor: Color(0xff212121)),
+        data: Theme.of(context).copyWith(canvasColor: ProConstants.drawerColor),
         child: Drawer(
           elevation: 0.0,
           child: ListView(
@@ -59,6 +55,15 @@ class _HomePageState extends State<HomePage> {
               //TODO: here we have to give ontap properties
               // either we can wrap each menu item inside GestureDetector or we can pass a function to the constructor which will navigate to the new page.
               // will fix this later. or try yourself and find best way to do this
+              SizedBox(
+                height: 150,
+                child: Container(
+                  
+                  child: Column(children: [
+                    
+                  ],),
+                ),
+              ),
               menuItem("Home", Icons.home),
               menuItem("Profile", Icons.person),
               menuItem("Explore", Icons.explore),
@@ -69,8 +74,10 @@ class _HomePageState extends State<HomePage> {
                     await firebaseAuth.signOut();
                     firebaseAuth.authStateChanges().listen((User user) {
                       if (user == null) {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => SignIn()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
                       } else {
                         return Center(
                           child: Text("Failed to loguot"),
@@ -98,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                   fontSize: ProConstants.headingsize, color: Colors.yellow),
             ),
           ),
-           PostWidget(
+          PostWidget(
             profileurl: "assets/images/logo.png",
             username: "Upendra - project Leader",
             posturl: "assets/images/mug.jpg",
@@ -130,13 +137,13 @@ class _HomePageState extends State<HomePage> {
     return ListTile(
       leading: Icon(
         icons,
-        color: Colors.redAccent,
+        color: ProConstants.bgcolor,
       ),
       title: Text(
         value,
         style: TextStyle(
           fontSize: 20,
-          color: Colors.yellow,
+          color: ProConstants.bgcolor,
         ),
       ),
     );

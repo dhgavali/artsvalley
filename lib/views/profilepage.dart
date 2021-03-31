@@ -1,4 +1,3 @@
-import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/settings.dart';
@@ -50,7 +49,8 @@ class ProfilePageState extends State<ProfilePage> {
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingPage()));
             },
           ),
         ],
@@ -62,11 +62,7 @@ class ProfilePageState extends State<ProfilePage> {
             Container(
               alignment: Alignment.center,
               padding: EdgeInsets.all(10),
-              child: CircleAvatar(
-                radius: 40,
-                backgroundImage: NetworkImage(widget.profileUrl),
-                backgroundColor: Colors.white38,
-              ),
+              child: _profilePhoto(),
             ),
             SizedBox(
               height: 10,
@@ -117,6 +113,31 @@ class ProfilePageState extends State<ProfilePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  Widget _profilePhoto() {
+    try {
+      print("try block activated");
+      return CircleAvatar(
+        radius: 40,
+        backgroundImage: NetworkImage("assets/images/painter.png"),
+        backgroundColor: Colors.white38,
+      );
+    } catch (e) {
+      print(e.msg);
+      print("catch block acvitvate");
+      return CircleAvatar(
+        radius: 40,
+        backgroundImage: AssetImage("/assets/images/painter.png"),
+        backgroundColor: Colors.white38,
+        maxRadius: 40,
+      );
+    }
+    // return CircleAvatar(
+    //   radius: 40,
+    //   backgroundImage: NetworkImage(''),
+    //   backgroundColor: Colors.white38,
+    // );
   }
 }
 

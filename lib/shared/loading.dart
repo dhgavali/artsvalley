@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Loading extends StatelessWidget {
+class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff212121),
+      color: Colors.white,
       child: Center(
         child: SpinKitChasingDots(
-          color: Colors.yellow,
-          size: 75.0,
+          size: 75,
+          color: Colors.deepOrange,
         ),
       ),
     );

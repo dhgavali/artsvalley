@@ -28,6 +28,7 @@ class AuthMethods {
     sharedpref.saveDisplayName(googleUser.displayName);
     sharedpref.saveUserPhotoUrl(googleUser.photoUrl);
     sharedpref.isUserLoggedIn("true");
+    sharedpref.saveUserId(googleUser.id);
 
     Map<String, String> data = {
       "username": googleUser.email.replaceAll("@gmail.com", "").trim(),
@@ -48,18 +49,19 @@ class AuthMethods {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       print("Signed in");
     } on FirebaseAuthException catch (e) {
-       print(e.message);
+      print(e.message);
     }
   }
 
- /// There are a lot of different ways on how you can do exception handling.
+  /// There are a lot of different ways on how you can do exception handling.
   /// This is to make it as easy as possible but a better way would be to
   /// use your own custom class that would take the exception and return better
   /// error messages. That way you can throw, return or whatever you prefer with that instead.
   Future<void> signUp({String email, String password}) async {
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
-        print("Signed Up");
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      print("Signed Up");
     } on FirebaseAuthException catch (e) {
       print(e.message);
     }
