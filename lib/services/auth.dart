@@ -1,14 +1,19 @@
 import 'dart:async';
 
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth;
   final userstatus;
   AuthMethods(this._auth, this.userstatus);
+  DataMethods db = new DataMethods();
+  // final FirebaseFirestore _dbconn = FirebaseFirestore.instance;
 
   Stream<User> get authStateChanges => _auth.idTokenChanges();
 
@@ -30,26 +35,65 @@ class AuthMethods {
     sharedpref.isUserLoggedIn("true");
     sharedpref.saveUserId(googleUser.id);
 
-    Map<String, String> data = {
-      "username": googleUser.email.replaceAll("@gmail.com", "").trim(),
-      "useremail": googleUser.email,
-      "displayname": googleUser.displayName,
-      "photourl": googleUser.photoUrl,
-      'userid': googleUser.id,
-    };
-    DataMethods db = new DataMethods();
-    db.addUserRecord(data);
+    // sign in method
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  //sign up method
+  signUpwithGoogle(BuildContext context) async {
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    //obtain the auth details
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    //create a new credentials
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    try {
+     UserCredential user =  await FirebaseAuth.instance.signInWithCredential(credential);
+     
+         Map userdata = {
+        'username': user.user.email.replaceAll("@gmail.com", ""),
+        'useremail': user.user.email,
+        'displayname': user.user.displayName,
+        'photoUrl': user.user.photoURL,
+        'userid': user.user.uid,
+      };
+
+      db.addUserRecord(
+          userdata);
+           
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    } catch (signUpError) {
+      if (signUpError is PlatformException) {
+        if (signUpError.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+          print("email is already in use");
+        }
+      }
+    }
   }
 
 //sign in with email and password
 
   Future<void> signIn({String email, String password}) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      print("Signed in");
+      UserCredential user = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      // Map<String, dynamic> data = await db.getUserData(email.trim());
+   // Future<QuerySnapshot> data = await db.getUserData(email);
+      SharedPrefsHelper _sharedpref = new SharedPrefsHelper();
+
+      // sharedpref.saveUserName(data.email);
+      _sharedpref.saveUserEmail(user.user.email);
+      _sharedpref.saveUserName(user.user.email.replaceAll("@gmail.com", ""));
+      _sharedpref.saveDisplayName(user.user.displayName);
+      _sharedpref.saveUserPhotoUrl(null);
+      // sharedpref.isUserLoggedIn("true");
+      _sharedpref.saveUserId(user.user.uid);
     } on FirebaseAuthException catch (e) {
       print(e.message);
+
+      // return LoginErrorPage();
     }
   }
 
@@ -57,13 +101,50 @@ class AuthMethods {
   /// This is to make it as easy as possible but a better way would be to
   /// use your own custom class that would take the exception and return better
   /// error messages. That way you can throw, return or whatever you prefer with that instead.
-  Future<void> signUp({String email, String password}) async {
+  Future<void> signUp({String fullname, String email, String password}) async {
+    final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
+    Map _userdata = {
+      'username': _username,
+      'useremail': email.trim(),
+      'displayname': fullname.trim(),
+      'photoUrl': null,
+      'userid': null,
+    };
+
     try {
       await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      print("Signed Up");
+          email: email.trim(), password: password.trim());
+      await db.addUserRecord(_userdata);
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      print(e.code);
     }
   }
 }
+
+// try {
+//   UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+//     email: "barry.allen@example.com",
+//     password: "SuperSecretPassword!"
+//   );
+// } on FirebaseAuthException catch (e) {
+//   if (e.code == 'weak-password') {
+//     print('The password provided is too weak.');
+//   } else if (e.code == 'email-already-in-use') {
+//     print('The account already exists for that email.');
+//   }
+// } catch (e) {
+//   print(e);
+
+//sign in
+//try {
+//   UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+//     email: "barry.allen@example.com",
+//     password: "SuperSecretPassword!"
+//   );
+// } on FirebaseAuthException catch (e) {
+//   if (e.code == 'user-not-found') {
+//     print('No user found for that email.');
+//   } else if (e.code == 'wrong-password') {
+//     print('Wrong password provided for that user.');
+//   }
+// }

@@ -27,15 +27,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController confirmController = new TextEditingController();
 
   String emailValidator(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (value.isEmpty) return "Email can't be empty";
-    if (!regex.hasMatch(value)) {
-      return 'Email format is invalid';
-    } else {
-      return null;
-    }
+      Pattern pattern =
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+      RegExp regex = new RegExp(pattern);
+      if (value.isEmpty) return "Email can't be empty";
+      if (!regex.hasMatch(value)) {
+        return 'Email format is invalid';
+      } else {
+        return null;
+      }
   }
 
   String validateName(value) {
@@ -90,7 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 customInputField1(
                   "Your Email",
                   Icons.email,
-                  nameController,
+                  emailController,
                   validateName,
                 ),
 
@@ -101,9 +101,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 //TODO: here we have to add sign up method on gesturedetector
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if (_signUpFormKey.currentState.validate()) {
-                      context.read<AuthMethods>().signUp(
+                      LinearProgressIndicator();
+                      await context.read<AuthMethods>().signUp(
+                          fullname: nameController.text.trim(),
                           email: emailController.text.trim(),
                           password: passwordController.text.trim());
 
@@ -142,10 +144,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 OrDivider(),
-
                 //TODO: google authentication for sign up goes here
-                _googleWidget(
-                  "assets/icons/google-plus.svg",
+                GestureDetector(
+                  onTap: () {
+                    var signup = context.read<AuthMethods>();
+                    signup.signUpwithGoogle(context);
+
+                  },
+                  child: _googleWidget(
+                    "assets/icons/google.svg",
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -161,7 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _googleWidget(String iconSrc) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(7.5),
       decoration: BoxDecoration(
         color: Colors.white10,
         border: Border.all(
@@ -172,8 +180,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       child: SvgPicture.asset(
         iconSrc,
-        height: 20,
-        width: 20,
+        height: 40,
+        width: 40,
       ),
     );
   }

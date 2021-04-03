@@ -10,6 +10,9 @@ class SharedPrefsHelper {
   static final isUserLoginKey = "USERLOGIN";
   static final userIdKey = "USERID";
 
+
+  //clearing sharedpreferences
+  
   //setting the user values into the shared preferences
   Future<void> isUserLoggedIn(String userstatus) async {
     final prefs = await SharedPreferences.getInstance();

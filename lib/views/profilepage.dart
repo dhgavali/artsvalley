@@ -1,3 +1,4 @@
+import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/settings.dart';
@@ -30,7 +31,7 @@ class ProfilePageState extends State<ProfilePage> {
   //   this.profileUrl,
   //   this.displayName,
   // });
-
+  final _prefs = SharedPrefsHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,23 +117,29 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _profilePhoto() {
-    try {
-      print("try block activated");
-      return CircleAvatar(
-        radius: 40,
-        backgroundImage: NetworkImage("assets/images/painter.png"),
-        backgroundColor: Colors.white38,
-      );
-    } catch (e) {
-      print(e.msg);
-      print("catch block acvitvate");
-      return CircleAvatar(
-        radius: 40,
-        backgroundImage: AssetImage("/assets/images/painter.png"),
-        backgroundColor: Colors.white38,
-        maxRadius: 40,
-      );
-    }
+    //  String _photoUrl =  _prefs.getUserProfileUrl();
+    return FutureBuilder(
+      future: _prefs.getUserProfileUrl(),
+      builder: (context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          return CircleAvatar(
+            radius: 40,
+            backgroundImage: NetworkImage(snapshot.data),
+            backgroundColor: Colors.white38,
+          );
+        } else {
+          return CircleAvatar(
+            radius: 40,
+            backgroundImage: AssetImage('assets/images/profile.png'),
+            backgroundColor: Colors.white38,
+          );
+        }
+      },
+    );
+
     // return CircleAvatar(
     //   radius: 40,
     //   backgroundImage: NetworkImage(''),

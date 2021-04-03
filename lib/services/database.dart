@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DataMethods {
   final CollectionReference dbconn =
@@ -15,6 +16,12 @@ class DataMethods {
     }
   }
 
+//method to get user data array
+  getUserData(String email) {
+    dbconn.where('useremail', isEqualTo: email).get().then((userdata) {
+      return userdata;
+    });
+  }
 //method to update data in database
 // updateUserRecord(){}
 

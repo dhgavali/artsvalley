@@ -58,10 +58,9 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 150,
                 child: Container(
-                  
-                  child: Column(children: [
-                    
-                  ],),
+                  child: Column(
+                    children: [],
+                  ),
                 ),
               ),
               menuItem("Home", Icons.home),
@@ -77,7 +76,8 @@ class _HomePageState extends State<HomePage> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                                builder: (BuildContext context) =>
+                                    LoginScreen()));
                       } else {
                         return Center(
                           child: Text("Failed to loguot"),

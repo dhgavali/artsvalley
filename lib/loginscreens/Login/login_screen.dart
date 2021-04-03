@@ -95,13 +95,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             .authStateChanges()
                             .listen((User user) {
                           if (user != null) {
+                            load.loadPage();
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => HomePage(),
                               ),
                             );
-                            load.loadPage();
                           } else {
                             return Center(
                               child: Text("failed to login"),
