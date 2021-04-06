@@ -1,6 +1,8 @@
 import 'package:artsvalley/loginscreens/Login/login_screen.dart';
+import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:artsvalley/views/profilepage.dart';
@@ -29,18 +31,22 @@ class _HomePageState extends State<HomePage> {
             child: IconButton(
               icon: Icon(Icons.person),
               onPressed: () async {
-                SharedPrefsHelper _sharedPref = new SharedPrefsHelper();
-                String _username = await _sharedPref.getUsername();
-                String _userPhotoUrl = await _sharedPref.getUserProfileUrl();
-                String _userDisplayName = await _sharedPref.getDisplayName();
+                // SharedPrefsHelper _sharedPref = new SharedPrefsHelper();
+                // String _username = await _sharedPref.getUsername();
+                // String _userPhotoUrl = await _sharedPref.getUserProfileUrl();
+                // String _userDisplayName = await _sharedPref.getDisplayName();
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProfilePage(
-                              userName: _username,
-                              profileUrl: _userPhotoUrl,
-                              displayName: _userDisplayName,
-                            )));
+                  context,
+                  MaterialPageRoute(
+                    // builder: (context) => ProfilePage(
+                    //   userName: _username,
+                    //   profileUrl: _userPhotoUrl,
+                    //   displayName: _userDisplayName,
+                    // ),
+                    builder: (context) => Profile(),
+                  ),
+                );
+                //
               },
             ),
           ),
@@ -90,46 +96,40 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: ListView(
-        //TODO: here we will use a streambuilder with the listview and then we will fetch the values passed below from the database. which will create the post widget.
-        children: [
-          Container(
-            width: double.infinity,
-            height: 50.0,
-            decoration: BoxDecoration(color: Colors.black87),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 24),
-            child: Text(
-              "Hello, User",
-              style: TextStyle(
-                  fontSize: ProConstants.headingsize, color: Colors.yellow),
-            ),
-          ),
-          PostWidget(
-            profileurl: "assets/images/logo.png",
-            username: "Upendra - project Leader",
-            posturl: "assets/images/mug.jpg",
-            likescount: 101,
-            caption:
-                "The icons above should be wrapped inside GestureDetector \n and then we have to perform operations of sharing or changing likes count",
-          ),
-          PostWidget(
-            profileurl: "assets/images/logo.png",
-            username: "Abhi Tavhare",
-            posturl: "assets/images/locket.jpg",
-            likescount: 1000,
-            caption:
-                "caption should be represented as multiline text with \n readmore button also we can open a new page with \n this data on click of readmore",
-          ),
-          PostWidget(
-            profileurl: "assets/images/logo.png",
-            username: "Rohan Yadav",
-            posturl: "assets/images/heart.jpg",
-            likescount: 181,
-            caption: "Implement the sharing functionality @Upendra",
-          ),
-        ],
-      ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            }
+
+            if (snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return LinearProgressIndicator();
+              }
+
+              // var post = snapshot.data.docs
+              //     .map((postdata) => {postdata.data()})
+              //     .toList();
+
+              return ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot mypost = snapshot.data.docs[index];
+                    return PostWidget(
+                      username: "Goerge Bush",
+                      profileurl: "assets/images/logo.png",
+                      posturl: mypost['postUrl'],
+                      caption: mypost['caption'].toString(),
+                      likescount: mypost['likes'],
+                    );
+                  });
+            }
+
+            return LinearProgressIndicator();
+          }),
     );
   }
 
@@ -149,3 +149,44 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+// ListView(
+//         //TODO: here we will use a streambuilder with the listview and then we will fetch the values passed below from the database. which will create the post widget.
+//         children: [
+//           Container(
+//             width: double.infinity,
+//             height: 50.0,
+//             decoration: BoxDecoration(color: Colors.black87),
+//             alignment: Alignment.centerLeft,
+//             padding: const EdgeInsets.only(left: 24),
+//             child: Text(
+//               "Hello, User",
+//               style: TextStyle(
+//                   fontSize: ProConstants.headingsize, color: Colors.yellow),
+//             ),
+//           ),
+//           PostWidget(
+//             profileurl: "assets/images/logo.png",
+//             username: "Upendra - project Leader",
+//             posturl: "assets/images/mug.jpg",
+//             likescount: 101,
+//             caption:
+//                 "The icons above should be wrapped inside GestureDetector \n and then we have to perform operations of sharing or changing likes count",
+//           ),
+//           PostWidget(
+//             profileurl: "assets/images/logo.png",
+//             username: "Abhi Tavhare",
+//             posturl: "assets/images/locket.jpg",
+//             likescount: 1000,
+//             caption:
+//                 "caption should be represented as multiline text with \n readmore button also we can open a new page with \n this data on click of readmore",
+//           ),
+//           PostWidget(
+//             profileurl: "assets/images/logo.png",
+//             username: "Rohan Yadav",
+//             posturl: "assets/images/heart.jpg",
+//             likescount: 181,
+//             caption: "Implement the sharing functionality @Upendra",
+//           ),
+//         ],
+//       ),

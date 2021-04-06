@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var name = usernameController.text;
 
     if (name.isEmpty) {
-      return "UserName can't be empty";
+      return "* username can't be empty";
     }
     return null;
   }
@@ -41,11 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
   String validatePassword(value) {
     var pass = pwdController.text;
     if (pass.isEmpty) {
-      return "Please enter a password";
+      return "* Please enter a password";
     } else if (pass.length < 6) {
-      return "Paswword should be atleast 6 characters ";
+      return "* Paswword should be atleast 6 characters ";
     } else if (pass.length > 15) {
-      return "Password should not be greater than 15 characters";
+      return "* Password should not be greater than 15 characters";
     } else {
       return null;
     }

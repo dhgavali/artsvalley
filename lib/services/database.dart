@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,12 +10,16 @@ class DataMethods {
       FirebaseFirestore.instance.collection("postdb");
 
   //method to add user data on sign up
-  addUserRecord(Map data) async {
+  Future<DocumentReference> addUserRecord(Map data, UserCredential user) async {
+    String userid = user.user.uid;
+    Future<DocumentReference> dc;
+    print(userid);
     try {
-      await dbconn.add(data);
+    dc =  dbconn.add(data);
     } catch (e) {
       print(e.message());
     }
+    return dc; 
   }
 
 //method to get user data array

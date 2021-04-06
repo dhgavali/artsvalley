@@ -1,8 +1,13 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/profile_page/edit_Profile.dart';
+import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
+import 'package:artsvalley/profile_page/profileDataHelper.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/update_data_provider.dart';
 import 'package:artsvalley/services/auth.dart';
+import 'package:artsvalley/services/auth_service.dart';
+import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/loginScreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +42,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => LoadingProvider(),
         ),
-      
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => DatabaseService()),
+        ChangeNotifierProvider(create: (_) => ProfileDataHelper()),
+        ChangeNotifierProvider(
+          create: (_) => UploadPost(),
+        ),
+        ChangeNotifierProvider(create: (_) => EditProfile()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

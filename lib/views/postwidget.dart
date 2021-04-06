@@ -73,9 +73,9 @@ class _PostWidgetState extends State<PostWidget> {
             ),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
             //TODO: this is the image fetched from the database which is user post.
-            child: Image.asset(
-              widget.posturl,
-              fit: BoxFit.cover,
+            child: FadeInImage(
+              image: NetworkImage(widget.posturl),
+              placeholder: AssetImage("assets/images/painter.png"),
             ),
           ),
           //TODO: we need to add these icons with changable colors on tap. based on that we need to increment likes or decrement on server and also change the saving priority
@@ -95,9 +95,7 @@ class _PostWidgetState extends State<PostWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () {
-                    
-                  },
+                  onTap: () {},
                   child: Icon(
                     Icons.favorite,
                     size: 40,

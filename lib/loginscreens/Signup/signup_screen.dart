@@ -27,15 +27,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController confirmController = new TextEditingController();
 
   String emailValidator(String value) {
-      Pattern pattern =
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-      RegExp regex = new RegExp(pattern);
-      if (value.isEmpty) return "Email can't be empty";
-      if (!regex.hasMatch(value)) {
-        return 'Email format is invalid';
-      } else {
-        return null;
-      }
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (value.isEmpty) return "Email can't be empty";
+    if (!regex.hasMatch(value)) {
+      return 'Email format is invalid';
+    } else {
+      return null;
+    }
   }
 
   String validateName(value) {
@@ -103,8 +103,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 GestureDetector(
                   onTap: () async {
                     if (_signUpFormKey.currentState.validate()) {
-                      LinearProgressIndicator();
+                      print("Method called");
                       await context.read<AuthMethods>().signUp(
+                        context: context,
                           fullname: nameController.text.trim(),
                           email: emailController.text.trim(),
                           password: passwordController.text.trim());
@@ -149,7 +150,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onTap: () {
                     var signup = context.read<AuthMethods>();
                     signup.signUpwithGoogle(context);
-
                   },
                   child: _googleWidget(
                     "assets/icons/google.svg",
@@ -224,4 +224,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+
 }

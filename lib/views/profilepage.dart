@@ -116,6 +116,8 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
+
+  //TODO: abhi.. future builder for checking profile photo. if its null return asset image and if not null then will return network image
   Widget _profilePhoto() {
     //  String _photoUrl =  _prefs.getUserProfileUrl();
     return FutureBuilder(
@@ -134,7 +136,7 @@ class ProfilePageState extends State<ProfilePage> {
           return CircleAvatar(
             radius: 40,
             backgroundImage: AssetImage('assets/images/profile.png'),
-            backgroundColor: Colors.white38,
+            backgroundColor: Colors.white38,  
           );
         }
       },

@@ -1,11 +1,12 @@
 import 'dart:async';
-
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/loginscreens/Login/login_screen.dart';
+import 'package:artsvalley/models/user.dart';
 import 'package:artsvalley/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
@@ -17,6 +18,7 @@ class AuthMethods {
 
   Stream<User> get authStateChanges => _auth.idTokenChanges();
 
+//Sign in method no need to add data.
   Future<UserCredential> signInWithGoogle() async {
     //first trigger authentication
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
@@ -34,43 +36,9 @@ class AuthMethods {
     sharedpref.saveUserPhotoUrl(googleUser.photoUrl);
     sharedpref.isUserLoggedIn("true");
     sharedpref.saveUserId(googleUser.id);
-
+    FirebaseUser(uid: googleUser.id);
     // sign in method
     return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  //sign up method
-  signUpwithGoogle(BuildContext context) async {
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-    //obtain the auth details
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-    //create a new credentials
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-    try {
-     UserCredential user =  await FirebaseAuth.instance.signInWithCredential(credential);
-     
-         Map userdata = {
-        'username': user.user.email.replaceAll("@gmail.com", ""),
-        'useremail': user.user.email,
-        'displayname': user.user.displayName,
-        'photoUrl': user.user.photoURL,
-        'userid': user.user.uid,
-      };
-
-      db.addUserRecord(
-          userdata);
-           
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
-    } catch (signUpError) {
-      if (signUpError is PlatformException) {
-        if (signUpError.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-          print("email is already in use");
-        }
-      }
-    }
   }
 
 //sign in with email and password
@@ -80,16 +48,17 @@ class AuthMethods {
       UserCredential user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       // Map<String, dynamic> data = await db.getUserData(email.trim());
-   // Future<QuerySnapshot> data = await db.getUserData(email);
+      // Future<QuerySnapshot> data = await db.getUserData(email);
       SharedPrefsHelper _sharedpref = new SharedPrefsHelper();
-
+      final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
       // sharedpref.saveUserName(data.email);
       _sharedpref.saveUserEmail(user.user.email);
-      _sharedpref.saveUserName(user.user.email.replaceAll("@gmail.com", ""));
+      _sharedpref.saveUserName(_username);
       _sharedpref.saveDisplayName(user.user.displayName);
       _sharedpref.saveUserPhotoUrl(null);
       // sharedpref.isUserLoggedIn("true");
       _sharedpref.saveUserId(user.user.uid);
+      FirebaseUser(uid: user.user.uid);
     } on FirebaseAuthException catch (e) {
       print(e.message);
 
@@ -101,25 +70,102 @@ class AuthMethods {
   /// This is to make it as easy as possible but a better way would be to
   /// use your own custom class that would take the exception and return better
   /// error messages. That way you can throw, return or whatever you prefer with that instead.
-  Future<void> signUp({String fullname, String email, String password}) async {
+  Future<void> signUp(
+      {BuildContext context,
+      String fullname,
+      String email,
+      String password}) async {
     final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
-    Map _userdata = {
-      'username': _username,
-      'useremail': email.trim(),
-      'displayname': fullname.trim(),
-      'photoUrl': null,
-      'userid': null,
-    };
 
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential user = await _auth.createUserWithEmailAndPassword(
           email: email.trim(), password: password.trim());
-      await db.addUserRecord(_userdata);
+      Map _userdata = {
+        'username': _username,
+        'useremail': email.trim(),
+        'displayname': fullname.trim(),
+        'photoUrl': user.user.photoURL,
+        'userid': user.user.uid,
+      };
+      await db.addUserRecord(_userdata, user).then((value) {
+        Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+        );
+      });
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+      print(e.message);
     }
   }
-}
+
+  //Sign Up With Google
+  signUpwithGoogle(BuildContext context) async {
+    print("sign up method called properly");
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    //obtain the auth details
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    //create a new credentials
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    try {
+      print("try block started");
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      Map userdata = {
+        'username': user.user.email.replaceAll("@gmail.com", ""),
+        'useremail': user.user.email,
+        'displayname': user.user.displayName,
+        'photoUrl': user.user.photoURL,
+        'userid': user.user.uid,
+      };
+
+      //checking whether user is already reigstered or not
+      final CollectionReference _dbconn =
+          FirebaseFirestore.instance.collection("users");
+
+      _dbconn
+          .where("useremail", isEqualTo: user.user.email)
+          .get()
+          .then((snapshot) {
+        print("fetch method started");
+        if (snapshot.docs.isEmpty) {
+          print("snapshot is empty");
+          db.addUserRecord(userdata, user).then((snapshot) {
+            if (snapshot == null) {
+              print("failed to add record");
+              print("failed to add record");
+              print("failed to add record");
+            } else {
+              print("snapshot is not empty but navigator is not called");
+              Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => LoginScreen(),
+                ),
+              );
+            }
+          });
+        } else {
+          print("snapshot has data user already registered");
+          print("length is ${snapshot.docs.length}");
+          print("data is ${snapshot.docs.first.exists}");
+          print("data is ${snapshot.docs.first.id}");
+        }
+      });
+    } on FirebaseAuthException catch (signUpError) {
+      if (signUpError.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+        print("email is already in use");
+      }
+    } catch (e) {
+      print("catch block started");
+    }
+
+    print("at the end of the sign up method");
+  }
 
 // try {
 //   UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -148,3 +194,5 @@ class AuthMethods {
 //     print('Wrong password provided for that user.');
 //   }
 // }
+
+}
