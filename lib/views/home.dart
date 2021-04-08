@@ -2,10 +2,11 @@ import 'package:artsvalley/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artsvalley/views/postwidget.dart';
-import 'package:artsvalley/views/profilepage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,20 +31,12 @@ class _HomePageState extends State<HomePage> {
             ),
             child: IconButton(
               icon: Icon(Icons.person),
-              onPressed: () async {
-                // SharedPrefsHelper _sharedPref = new SharedPrefsHelper();
-                // String _username = await _sharedPref.getUsername();
-                // String _userPhotoUrl = await _sharedPref.getUserProfileUrl();
-                // String _userDisplayName = await _sharedPref.getDisplayName();
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    // builder: (context) => ProfilePage(
-                    //   userName: _username,
-                    //   profileUrl: _userPhotoUrl,
-                    //   displayName: _userDisplayName,
-                    // ),
+                  CupertinoPageRoute(
                     builder: (context) => Profile(),
+                    // builder: (context) => Profile(),
                   ),
                 );
                 //
@@ -61,6 +54,13 @@ class _HomePageState extends State<HomePage> {
               //TODO: here we have to give ontap properties
               // either we can wrap each menu item inside GestureDetector or we can pass a function to the constructor which will navigate to the new page.
               // will fix this later. or try yourself and find best way to do this
+              ListTile(
+                leading: Icon(
+                  Icons.close,
+                  size: 32.0,
+                  color: Colors.black,
+                ),
+              ),
               SizedBox(
                 height: 150,
                 child: Container(
@@ -72,7 +72,16 @@ class _HomePageState extends State<HomePage> {
               menuItem("Home", Icons.home),
               menuItem("Profile", Icons.person),
               menuItem("Explore", Icons.explore),
-              menuItem("settings", Icons.settings),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => SettingsPage(),
+                      ),
+                    );
+                  },
+                  child: menuItem("settings", Icons.settings)),
               menuItem("About us", Icons.info),
               GestureDetector(
                   onTap: () async {
@@ -81,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                       if (user == null) {
                         Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
+                            CupertinoPageRoute(
                                 builder: (BuildContext context) =>
                                     LoginScreen()));
                       } else {

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/loginscreens/Login/login_screen.dart';
-import 'package:artsvalley/models/user.dart';
+import 'package:artsvalley/providers/user.dart';
 import 'package:artsvalley/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,27 +76,31 @@ class AuthMethods {
       String email,
       String password}) async {
     final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
-
+    LinearProgressIndicator();
     try {
-      UserCredential user = await _auth.createUserWithEmailAndPassword(
-          email: email.trim(), password: password.trim());
-      Map _userdata = {
-        'username': _username,
-        'useremail': email.trim(),
-        'displayname': fullname.trim(),
-        'photoUrl': user.user.photoURL,
-        'userid': user.user.uid,
-      };
-      await db.addUserRecord(_userdata, user).then((value) {
-        Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(
-            builder: (context) => LoginScreen(),
-          ),
-        );
+      await _auth
+          .createUserWithEmailAndPassword(
+              email: email.trim(), password: password.trim())
+          .then((snapshot) {
+        Map _userdata = {
+          'username': _username,
+          'useremail': email.trim(),
+          'displayname': fullname.trim(),
+          'photoUrl': snapshot.user.photoURL,
+          'userid': snapshot.user.uid,
+        };
+        db.addUserRecord(_userdata, snapshot).then((value) {
+          Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => LoginScreen(),
+            ),
+          );
+        });
       });
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Email Already In Use")));
     }
   }
 

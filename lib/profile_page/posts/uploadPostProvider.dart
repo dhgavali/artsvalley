@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/services/databaseService.dart';
@@ -33,8 +34,8 @@ class UploadPost with ChangeNotifier {
   }
 
   //for editing image (Crop Functionlity)
-  Future<Null> cropImage(BuildContext context) async {
-    File croppedimage = await ImageCropper.cropImage(
+  Future<void> cropImage(BuildContext context) async {
+    File _croppedImage = await ImageCropper.cropImage(
       sourcePath: uploadPostImage.path,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
@@ -53,12 +54,11 @@ class UploadPost with ChangeNotifier {
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
     );
-
-
-    print("Cropper ${croppedimage.runtimeType}");
+    uploadPostImage = _croppedImage;
+    notifyListeners();
   }
-  
-  //uploading Image to storage 
+
+  //uploading Image to storage
   Future uploadPostToStorage() async {
     TaskSnapshot tasksnapshot = await FirebaseStorage.instance
         .ref()
@@ -73,6 +73,7 @@ class UploadPost with ChangeNotifier {
   //for selecting image either from galary or camera
 
   selectPostImageType(BuildContext context) {
+    print("select post called");
     return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -154,8 +155,12 @@ class UploadPost with ChangeNotifier {
           );
         });
   }
-//for showing image 
+
+//for showing image
+//
+//TODO: here instead of modal Either we create a class or a single child scroll view. either we can navigate to new page. this is second method after the image is selected to uplaod
   showPostImageType(BuildContext context) {
+    print("show post called");
     return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -198,19 +203,26 @@ class UploadPost with ChangeNotifier {
                             left: 20.0, right: 20.0, top: 25.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(25.0),
-                          child: Image.file(
-                            uploadPostImage,
-                            //for animation
-                            frameBuilder: (BuildContext context, Widget child,
-                                    int frame, bool wasSynchronouslyLoaded) =>
-                                wasSynchronouslyLoaded
-                                    ? child
-                                    : AnimatedOpacity(
-                                        child: child,
-                                        opacity: frame == null ? 0 : 1,
-                                        duration: const Duration(seconds: 2),
-                                        curve: Curves.easeOut,
-                                      ),
+                          child: Consumer<UploadPost>(
+                            builder: (context, value, child) {
+                              return Image.file(
+                                value.uploadPostImage,
+                                //for animation
+                                frameBuilder: (BuildContext context,
+                                        Widget child,
+                                        int frame,
+                                        bool wasSynchronouslyLoaded) =>
+                                    wasSynchronouslyLoaded
+                                        ? child
+                                        : AnimatedOpacity(
+                                            child: child,
+                                            opacity: frame == null ? 0 : 1,
+                                            duration:
+                                                const Duration(seconds: 2),
+                                            curve: Curves.easeOut,
+                                          ),
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -261,7 +273,7 @@ class UploadPost with ChangeNotifier {
         });
   }
 
-  //sheet for caption 
+  //sheet for caption
 
   editPostSheet(BuildContext context) {
     return showModalBottomSheet(
@@ -278,7 +290,7 @@ class UploadPost with ChangeNotifier {
                     color: Colors.white10,
                   ),
                 ),
-                //ignore this commented block 
+                //ignore this commented block
                 /* Container(
                   child: Column(
                     children: <Widget>[
@@ -374,14 +386,19 @@ class UploadPost with ChangeNotifier {
                   onPressed: () {
                     Provider.of<DatabaseService>(context, listen: false)
                         .uploadPostData(captionController.text, {
-                      'caption': captionController.text,
+                      'caption': captionController.text.trim(),
                       'userId':
                           Provider.of<DatabaseService>(context, listen: false)
                               .userid,
                       'postUrl': uploadPostImageUrl,
                     }).whenComplete(() {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => Profile()));
+                      // Navigator.of(context).pushAndRemoveUntil  (
+                      //     MaterialPageRoute(builder: (context) => Profile()));
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => Profile()),
+                          (Route<dynamic> route) => false);
                     });
                   },
                 ),

@@ -33,31 +33,33 @@ class BoxContent extends StatelessWidget {
   }
 }
 
-
-Widget customInputField1(String hintText, IconData customIcon,
-    TextEditingController mycontroller, FormFieldValidator<String> validator,
-    ){
- return TextFieldContainer(
-      child: TextFormField(
-        controller: mycontroller,
-        cursorColor: kPrimaryColor,
-         validator: validator,
-        decoration: InputDecoration(
-          icon: Icon(
-            customIcon,
-            color: kPrimaryColor,
-          ),
-          // errorStyle: TextStyle(),
-          hintText: hintText,
-          border: InputBorder.none,
+Widget customInputField1(
+  String hintText,
+  IconData customIcon,
+  TextEditingController mycontroller,
+  FormFieldValidator<String> validator,
+) {
+  return TextFieldContainer(
+    child: TextFormField(
+      controller: mycontroller,
+      cursorColor: kPrimaryColor,
+      validator: validator,
+      decoration: InputDecoration(
+        icon: Icon(
+          customIcon,
+          color: kPrimaryColor,
         ),
+        // errorStyle: TextStyle(),
+        hintText: hintText,
+        border: InputBorder.none,
       ),
-    );
+    ),
+  );
 }
+
 Widget customInputField(String hintText, IconData customIcon,
     TextEditingController mycontroller, FormFieldValidator<String> validator,
     [bool obsecureText = false]) {
-    
   Icon myIcon = Icon(customIcon, color: Colors.grey);
   String hint = hintText;
   return Container(
@@ -181,3 +183,29 @@ Widget createAccountLabel(String label, String action) {
   );
 }
 
+Widget customDivider(BuildContext context) {
+  return Center(
+    child: SizedBox(
+      height: 5,
+      width: MediaQuery.of(context).size.width,
+      child: Divider(
+        color: Colors.lightGreen,
+      ),
+    ),
+  );
+}
+
+List<BoxShadow> customShadowButton() {
+  return <BoxShadow>[
+    BoxShadow(
+      blurRadius: 5,
+      color: Color(0xff212121),
+      offset: Offset(0.2, 0.5),
+    ),
+    BoxShadow(
+      blurRadius: 5,
+      color: Color(0xfff1f1f1),
+      offset: Offset(0.2, 0.5),
+    ),
+  ];
+}

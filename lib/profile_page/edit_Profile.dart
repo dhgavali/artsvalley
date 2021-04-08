@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,10 +28,11 @@ class EditProfile with ChangeNotifier {
     notifyListeners();
   }
 
-   Future<Null> cropImage(BuildContext context) async {
-     var img = Provider.of<EditProfile>(context,listen: false).userProfileImage.path;
+  Future<void> cropImage(BuildContext context) async {
+    var img =
+        Provider.of<EditProfile>(context, listen: false).userProfileImage.path;
 
-    File croppedimage = await ImageCropper.cropImage(
+    File _croppedImage = await ImageCropper.cropImage(
       sourcePath: img,
       cropStyle: CropStyle.circle,
       aspectRatioPresets: [
@@ -50,11 +52,11 @@ class EditProfile with ChangeNotifier {
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
     );
-  
+    this.userProfileImage = _croppedImage;
+    notifyListeners();
   }
 
-
-   showProfile(BuildContext context) {
+  showProfile(BuildContext context) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -73,10 +75,9 @@ class EditProfile with ChangeNotifier {
                     color: Colors.white10,
                   ),
                 ),
-                
-                 Container(
-                   margin: EdgeInsets.only(left: 350),
-                   child: Column(
+                Container(
+                  margin: EdgeInsets.only(left: 350),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       IconButton(
@@ -86,67 +87,76 @@ class EditProfile with ChangeNotifier {
                         },
                       ),
                     ],
+                  ),
                 ),
-                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 CircleAvatar(
-                  radius: MediaQuery.of(context).size.width*0.3,
+                  radius: MediaQuery.of(context).size.width * 0.3,
                   backgroundColor: Colors.transparent,
                   backgroundImage: FileImage(userProfileImage),
                 ),
-                SizedBox(height: 65,),
+                SizedBox(
+                  height: 65,
+                ),
                 Container(
                   child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    MaterialButton(
-                      child: Text(
-                        'Reselect',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.white,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      MaterialButton(
+                        child: Text(
+                          'Reselect',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.white,
+                          ),
                         ),
+                        onPressed: () {
+                          selectProfileImageType(context);
+                        },
                       ),
-                      onPressed: () {
-                        selectProfileImageType(context);
-                      },
-                    ),
-                    MaterialButton(
-                      child: Text(
-                        'Upload Image',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      MaterialButton(
+                        child: Text(
+                          'Upload Image',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        onPressed: () {
+                          Provider.of<DatabaseService>(context, listen: false)
+                              .uploadUserProfileImage(context)
+                              .whenComplete(() {
+                            FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(
+                                  Provider.of<DatabaseService>(context,
+                                          listen: false)
+                                      .userid,
+                                )
+                                .update({'profilephoto': userProfileImageUrl});
+                            Navigator.pop(context);
+                            //TODO make changes according to u for photo url . (on whencomplete this will sort out).
+                          });
+                        },
                       ),
-                      onPressed: (){
-                        Provider.of<DatabaseService>(context,listen: false).uploadUserProfileImage(context).whenComplete(() {
-                          FirebaseFirestore.instance.collection('users').doc(Provider.of<DatabaseService>(context, listen: false)
-                              .userid,).update({'profilephoto': userProfileImageUrl});
-                              Navigator.pop(context);
-                              //TODO make changes according to u for photo url . (on whencomplete this will sort out).
-                        });
-                      },
-                      
-          
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 ),
               ],
             ),
           );
         });
-  } 
+  }
 
   selectProfileImageType(BuildContext context) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
           return Container(
-            
             height: MediaQuery.of(context).size.height * 0.3 / 2.5,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
@@ -228,7 +238,4 @@ class EditProfile with ChangeNotifier {
           );
         });
   }
-
-
-
 }

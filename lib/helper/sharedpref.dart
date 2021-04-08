@@ -10,16 +10,15 @@ class SharedPrefsHelper {
   static final isUserLoginKey = "USERLOGIN";
   static final userIdKey = "USERID";
 
-
   //clearing sharedpreferences
-  
+
   //setting the user values into the shared preferences
   Future<void> isUserLoggedIn(String userstatus) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(isUserLoginKey, userstatus);
   }
 
-  Future<void> saveUserEmail(String email) async { 
+  Future<void> saveUserEmail(String email) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(userEmailKey, email);
   }
@@ -38,6 +37,7 @@ class SharedPrefsHelper {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(userPhotoUrlKey, userPhotoUrl);
   }
+
   Future<void> saveUserId(String userId) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(userIdKey, userId);
@@ -69,9 +69,9 @@ class SharedPrefsHelper {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(isUserLoginKey);
   }
+
   Future<String> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(userIdKey);
   }
-
 }

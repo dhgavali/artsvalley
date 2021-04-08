@@ -2,12 +2,11 @@ import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
-import 'package:artsvalley/profile_page/profileDataHelper.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/update_data_provider.dart';
 import 'package:artsvalley/services/auth.dart';
-import 'package:artsvalley/services/auth_service.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/loginScreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -30,30 +29,22 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AuthMethods>(
-          create: (_) => AuthMethods(FirebaseAuth.instance, userstatus),
-        ),
+            create: (_) => AuthMethods(FirebaseAuth.instance, userstatus)),
         StreamProvider(
           initialData: null,
           create: (context) => context.read<AuthMethods>().authStateChanges,
         ),
-        ChangeNotifierProvider(
-          create: (context) => UpdateDataProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LoadingProvider(),
-        ),
-        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (context) => UpdateDataProvider()),
+        ChangeNotifierProvider(create: (context) => LoadingProvider()),
         ChangeNotifierProvider(create: (_) => DatabaseService()),
-        ChangeNotifierProvider(create: (_) => ProfileDataHelper()),
-        ChangeNotifierProvider(
-          create: (_) => UploadPost(),
-        ),
+        ChangeNotifierProvider(create: (_) => UploadPost()),
         ChangeNotifierProvider(create: (_) => EditProfile()),
       ],
+      
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: "Arts Valley",
         theme: ThemeData(
-          primaryColor: Colors.amberAccent,
+          primaryColor: ProConstants.primaryColor,
           primarySwatch: Colors.teal,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           backgroundColor: Color(0xfff1f1f1),
