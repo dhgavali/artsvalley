@@ -1,4 +1,6 @@
+import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
   final String profileurl;
@@ -26,6 +28,7 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
+    var _likeProvider = context.watch<LikedCheck>();
     return Container(
       width: MediaQuery.of(context).size.width - 50,
       height: 500,
@@ -95,15 +98,23 @@ class _PostWidgetState extends State<PostWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.favorite,
-                    size: 40,
-                    color: Colors.redAccent,
+                  onTap: () {
+                    _likeProvider.updateLike(null);
+                  },
+                  child: Consumer<LikedCheck>(
+                    builder: (context, value, child) {
+                      return Icon(
+                        _likeProvider.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        size: 40,
+                        color: Colors.redAccent,
+                      );
+                    },
                   ),
                 ),
                 Text(
-                  widget.likescount.toString(),
+                  _likeProvider.count.toString(),
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                 )
               ],

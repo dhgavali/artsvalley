@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
+import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/update_data_provider.dart';
 import 'package:artsvalley/services/auth.dart';
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DatabaseService()),
         ChangeNotifierProvider(create: (_) => UploadPost()),
         ChangeNotifierProvider(create: (_) => EditProfile()),
+        ChangeNotifierProvider(create: (_) => LikedCheck()),
       ],
       
       child: MaterialApp(
@@ -51,6 +54,10 @@ class MyApp extends StatelessWidget {
         ),
         home: AuthenticationWrapper(),
         debugShowCheckedModeBanner: false,
+        routes: {
+          '/home' : (context) => HomePage(),
+          '/profile' : (context) => Profile(),
+        },
       ),
     );
   }

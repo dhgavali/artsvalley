@@ -86,8 +86,8 @@ class AuthMethods {
           'username': _username,
           'useremail': email.trim(),
           'displayname': fullname.trim(),
-          'photoUrl': snapshot.user.photoURL,
-          'userid': snapshot.user.uid,
+          'photoUrl': null,
+          'userid': null,
         };
         db.addUserRecord(_userdata, snapshot).then((value) {
           Navigator.pushReplacement(

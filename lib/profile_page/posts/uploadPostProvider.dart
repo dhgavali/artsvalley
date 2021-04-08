@@ -385,12 +385,13 @@ class UploadPost with ChangeNotifier {
                   //creating key value pair here
                   onPressed: () {
                     Provider.of<DatabaseService>(context, listen: false)
-                        .uploadPostData(captionController.text, {
+                        .uploadPostData({
                       'caption': captionController.text.trim(),
                       'userId':
                           Provider.of<DatabaseService>(context, listen: false)
                               .userid,
                       'postUrl': uploadPostImageUrl,
+                      'likes': 0,
                     }).whenComplete(() {
                       // Navigator.of(context).pushAndRemoveUntil  (
                       //     MaterialPageRoute(builder: (context) => Profile()));

@@ -64,8 +64,8 @@ class DatabaseService with ChangeNotifier {
   }
 
 //creating post collection into firestore
-  Future uploadPostData(String postId, dynamic data) async {
-    return FirebaseFirestore.instance.collection('posts').doc(postId).set(data);
+  Future uploadPostData(dynamic data) async {
+    return FirebaseFirestore.instance.collection('posts').doc().set(data);
   }
 
   //creating collection

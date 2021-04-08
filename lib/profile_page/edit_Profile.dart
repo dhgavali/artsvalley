@@ -61,7 +61,7 @@ class EditProfile with ChangeNotifier {
         context: context,
         builder: (context) {
           return Container(
-            height: MediaQuery.of(context).size.height * 2,
+            height: MediaQuery.of(context).size.height * 2.5,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: Colors.grey[850],
@@ -90,7 +90,7 @@ class EditProfile with ChangeNotifier {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 CircleAvatar(
                   radius: MediaQuery.of(context).size.width * 0.3,
@@ -98,7 +98,7 @@ class EditProfile with ChangeNotifier {
                   backgroundImage: FileImage(userProfileImage),
                 ),
                 SizedBox(
-                  height: 65,
+                  height: 50,
                 ),
                 Container(
                   child: Row(
