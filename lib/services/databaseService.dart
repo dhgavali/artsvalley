@@ -69,9 +69,9 @@ class DatabaseService with ChangeNotifier {
   }
 
   //creating collection
-  Future createUserCollection(BuildContext context, dynamic data) async {
-    return userDataref.doc(userid).set(data);
-  }
+  // Future createUserCollection(BuildContext context, dynamic data) async {
+  //   return userDataref.doc(userid).set(data);
+  // }
 
   //for accessing data fro, firestore
  

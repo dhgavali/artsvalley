@@ -1,5 +1,6 @@
 import 'package:artsvalley/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/views/settings.dart';
@@ -8,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -84,21 +86,8 @@ class _HomePageState extends State<HomePage> {
                   child: menuItem("settings", Icons.settings)),
               menuItem("About us", Icons.info),
               GestureDetector(
-                  onTap: () async {
-                    await firebaseAuth.signOut();
-                    firebaseAuth.authStateChanges().listen((User user) {
-                      if (user == null) {
-                        Navigator.pushReplacement(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (BuildContext context) =>
-                                    LoginScreen()));
-                      } else {
-                        return Center(
-                          child: Text("Failed to loguot"),
-                        );
-                      }
-                    });
+                  onTap: () {
+                    context.read<AuthMethods>().signOut(context);
                   },
                   child: menuItem("Logout", Icons.logout)),
             ],

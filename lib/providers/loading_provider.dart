@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
 class LoadingProvider with ChangeNotifier {
-  bool isLoaded = false;
+  bool _isLoaded = false;
+
+  get isLoaded => this._isLoaded;
+
+  set isLoaded(value) => this._isLoaded;
 
   void loadPage() {
-    isLoaded = !isLoaded;
+    _isLoaded = !_isLoaded;
     notifyListeners();
   }
 }

@@ -54,7 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var load = context.watch<LoadingProvider>();
+    // var load = context.watch<LoadingProvider>();
+    var load = Provider.of<LoadingProvider>(context, listen: false);
     return load.isLoaded
         ? LoadingPage()
         : Scaffold(
@@ -84,30 +85,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     GestureDetector(
                       onTap: () async {
                         if (_signinkey.currentState.validate()) {
-                          load.loadPage();
                           await context.read<AuthMethods>().signIn(
+                                context: context,
                                 email: usernameController.text.trim(),
                                 password: pwdController.text.trim(),
                               );
                         }
-
-                        FirebaseAuth.instance
-                            .authStateChanges()
-                            .listen((User user) {
-                          if (user != null) {
-                            load.loadPage();
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
-                            );
-                          } else {
-                            return Center(
-                              child: Text("failed to login"),
-                            );
-                          }
-                        });
                       },
                       child: RoundedButton(
                         text: "LOGIN",

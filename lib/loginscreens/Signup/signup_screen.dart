@@ -149,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 GestureDetector(
                   onTap: () {
                     var signup = context.read<AuthMethods>();
-                    signup.signUpwithGoogle(context);
+                    signup.signInWithGoogle();
                   },
                   child: _googleWidget(
                     "assets/icons/google.svg",

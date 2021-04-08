@@ -10,16 +10,29 @@ class DataMethods {
       FirebaseFirestore.instance.collection("postdb");
 
   //method to add user data on sign up
-  Future<DocumentReference> addUserRecord(Map data, UserCredential user) async {
-    String userid = user.user.uid;
+//  Future<DocumentReference> addUserRecord(
+      // {String username,
+      // String email,
+      // String uid,
+      // String photoUrl,
+      // String displayname}) async {
+  
+  Future<DocumentReference> addUserRecord(
+      Map userdata) async {
+    print("add recrod method startd");
+    // String userid = user.user.uid;
+    // print(userid);
     Future<DocumentReference> dc;
-    print(userid);
     try {
-    dc =  dbconn.add(data);
+      print("try block started");
+      //  dbconn.add(data);
+      dc = dbconn.add(userdata);
+      // print("document refrence : $dc");
     } catch (e) {
-      print(e.message());
+      print("catch block activated");
+      print(e.toString());
     }
-    return dc; 
+    return dc;
   }
 
 //method to get user data array

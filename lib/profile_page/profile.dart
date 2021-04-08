@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
 import 'package:artsvalley/views/settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +20,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _prefs = SharedPrefsHelper();
-
+   String uid;
   @override
   void initState() {
+  uid = FirebaseAuth.instance.currentUser.uid;
     super.initState();
   }
 
@@ -121,28 +126,55 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _profilePhoto() {
-    //  String _photoUrl =  _prefs.getUserProfileUrl();
+    print("future builder started");
+    Future<String> _email = _prefs.getUserEmail();
     return FutureBuilder(
-      future: _prefs.getUserProfileUrl(),
-      builder: (context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.hasError) {
-            print(snapshot.error);
+        future: FirebaseFirestore.instance
+            .collection("users")
+            .where("useremail", isEqualTo: _email)
+            .get(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            print("data : " + snapshot.data.toString());
+            print("docs : " + snapshot.data.docs.toString());
+            print("size: " + snapshot.data.size.toString());
+            print("Result: " + snapshot.data.docs.first.toString());
           }
+          print(snapshot);
           return CircleAvatar(
             radius: 60,
-            backgroundImage: NetworkImage(snapshot.data),
-            backgroundColor: Colors.white38,
-          );
-        } else {
-          return CircleAvatar(
-            radius: 0,
             backgroundImage: AssetImage('assets/images/profile.png'),
             backgroundColor: Colors.white38,
           );
-        }
-      },
-    );
+        });
+    //  String _photoUrl =  _prefs.getUserProfileUrl();
+    // return FutureBuilder<QuerySnapshot>(
+    //   future: FirebaseFirestore.instance
+    //       .collection("users")
+    //       .where("username", isEqualTo: _prefs.getUsername())
+    //       .get(),
+    //   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //     print("builder started");
+    //     if (snapshot.hasData) {
+    //       if (snapshot.hasError) {
+    //         print(snapshot.error);
+    //       }
+    //       print(snapshot.data.docs);
+    //       print(snapshot.hasData);
+    //       return CircleAvatar(
+    //         radius: 60,
+    //         backgroundImage: AssetImage('assets/images/profile.png'),
+    //         backgroundColor: Colors.white38,
+    //       );
+    //     } else {
+    //       return CircleAvatar(
+    //         radius: 0,
+    //         backgroundImage: AssetImage('assets/images/profile.png'),
+    //         backgroundColor: Colors.white38,
+    //       );
+    //     }
+    //   },
+    // );
   }
 }
 
