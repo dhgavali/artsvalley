@@ -38,10 +38,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => UpdateDataProvider()),
         ChangeNotifierProvider(create: (context) => LoadingProvider()),
-        ChangeNotifierProvider(create: (_) => DatabaseService()),
-        ChangeNotifierProvider(create: (_) => UploadPost()),
-        ChangeNotifierProvider(create: (_) => EditProfile()),
-        ChangeNotifierProvider(create: (_) => LikedCheck()),
+        ChangeNotifierProvider(create: (context) => DatabaseService()),
+        ChangeNotifierProvider(create: (context) => UploadPost()),
+        ChangeNotifierProvider(create: (context) => EditProfile()),
+        ChangeNotifierProvider(create: (context) => LikedCheck()),
       ],
       
       child: MaterialApp(

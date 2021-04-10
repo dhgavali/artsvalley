@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:artsvalley/views/home.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +18,6 @@ class UploadPost with ChangeNotifier {
   String uploadPostImageUrl;
   String get getUploadImageUrl => uploadPostImageUrl;
   final picker = ImagePicker();
-
   // selecting Image
   Future pickUploadPostImage(BuildContext context, ImageSource source) async {
     final uploadPostImageVal = await picker.getImage(source: source);
@@ -290,25 +290,6 @@ class UploadPost with ChangeNotifier {
                     color: Colors.white10,
                   ),
                 ),
-                //ignore this commented block
-                /* Container(
-                  child: Column(
-                    children: <Widget>[
-                      IconButton(
-                          icon: Icon(
-                            Icons.image_aspect_ratio,
-                            color: Colors.green,
-                          ),
-                          onPressed: () {}),
-                      IconButton(
-                          icon: Icon(
-                            Icons.fit_screen,
-                            color: Colors.yellow,
-                          ),
-                          onPressed: () {}),
-                    ],
-                  ),
-                ), */
                 Expanded(
                   child: Stack(
                     children: <Widget>[
@@ -383,6 +364,7 @@ class UploadPost with ChangeNotifier {
                   ),
                   color: Colors.blueGrey,
                   //creating key value pair here
+                  //TODO: Post map here
                   onPressed: () {
                     Provider.of<DatabaseService>(context, listen: false)
                         .uploadPostData({
@@ -392,9 +374,8 @@ class UploadPost with ChangeNotifier {
                               .userid,
                       'postUrl': uploadPostImageUrl,
                       'likes': 0,
+                      // 'postid' : ,
                     }).whenComplete(() {
-                      // Navigator.of(context).pushAndRemoveUntil  (
-                      //     MaterialPageRoute(builder: (context) => Profile()));
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

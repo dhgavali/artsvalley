@@ -105,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (_signUpFormKey.currentState.validate()) {
                       print("Method called");
                       await context.read<AuthMethods>().signUp(
-                        context: context,
+                          context: context,
                           fullname: nameController.text.trim(),
                           email: emailController.text.trim(),
                           password: passwordController.text.trim());
@@ -224,6 +224,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-
 }

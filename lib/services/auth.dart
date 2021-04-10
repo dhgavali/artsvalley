@@ -137,7 +137,7 @@ class AuthMethods {
         'photoUrl': user.user.photoURL,
         'userid': user.user.uid,
       };
-
+      print(user.user.uid);
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.user.uid)
@@ -166,5 +166,10 @@ class AuthMethods {
         );
       }
     });
+  }
+
+  Future<void> resetPassword(String email) async {
+    print("sent email");
+    return _auth.sendPasswordResetEmail(email: email);
   }
 }

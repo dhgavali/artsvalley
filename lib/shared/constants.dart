@@ -17,4 +17,8 @@ class ProConstants {
   static final double buttonWidth = 300.0;
   static final double buttonHeight = 60.0;
   static final double buttonfontsize = 20.0;
+
+  //databases
+  static final String usersCollection = "users";
+  static final String postsCollection = "posts";
 }

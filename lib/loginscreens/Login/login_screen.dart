@@ -1,4 +1,5 @@
 import 'package:artsvalley/components/text_field_container.dart';
+import 'package:artsvalley/loginscreens/reset/resetPassword.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/update_data_provider.dart';
 import 'package:artsvalley/services/auth.dart';
@@ -82,6 +83,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       pwdController,
                       validatePassword,
                     ),
+                    SizedBox(height: 10),
+                    Container(
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        widthFactor: 2.5,
+                        child: TextButton(
+                          onPressed: (){
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => ResetPassword()),
+                            );
+                          },
+                          child: Text('Forgot Password ?',
+                          style: TextStyle(
+                            color: kPrimaryColor,
+                          ),
+                          ),
+                        ),
+                        ),
+                      ),
                     GestureDetector(
                       onTap: () async {
                         if (_signinkey.currentState.validate()) {

@@ -19,11 +19,10 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final _prefs = SharedPrefsHelper();
-   String uid;
+  String uid;
   @override
   void initState() {
-  uid = FirebaseAuth.instance.currentUser.uid;
+    uid = FirebaseAuth.instance.currentUser.uid;
     super.initState();
   }
 
@@ -127,20 +126,38 @@ class _ProfileState extends State<Profile> {
 
   Widget _profilePhoto() {
     print("future builder started");
-    Future<String> _email = _prefs.getUserEmail();
-    return FutureBuilder(
+    return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
             .collection("users")
-            .where("useremail", isEqualTo: _email)
+            .where("useremail", isEqualTo: "dhgavali@gmail.com")
             .get(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            print("data : " + snapshot.data.toString());
-            print("docs : " + snapshot.data.docs.toString());
-            print("size: " + snapshot.data.size.toString());
-            print("Result: " + snapshot.data.docs.first.toString());
+        initialData: null,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return LinearProgressIndicator();
           }
-          print(snapshot);
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("OOPS eerror occuered"),
+                );
+              }
+              String _profileurl;
+              print("data : " + snapshot.data.toString());
+              print("docs : " + snapshot.data.docs.toString());
+              print("size: " + snapshot.data.size.toString());
+              print("Result: " + snapshot.data.docs.first.toString());
+              snapshot.data.docs.map((value) {
+              _profileurl = value.data()['photoUrl'];
+              }).toList();
+              return CircleAvatar(
+                radius: 60,
+                backgroundImage: NetworkImage(_profileurl),
+                backgroundColor: Colors.white38,
+              );
+            }
+          }
           return CircleAvatar(
             radius: 60,
             backgroundImage: AssetImage('assets/images/profile.png'),
