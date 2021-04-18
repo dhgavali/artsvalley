@@ -1,7 +1,7 @@
+import 'package:artsvalley/views/loginscreens/Login/background.dart';
+import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
+import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:artsvalley/loginScreens/Login/login_screen.dart';
-import 'package:artsvalley/loginScreens/Signup/signup_screen.dart';
-import 'package:artsvalley/loginScreens/Welcome/components/background.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:flutter_svg/svg.dart';

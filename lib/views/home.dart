@@ -1,11 +1,8 @@
-import 'package:artsvalley/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,11 +32,10 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
+                    // builder: (context) => ProfilePage(),
                     builder: (context) => Profile(),
-                    // builder: (context) => Profile(),
                   ),
                 );
-                //
               },
             ),
           ),
@@ -49,85 +43,118 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: Theme(
         data: Theme.of(context).copyWith(canvasColor: ProConstants.drawerColor),
-        child: Drawer(
-          elevation: 0.0,
-          child: ListView(
-            children: [
-              //TODO: here we have to give ontap properties
-              // either we can wrap each menu item inside GestureDetector or we can pass a function to the constructor which will navigate to the new page.
-              // will fix this later. or try yourself and find best way to do this
-              ListTile(
-                leading: Icon(
-                  Icons.close,
-                  size: 32.0,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(
-                height: 150,
-                child: Container(
-                  child: Column(
-                    children: [],
-                  ),
-                ),
-              ),
-              menuItem("Home", Icons.home),
-              menuItem("Profile", Icons.person),
-              menuItem("Explore", Icons.explore),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => SettingsPage(),
-                      ),
-                    );
-                  },
-                  child: menuItem("settings", Icons.settings)),
-              menuItem("About us", Icons.info),
-              GestureDetector(
-                  onTap: () {
-                    context.read<AuthMethods>().signOut(context);
-                  },
-                  child: menuItem("Logout", Icons.logout)),
-            ],
-          ),
-        ),
+        child: MyDrawer(),
       ),
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("posts").snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
+      body:
+      //TODO: 
+      //here we are basically going to create two separate classes or a single class which will contain the
+      //user and posts database. and fetch the data from the two databaase then return a single list which will be used 
+      //here to fetch the data. and this will be a streabuilder which will be like using behavirol subject for fetching the data.
+      //
+       StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
+          if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return LinearProgressIndicator();
             }
 
-            if (snapshot.hasData) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return LinearProgressIndicator();
-              }
-
-              // var post = snapshot.data.docs
-              //     .map((postdata) => {postdata.data()})
-              //     .toList();
-
-              return ListView.builder(
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot mypost = snapshot.data.docs[index];
-                    return PostWidget(
-                      username: "Goerge Bush",
-                      profileurl: "assets/images/logo.png",
-                      posturl: mypost['postUrl'],
-                      caption: mypost['caption'].toString(),
-                      likescount: mypost['likes'],
-                    );
+            String _username;
+            String _profileUrl;
+            return ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot mypost = snapshot.data.docs[index];
+                  FirebaseFirestore.instance
+                      .collection("users")
+                      .where('userId', isEqualTo: mypost['userId'])
+                      .get()
+                      .then((userdata) {
+                    userdata.docs.map((values) {
+                      _username = values.data()['username'];
+                      _profileUrl = values.data()['photoUrl'];
+                      print(_username);
+                      print(_profileUrl);
+                    });
                   });
-            }
+                  print("line no.86 home page");
+                  print(mypost['userId']);
 
-            return LinearProgressIndicator();
-          }),
+                  return PostWidget(
+                    username: "Goerge Bush",
+                    profileurl: "assets/images/logo.png",
+                    posturl: mypost['postUrl'],
+                    caption: mypost['caption'],
+                    likescount: mypost['likes'],
+                    postId: mypost['postId'],
+                    userId: mypost['userId'],
+                  );
+                });
+          }
+          return LinearProgressIndicator();
+        },
+      ),
+    );
+  }
+
+//   Widget myDrawer() {
+
+// }
+
+}
+
+class MyDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      elevation: 0.0,
+      child: ListView(
+        children: [
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pop();
+            },
+            leading: Icon(
+              Icons.close,
+              size: 32.0,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: 150,
+            child: Container(
+              child: Column(
+                children: [],
+              ),
+            ),
+          ),
+          menuItem("Home", Icons.home),
+          menuItem("Profile", Icons.person),
+          menuItem("Explore", Icons.explore),
+          GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => SettingsPage(),
+                  ),
+                );
+              },
+              child: menuItem("settings", Icons.settings)),
+          menuItem("About us", Icons.info),
+          GestureDetector(
+              onTap: () {
+                context.read<AuthMethods>().signOut(context);
+              },
+              child: menuItem("Logout", Icons.logout)),
+        ],
+      ),
     );
   }
 
@@ -147,44 +174,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-// ListView(
-//         //TODO: here we will use a streambuilder with the listview and then we will fetch the values passed below from the database. which will create the post widget.
-//         children: [
-//           Container(
-//             width: double.infinity,
-//             height: 50.0,
-//             decoration: BoxDecoration(color: Colors.black87),
-//             alignment: Alignment.centerLeft,
-//             padding: const EdgeInsets.only(left: 24),
-//             child: Text(
-//               "Hello, User",
-//               style: TextStyle(
-//                   fontSize: ProConstants.headingsize, color: Colors.yellow),
-//             ),
-//           ),
-//           PostWidget(
-//             profileurl: "assets/images/logo.png",
-//             username: "Upendra - project Leader",
-//             posturl: "assets/images/mug.jpg",
-//             likescount: 101,
-//             caption:
-//                 "The icons above should be wrapped inside GestureDetector \n and then we have to perform operations of sharing or changing likes count",
-//           ),
-//           PostWidget(
-//             profileurl: "assets/images/logo.png",
-//             username: "Abhi Tavhare",
-//             posturl: "assets/images/locket.jpg",
-//             likescount: 1000,
-//             caption:
-//                 "caption should be represented as multiline text with \n readmore button also we can open a new page with \n this data on click of readmore",
-//           ),
-//           PostWidget(
-//             profileurl: "assets/images/logo.png",
-//             username: "Rohan Yadav",
-//             posturl: "assets/images/heart.jpg",
-//             likescount: 181,
-//             caption: "Implement the sharing functionality @Upendra",
-//           ),
-//         ],
-//       ),

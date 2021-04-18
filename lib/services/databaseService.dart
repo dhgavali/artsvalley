@@ -1,45 +1,13 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 
 class DatabaseService with ChangeNotifier {
-  final String uid;
-  DatabaseService({this.uid});
-
-  String userEmail, userName, userImage, fullName;
-  String get getUserName => userName;
-  String get getUserEmail => userEmail;
-  String get getUserImage => userImage;
-  String get getName => fullName;
-  TextEditingController fullNameInputController = new TextEditingController();
-
-  final userid = FirebaseAuth.instance.currentUser.uid;
 
   UploadTask imageUploadTask;
-
-  //collection refernce
-  final CollectionReference userDataref =
-      FirebaseFirestore.instance.collection('users');
-
-  //Actully this function that i created we are using it for creating record collection to cloud firebase and  updation of data
-  //ignore this
-
-  Future updateUserData(String username, String name, String email,
-      String profilePhotoUrl) async {
-    return await userDataref.doc(uid).set({
-      'Fullname': fullNameInputController.text,
-      'email': email,
-      'username': username,
-      'profilephoto': profilePhotoUrl,
-      'createdAt': FieldValue.serverTimestamp(),
-      //'UpdatedAt': FieldValue.serverTimestamp(),
-    });
-  }
 
   //initial data for stream
 
@@ -64,8 +32,8 @@ class DatabaseService with ChangeNotifier {
   }
 
 //creating post collection into firestore
-  Future uploadPostData(dynamic data) async {
-    return FirebaseFirestore.instance.collection('posts').doc().set(data);
+  Future uploadPostData(dynamic data, String docid) async {
+    return FirebaseFirestore.instance.collection('posts').doc(docid).set(data);
   }
 
   //creating collection
@@ -74,7 +42,6 @@ class DatabaseService with ChangeNotifier {
   // }
 
   //for accessing data fro, firestore
- 
 
   notifyListeners();
 }

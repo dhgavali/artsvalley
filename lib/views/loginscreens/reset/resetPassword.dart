@@ -1,10 +1,10 @@
-import 'package:artsvalley/loginscreens/reset/mailSent.dart';
+import 'package:artsvalley/components/rounded_button.dart';
+import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
+import 'package:artsvalley/views/loginscreens/reset/mailSent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../components/rounded_button.dart';
-import '../../services/auth.dart';
-import '../../shared/shared_widgets.dart';
-import '../Login/login_screen.dart';
+import 'package:artsvalley/services/auth.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:provider/provider.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -70,7 +70,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 MailSent(emailController.text.trim())));
                       } on FirebaseAuthException catch (e) {
                         String error;
-
                         switch (e.code) {
                           case "user-not-found":
                             error =

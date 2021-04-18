@@ -1,7 +1,8 @@
-import 'package:artsvalley/loginscreens/Login/login_screen.dart';
-import 'package:artsvalley/loginscreens/Signup/signup_screen.dart';
-import 'package:artsvalley/loginscreens/Welcome/components/body.dart';
+import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
+import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'components/body.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final _controller = PageController(initialPage: 1);

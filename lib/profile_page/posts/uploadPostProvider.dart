@@ -1,19 +1,25 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/providers/userid.dart';
+import 'package:artsvalley/providers/userdata.dart';
 import 'package:artsvalley/services/databaseService.dart';
-import 'package:artsvalley/views/home.dart';
+import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class UploadPost with ChangeNotifier {
   TextEditingController captionController = new TextEditingController();
 
   File uploadPostImage;
+  final uuid = Uuid();
   File get getUploadPostImage => uploadPostImage;
   String uploadPostImageUrl;
   String get getUploadImageUrl => uploadPostImageUrl;
@@ -54,12 +60,16 @@ class UploadPost with ChangeNotifier {
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
     );
+
+    //cropping the image and assigning the postimage to the cropped image
+    //and notifying listeners to update the image path
     uploadPostImage = _croppedImage;
     notifyListeners();
   }
 
   //uploading Image to storage
   Future uploadPostToStorage() async {
+    print("Line no . 66 upload post function");
     TaskSnapshot tasksnapshot = await FirebaseStorage.instance
         .ref()
         .child('posts/${uploadPostImage.path}/${TimeOfDay.now()}')
@@ -71,27 +81,24 @@ class UploadPost with ChangeNotifier {
   }
 
   //for selecting image either from galary or camera
-
   selectPostImageType(BuildContext context) {
     print("select post called");
     return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
         context: context,
         builder: (context) {
           return Container(
             height: MediaQuery.of(context).size.height * 0.3 / 2.5,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: Colors.grey[850],
-                borderRadius: BorderRadius.circular(12)),
+              color: ProConstants.shadowColor,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(50),
+              ),
+            ),
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 150),
-                  child: Divider(
-                    thickness: 4.0,
-                    color: Colors.white10,
-                  ),
-                ),
+                HorizontalLine(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -103,11 +110,9 @@ class UploadPost with ChangeNotifier {
                             iconSize: 35,
                             color: Colors.blueGrey[200],
                             onPressed: () {
+                              //Picking the image from gallary passing the context.
                               pickUploadPostImage(context, ImageSource.gallery);
                             },
-                          ),
-                          SizedBox(
-                            height: 1,
                           ),
                           Text(
                             'Gallery',
@@ -131,11 +136,9 @@ class UploadPost with ChangeNotifier {
                             iconSize: 35,
                             color: Colors.blueGrey[200],
                             onPressed: () {
+                              Navigator.pop(context);
                               pickUploadPostImage(context, ImageSource.camera);
                             },
-                          ),
-                          SizedBox(
-                            height: 1,
                           ),
                           Text(
                             'Camera',
@@ -156,16 +159,12 @@ class UploadPost with ChangeNotifier {
         });
   }
 
-//for showing image
-//
-//TODO: here instead of modal Either we create a class or a single child scroll view. either we can navigate to new page. this is second method after the image is selected to uplaod
   showPostImageType(BuildContext context) {
     print("show post called");
     return showModalBottomSheet(
         context: context,
         builder: (context) {
           return Container(
-            height: MediaQuery.of(context).size.height * 2,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: Colors.grey[850],
@@ -276,6 +275,7 @@ class UploadPost with ChangeNotifier {
   //sheet for caption
 
   editPostSheet(BuildContext context) {
+    var user = Provider.of<User>(context, listen: false);
     return showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -366,16 +366,18 @@ class UploadPost with ChangeNotifier {
                   //creating key value pair here
                   //TODO: Post map here
                   onPressed: () {
+                    print("upload post time");
+                    print("Current user is: ");
+                    print(user.email);
+                    String _postid = uuid.v1();
                     Provider.of<DatabaseService>(context, listen: false)
                         .uploadPostData({
                       'caption': captionController.text.trim(),
-                      'userId':
-                          Provider.of<DatabaseService>(context, listen: false)
-                              .userid,
+                      'userId': user.uid,
                       'postUrl': uploadPostImageUrl,
                       'likes': 0,
-                      // 'postid' : ,
-                    }).whenComplete(() {
+                      'postId': _postid,
+                    }, _postid).whenComplete(() {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

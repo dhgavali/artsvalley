@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/update_data_provider.dart';
+import 'package:artsvalley/providers/userdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
-import 'package:artsvalley/loginScreens/Welcome/welcome_screen.dart';
+import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,18 +23,18 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final SharedPrefsHelper sharedpref = new SharedPrefsHelper();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Future<String> userstatus = sharedpref.getUserStatus();
     return MultiProvider(
       providers: [
         Provider<AuthMethods>(
-            create: (_) => AuthMethods(FirebaseAuth.instance, userstatus)),
+          create: (context) => AuthMethods(FirebaseAuth.instance),
+        ),
         StreamProvider(
           initialData: null,
-          create: (context) => context.read<AuthMethods>().authStateChanges,
+          create: (context) =>
+              Provider.of<AuthMethods>(context, listen: false).authStateChanges,
         ),
         ChangeNotifierProvider(create: (context) => UpdateDataProvider()),
         ChangeNotifierProvider(create: (context) => LoadingProvider()),
@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
         ChangeNotifierProvider(create: (context) => LikedCheck()),
+        ChangeNotifierProvider(create: (context) => UserDataProvider()),
       ],
-      
       child: MaterialApp(
         title: "Arts Valley",
         theme: ThemeData(
@@ -51,12 +51,25 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.teal,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           backgroundColor: Color(0xfff1f1f1),
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              fontSize: 28.00,
+              fontWeight: FontWeight.bold,
+            ),
+            headline2: TextStyle(
+              fontSize: 26.00,
+              fontWeight: FontWeight.bold,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 20.00,
+            ),
+          ),
         ),
         home: AuthenticationWrapper(),
         debugShowCheckedModeBanner: false,
         routes: {
-          '/home' : (context) => HomePage(),
-          '/profile' : (context) => Profile(),
+          '/home': (context) => HomePage(),
+          '/profile': (context) => Profile(),
         },
       ),
     );
@@ -66,7 +79,7 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
+    final firebaseUser = Provider.of<User>(context);
 
     if (firebaseUser != null) {
       return HomePage();

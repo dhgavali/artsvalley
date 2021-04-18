@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
-import 'package:artsvalley/loginscreens/Login/login_screen.dart';
-import 'package:artsvalley/loginscreens/Welcome/welcome_screen.dart';
+import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
-import 'package:artsvalley/providers/user.dart';
-import 'package:artsvalley/services/database.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,12 +12,11 @@ import 'package:provider/provider.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth;
-  final userstatus;
-  AuthMethods(this._auth, this.userstatus);
-  DataMethods db = new DataMethods();
-  // final FirebaseFirestore _dbconn = FirebaseFirestore.instance;
-
+  UserCredential user;
+  AuthMethods(this._auth);
   Stream<User> get authStateChanges => _auth.idTokenChanges();
+
+  // Stream<User> get user => _auth.authStateChanges();
 
 //Sign in method no need to add data.
   Future<UserCredential> signInWithGoogle() async {
@@ -38,34 +34,40 @@ class AuthMethods {
     // // sign in method
     final _username =
         googleUser.email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
-    UserCredential firebaseUser =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    if (firebaseUser != null) {
-      // Check is already sign up
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection('users')
-          .where('id', isEqualTo: firebaseUser.user.uid)
-          .get();
-      final List<DocumentSnapshot> documents = result.docs;
-      if (documents.length == 0) {
-        // Update data to server if new user
-        FirebaseFirestore.instance
+    try {
+      UserCredential firebaseUser =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      if (firebaseUser != null) {
+        // Check is already sign up
+        final QuerySnapshot result = await FirebaseFirestore.instance
             .collection('users')
-            .doc(firebaseUser.user.uid)
-            .set({
-          'username': _username,
-          'useremail': firebaseUser.user.email,
-          'displayname': firebaseUser.user.displayName,
-          'photoUrl': firebaseUser.user.photoURL,
-          'userid': firebaseUser.user.uid
-        });
+            .where('id', isEqualTo: firebaseUser.user.uid)
+            .get();
+        final List<DocumentSnapshot> documents = result.docs;
+        if (documents.length == 0) {
+          // Update data to server if new user
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(firebaseUser.user.uid)
+              .set(
+            {
+              'username': _username,
+              'useremail': firebaseUser.user.email,
+              'displayname': firebaseUser.user.displayName,
+              'photoUrl': firebaseUser.user.photoURL,
+              'userid': firebaseUser.user.uid
+            },
+            SetOptions(merge: true),
+          );
+        }
       }
-      _sharedpref.saveUserEmail(googleUser.email);
+      _sharedpref.saveUserEmail(firebaseUser.user.email);
       _sharedpref.saveUserName(_username);
-      _sharedpref.saveUserId(googleUser.id);
-      FirebaseUser(uid: googleUser.id);
+      _sharedpref.saveUserId(firebaseUser.user.uid);
+      return firebaseUser;
+    } catch (error) {
+      print(error);
     }
-    return firebaseUser;
   }
 
 //sign in with email and password
@@ -76,7 +78,6 @@ class AuthMethods {
     var load = context.read<LoadingProvider>();
 
     try {
-      load.loadPage();
       UserCredential _user = await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password.trim());
       final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
@@ -84,7 +85,6 @@ class AuthMethods {
       _sharedpref.saveUserEmail(_user.user.email);
       _sharedpref.saveUserName(_username);
       _sharedpref.saveUserId(_user.user.uid);
-      FirebaseUser(uid: _user.user.uid);
 
       FirebaseAuth.instance.authStateChanges().listen((User user) {
         if (user != null) {
@@ -94,7 +94,7 @@ class AuthMethods {
               builder: (context) => HomePage(),
             ),
           );
-          load.loadPage();
+
           load.isLoaded = false;
         } else {
           return Center(
@@ -103,7 +103,6 @@ class AuthMethods {
         }
       });
     } on FirebaseAuthException catch (e) {
-      load.loadPage();
       print(e.code);
       print(e.message);
       switch (e.code) {
@@ -127,7 +126,6 @@ class AuthMethods {
     final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
 
     try {
-      print("sign up block try ");
       UserCredential user = await _auth.createUserWithEmailAndPassword(
           email: email.trim(), password: password.trim());
       Map<String, dynamic> _userdata = {
@@ -137,7 +135,6 @@ class AuthMethods {
         'photoUrl': user.user.photoURL,
         'userid': user.user.uid,
       };
-      print(user.user.uid);
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.user.uid)
@@ -162,7 +159,7 @@ class AuthMethods {
             (Route<dynamic> route) => false);
       } else {
         return Center(
-          child: Text("Failed to loguot"),
+          child: Text("Failed to Logout"),
         );
       }
     });

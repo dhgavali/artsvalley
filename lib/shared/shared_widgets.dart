@@ -209,3 +209,20 @@ List<BoxShadow> customShadowButton() {
     ),
   ];
 }
+
+class HorizontalLine extends StatelessWidget {
+  ///
+  ///
+  ///stateless widget which return a Padding widget with Divider
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 150),
+      child: Divider(
+        thickness: 4.0,
+        color: Colors.white10,
+      ),
+    );
+  }
+}

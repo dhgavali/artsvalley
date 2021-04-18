@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:artsvalley/providers/userdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -127,15 +129,14 @@ class EditProfile with ChangeNotifier {
                           ),
                         ),
                         onPressed: () {
+                          //TODO: changed userdtaprovider here
                           Provider.of<DatabaseService>(context, listen: false)
                               .uploadUserProfileImage(context)
                               .whenComplete(() {
                             FirebaseFirestore.instance
                                 .collection('users')
                                 .doc(
-                                  Provider.of<DatabaseService>(context,
-                                          listen: false)
-                                      .userid,
+                                  Provider.of<User>(context, listen: false).uid,
                                 )
                                 .update({'profilephoto': userProfileImageUrl});
                             Navigator.pop(context);

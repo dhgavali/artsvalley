@@ -18,15 +18,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String _name;
-
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
-    print("profile page line no. 25");
-    print("This is email & uid of current user");
     print(user.email);
-
-    print(user.uid);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -78,7 +73,7 @@ class _ProfileState extends State<Profile> {
               Column(
                 children: [
                   Text(
-                    (_name != null) ? _name.toString() : "Welcome To profile",
+                    (_name == null) ? _name.toString() : "Welcome To profile",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
@@ -91,24 +86,13 @@ class _ProfileState extends State<Profile> {
               SizedBox(height: 50),
               CountData(),
               customDivider(context),
-
+              // addPostButton(),
               // customDivider(context),
-              //
-              //TODO: GridView of Post or Listview of Posts; all the profile section will be converted into silvers and gridview will be below
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<UploadPost>(context, listen: false)
-              .selectPostImageType(context);
-        },
-        child: Icon(
-          Icons.add_a_photo,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
       //
     );
   }
@@ -138,17 +122,12 @@ class _ProfileState extends State<Profile> {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
             .collection("users")
-            .where("userid", isEqualTo: Provider.of<User>(context).uid)
+            .where("userid", isEqualTo: FirebaseUser().myUserid)
             .get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           String _profileurl;
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircleAvatar(
-              radius: 60,
-              // backgroundImage: NetworkImage("_profileurl") ??
-              backgroundColor: Colors.white38,
-              child: CircularProgressIndicator(),
-            );
+            return LinearProgressIndicator();
           }
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
@@ -173,12 +152,7 @@ class _ProfileState extends State<Profile> {
               backgroundColor: Colors.white38,
             );
           }
-          return CircleAvatar(
-            radius: 60,
-            // backgroundImage: NetworkImage("_profileurl") ??
-            backgroundColor: Colors.white38,
-            child: CircularProgressIndicator(),
-          );
+          return LinearProgressIndicator();
         });
   }
 }

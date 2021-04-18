@@ -1,17 +1,18 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
-import 'package:artsvalley/loginscreens/Login/login_screen.dart';
-import 'package:artsvalley/loginscreens/Signup/components/background.dart';
-import 'package:artsvalley/loginscreens/Signup/components/or_divider.dart';
 import 'package:artsvalley/providers/update_data_provider.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
+import 'package:artsvalley/views/loginscreens/Signup/components/background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+
+import 'components/or_divider.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override

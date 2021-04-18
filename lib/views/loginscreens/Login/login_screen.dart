@@ -1,5 +1,8 @@
+import 'package:artsvalley/components/already_have_an_account_acheck.dart';
+import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
-import 'package:artsvalley/loginscreens/reset/resetPassword.dart';
+import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
+import 'package:artsvalley/views/loginscreens/reset/resetPassword.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/update_data_provider.dart';
 import 'package:artsvalley/services/auth.dart';
@@ -9,9 +12,6 @@ import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:artsvalley/loginScreens/Signup/signup_screen.dart';
-import 'package:artsvalley/components/already_have_an_account_acheck.dart';
-import 'package:artsvalley/components/rounded_button.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -89,19 +89,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.bottomRight,
                         widthFactor: 2.5,
                         child: TextButton(
-                          onPressed: (){
+                          onPressed: () {
                             Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => ResetPassword()),
+                              MaterialPageRoute(
+                                  builder: (context) => ResetPassword()),
                             );
                           },
-                          child: Text('Forgot Password ?',
-                          style: TextStyle(
-                            color: kPrimaryColor,
+                          child: Text(
+                            'Forgot Password ?',
+                            style: TextStyle(
+                              color: kPrimaryColor,
+                            ),
                           ),
-                          ),
-                        ),
                         ),
                       ),
+                    ),
                     GestureDetector(
                       onTap: () async {
                         if (_signinkey.currentState.validate()) {

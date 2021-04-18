@@ -1,31 +1,37 @@
+import 'dart:async';
+
 import 'package:artsvalley/providers/likedcheck.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/widgets.dart';
+import 'package:rxdart/rxdart.dart';
 
-class PostWidget extends StatefulWidget {
+class PostWidget extends StatelessWidget {
   final String profileurl;
-  //either we will display a username or full name here
+  // //either we will display a username or full name here
   final String username;
   final String posturl;
-  //it may be string or int. we will use one which works easily and then typecast at server level or at UI level
+//   //it may be string or int. we will use one which works easily and then typecast at server level or at UI level
   final int likescount;
+  final String postId;
   final String caption;
-//This is the constructor for this class which initializes the values that are required to create a post template.
-// These are named parameters so at the time of calling the constructor you will get hint what to pass to the constructor no need to remember.
-// This constructor will be called at homepage inside a streambuilder where a values will be fetched from the datbase and then passed to this constructor.
-//There are required some fixes in this that i have mentioned at the end of this page.
+  final String userId;
+  final Function onLiked;
+// //This is the constructor for this class which initializes the values that are required to create a post template.
+// // These are named parameters so at the time of calling the constructor you will get hint what to pass to the constructor no need to remember.
+// // This constructor will be called at homepage inside a streambuilder where a values will be fetched from the datbase and then passed to this constructor.
+// //There are required some fixes in this that i have mentioned at the end of this page.
   PostWidget(
       {this.profileurl,
       this.username,
       this.posturl,
       this.likescount,
-      this.caption});
+      this.caption,
+      this.postId,
+      this.onLiked,
+      this.userId});
 
-  @override
-  _PostWidgetState createState() => _PostWidgetState();
-}
-
-class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     var _likeProvider = context.watch<LikedCheck>();
@@ -55,7 +61,7 @@ class _PostWidgetState extends State<PostWidget> {
                   //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
                   child: CircleAvatar(
                     backgroundImage: AssetImage(
-                      widget.profileurl,
+                      "assets/images/logo.png",
                     ),
                     backgroundColor: Colors.yellow,
                   ),
@@ -63,8 +69,7 @@ class _PostWidgetState extends State<PostWidget> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   //TODO: The text widget here represents the username. we need to get this from database.
-                  child:
-                      Text(widget.username, style: TextStyle(fontSize: 20.0)),
+                  child: Text("username", style: TextStyle(fontSize: 20.0)),
                 ),
               ],
             ),
@@ -77,7 +82,9 @@ class _PostWidgetState extends State<PostWidget> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
             //TODO: this is the image fetched from the database which is user post.
             child: FadeInImage(
-              image: NetworkImage(widget.posturl),
+              image: (posturl.length > 1)
+                  ? NetworkImage(posturl)
+                  : AssetImage("assets/images/painter.png"),
               placeholder: AssetImage("assets/images/painter.png"),
             ),
           ),
@@ -126,7 +133,7 @@ class _PostWidgetState extends State<PostWidget> {
             child: Container(
               //TODO: needs to fix this text. When the text is bigger than width we need to adjust it to multiline text. So the text will be displayed on next line automatically. and after 3 lines the readmore button will be shown for the longer captions. So when clicked on readmore text will expand to full size page
               child: Text(
-                widget.caption,
+                "caption",
                 overflow: TextOverflow.visible,
               ),
             ),
