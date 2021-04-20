@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:artsvalley/profile_page/profile.dart';
-import 'package:artsvalley/providers/userid.dart';
-import 'package:artsvalley/providers/userdata.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';

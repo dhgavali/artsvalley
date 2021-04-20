@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/services/auth.dart';

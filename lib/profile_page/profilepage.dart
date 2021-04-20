@@ -1,5 +1,4 @@
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/providers/userid.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
@@ -122,7 +121,7 @@ class _ProfileState extends State<Profile> {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
             .collection("users")
-            .where("userid", isEqualTo: FirebaseUser().myUserid)
+            .where("userid", isEqualTo: Provider.of<User>(context).uid)
             .get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           String _profileurl;

@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
+
+import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 
 class DatabaseService with ChangeNotifier {
-
   UploadTask imageUploadTask;
 
   //initial data for stream
@@ -44,4 +47,52 @@ class DatabaseService with ChangeNotifier {
   //for accessing data fro, firestore
 
   notifyListeners();
+
+//TODO: For udpating the likes
+//
+//
+// Create a reference to the document the transaction will use
+  updateLikesDB(String documentId, bool actionType) {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection(ProConstants.postsCollection)
+        .doc(documentId);
+
+    return FirebaseFirestore.instance
+        .runTransaction((transaction) async {
+          // Get the document
+          DocumentSnapshot snapshot = await transaction.get(documentReference);
+
+          if (!snapshot.exists) {
+            throw Exception("User does not exist!");
+          }
+
+          // Update the follower count based on the current count
+          // Note: this could be done without a transaction
+          // by updating the population using FieldValue.increment()
+          int newFollowerCount;
+
+          switch (actionType) {
+            case true:
+              print("true like increemnted");
+              newFollowerCount = snapshot.data()['likes'] + 1;
+              break;
+            case false:
+              print("false like decremented");
+              newFollowerCount = snapshot.data()['likes'] - 1;
+              break;
+          }
+          // Perform an update on the document
+          transaction.update(documentReference, {'likes': newFollowerCount});
+
+          // Return the new count
+          return newFollowerCount;
+        })
+        .then((value) => print("Follower count updated to $value"))
+        .catchError(
+            (error) => print("Failed to update user followers: $error"));
+  }
 }
+
+//TODO: method for fetching data from the firebase
+
+//

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class UpdateDataProvider with ChangeNotifier {
+class PassVisibleState with ChangeNotifier {
   bool _isEnabled = false;
   bool _isVisible = true;
   bool get isEnabled => _isEnabled;

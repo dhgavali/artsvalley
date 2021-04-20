@@ -65,9 +65,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                         await context.read<AuthMethods>().resetPassword(
                               emailController.text.trim(),
                             );
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) =>
-                                MailSent(emailController.text.trim())));
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => MailSent(
+                              emailController.text.trim(),
+                            ),
+                          ),
+                        );
                       } on FirebaseAuthException catch (e) {
                         String error;
                         switch (e.code) {

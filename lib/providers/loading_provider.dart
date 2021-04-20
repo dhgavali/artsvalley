@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
+///
+///A loading class which will set the state for loading widget.
+///
+///
 class LoadingProvider with ChangeNotifier {
   bool _isLoaded = false;
 

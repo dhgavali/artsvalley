@@ -4,7 +4,7 @@ import 'package:artsvalley/components/text_field_container.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:artsvalley/views/loginscreens/reset/resetPassword.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
-import 'package:artsvalley/providers/update_data_provider.dart';
+import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/loading.dart';
@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _passwordRoundedField(String title, TextEditingController mycontroller,
       FormFieldValidator<String> validator) {
 // provider
-    var visibility = context.watch<UpdateDataProvider>();
+    var visibility = context.watch<PassVisibleState>();
     Icon myIcon = visibility.isVisible
         ? Icon(
             Icons.visibility,

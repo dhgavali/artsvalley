@@ -1,7 +1,7 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
-import 'package:artsvalley/providers/update_data_provider.dart';
+import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -190,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _passwordRoundedField(String title, TextEditingController mycontroller,
       FormFieldValidator<String> validator) {
 // provider
-    var visibility = context.watch<UpdateDataProvider>();
+    var visibility = context.watch<PassVisibleState>();
     Icon myIcon = visibility.isVisible
         ? Icon(
             Icons.visibility,

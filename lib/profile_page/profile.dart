@@ -1,5 +1,4 @@
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/providers/userid.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
@@ -143,12 +142,7 @@ class _ProfileState extends State<Profile> {
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           String _profileurl;
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircleAvatar(
-              radius: 60,
-              // backgroundImage: NetworkImage("_profileurl") ??
-              backgroundColor: Colors.white38,
-              child: CircularProgressIndicator(),
-            );
+            return LinearProgressIndicator();
           }
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
@@ -173,12 +167,7 @@ class _ProfileState extends State<Profile> {
               backgroundColor: Colors.white38,
             );
           }
-          return CircleAvatar(
-            radius: 60,
-            // backgroundImage: NetworkImage("_profileurl") ??
-            backgroundColor: Colors.white38,
-            child: CircularProgressIndicator(),
-          );
+          return LinearProgressIndicator();
         });
   }
 }

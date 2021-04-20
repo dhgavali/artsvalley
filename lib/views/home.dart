@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               child: Text(snapshot.error.toString()),
             );
           }
-
+          
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return LinearProgressIndicator();

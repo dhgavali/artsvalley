@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:artsvalley/providers/userdata.dart';
+import 'package:artsvalley/models/userdata_model.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -129,16 +130,16 @@ class EditProfile with ChangeNotifier {
                           ),
                         ),
                         onPressed: () {
-                          //TODO: changed userdtaprovider here
+                          //TODO: changed userdataprovider here
                           Provider.of<DatabaseService>(context, listen: false)
                               .uploadUserProfileImage(context)
                               .whenComplete(() {
                             FirebaseFirestore.instance
-                                .collection('users')
+                                .collection(ProConstants.usersCollection)
                                 .doc(
                                   Provider.of<User>(context, listen: false).uid,
                                 )
-                                .update({'profilephoto': userProfileImageUrl});
+                                .update({'photoUrl': userProfileImageUrl});
                             Navigator.pop(context);
                             //TODO make changes according to u for photo url . (on whencomplete this will sort out).
                           });

@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:artsvalley/providers/likedcheck.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
-import 'package:rxdart/rxdart.dart';
+
+//TODO: this is a stateless widget
+//we will be adding the contents from the constructor in this
 
 class PostWidget extends StatelessWidget {
   final String profileurl;
@@ -60,16 +59,19 @@ class PostWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
                   child: CircleAvatar(
-                    backgroundImage: AssetImage(
-                      "assets/images/logo.png",
-                    ),
+                    backgroundImage: (profileurl != null)
+                        ? NetworkImage("$profileurl")
+                        : AssetImage(
+                            "assets/images/logo.png",
+                          ),
                     backgroundColor: Colors.yellow,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   //TODO: The text widget here represents the username. we need to get this from database.
-                  child: Text("username", style: TextStyle(fontSize: 20.0)),
+                  child: Text(username ?? "username",
+                      style: TextStyle(fontSize: 20.0)),
                 ),
               ],
             ),
@@ -106,7 +108,7 @@ class PostWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    _likeProvider.updateLike(null);
+                    _likeProvider.updateLike(postId);
                   },
                   child: Consumer<LikedCheck>(
                     builder: (context, value, child) {
