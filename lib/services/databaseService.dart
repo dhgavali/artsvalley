@@ -11,7 +11,12 @@ import 'package:artsvalley/profile_page/edit_Profile.dart';
 
 class DatabaseService with ChangeNotifier {
   UploadTask imageUploadTask;
+  int _likescount;
 
+  int get likescount => this._likescount;
+
+  // TODO: here we also need to create a setter for likes count
+  // Stream set likescount(value) => this._likescount;
   //initial data for stream
 
 //for profile picture
@@ -78,7 +83,12 @@ class DatabaseService with ChangeNotifier {
               break;
             case false:
               print("false like decremented");
-              newFollowerCount = snapshot.data()['likes'] - 1;
+              if (snapshot.data()['likes'] <= 0) {
+                print("cannot decrement");
+                newFollowerCount = 0;
+              } else {
+                newFollowerCount = snapshot.data()['likes'] - 1;
+              }
               break;
           }
           // Perform an update on the document

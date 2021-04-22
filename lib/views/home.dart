@@ -1,12 +1,15 @@
 import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,7 +18,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    log("init state was called");
+    UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // print("buid methd");
+    // log("build method started");
+    // Provider.of<UserDataProvider>(context)
+    // .intializeUserData(Provider.of<User>(context).uid);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -46,12 +61,12 @@ class _HomePageState extends State<HomePage> {
         child: MyDrawer(),
       ),
       body:
-      //TODO: 
-      //here we are basically going to create two separate classes or a single class which will contain the
-      //user and posts database. and fetch the data from the two databaase then return a single list which will be used 
-      //here to fetch the data. and this will be a streabuilder which will be like using behavirol subject for fetching the data.
-      //
-       StreamBuilder(
+          //TODO:
+          //here we are basically going to create two separate classes or a single class which will contain the
+          //user and posts database. and fetch the data from the two databaase then return a single list which will be used
+          //here to fetch the data. and this will be a streabuilder which will be like using behavirol subject for fetching the data.
+          //
+          StreamBuilder(
         stream: FirebaseFirestore.instance.collection("posts").snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -59,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               child: Text(snapshot.error.toString()),
             );
           }
-          
+          print("Stream builder started");
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return LinearProgressIndicator();
@@ -79,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                     userdata.docs.map((values) {
                       _username = values.data()['username'];
                       _profileUrl = values.data()['photoUrl'];
+                      print("inside a streambuilder");
                       print(_username);
                       print(_profileUrl);
                     });
@@ -87,8 +103,10 @@ class _HomePageState extends State<HomePage> {
                   print(mypost['userId']);
 
                   return PostWidget(
-                    username: "Goerge Bush",
-                    profileurl: "assets/images/logo.png",
+                    username: "dhgavali",
+                    profileurl: (mypost['userProfile'].toString().length > 5)
+                        ? mypost['userProfile']
+                        : "assets/images/logo.png",
                     posturl: mypost['postUrl'],
                     caption: mypost['caption'],
                     likescount: mypost['likes'],
@@ -117,7 +135,7 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         children: [
           ListTile(
-            onTap: (){
+            onTap: () {
               Navigator.of(context).pop();
             },
             leading: Icon(

@@ -5,7 +5,7 @@ import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
-import 'package:artsvalley/models/userdata_model.dart';
+import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
         ChangeNotifierProvider(create: (context) => LikedCheck()),
+        ChangeNotifierProvider(create: (context) => UserDataProvider()),
       ],
       child: MaterialApp(
         title: "Arts Valley",

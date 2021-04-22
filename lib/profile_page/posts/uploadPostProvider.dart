@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -274,6 +276,7 @@ class UploadPost with ChangeNotifier {
 
   editPostSheet(BuildContext context) {
     var user = Provider.of<User>(context, listen: false);
+    var dataProvider = Provider.of<UserDataProvider>(context, listen: false);
     return showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -364,9 +367,13 @@ class UploadPost with ChangeNotifier {
                   //creating key value pair here
                   //TODO: Post map here
                   onPressed: () {
-                    print("upload post time");
-                    print("Current user is: ");
-                    print(user.email);
+                    log("upload post time");
+                    log("Current user is: ");
+                    // print(user.email);
+
+                    String _username = dataProvider.usern;
+                    String _userProfile = dataProvider.userprof;
+                    // log(_userProfile);
                     String _postid = uuid.v1();
                     Provider.of<DatabaseService>(context, listen: false)
                         .uploadPostData({
@@ -375,6 +382,8 @@ class UploadPost with ChangeNotifier {
                       'postUrl': uploadPostImageUrl,
                       'likes': 0,
                       'postId': _postid,
+                      'username': _username,
+                      'userProfile': user.photoURL,
                     }, _postid).whenComplete(() {
                       Navigator.pushAndRemoveUntil(
                           context,

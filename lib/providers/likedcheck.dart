@@ -4,12 +4,11 @@ import 'package:flutter/cupertino.dart';
 
 class LikedCheck with ChangeNotifier {
   bool _isLiked = false;
-  int count = 0;
+  // int count = 0;
   get isLiked => this._isLiked;
-  void updateLike(String postid) {
+  void updateLike() {
     _isLiked = !_isLiked;
-    _isLiked ? count++ : count--;
-    DatabaseService().updateLikesDB(postid, _isLiked);
+    // DatabaseService().updateLikesDB(postid, _isLiked);
     // FirebaseFirestore.instance
     //     .collection("posts")
     //     .where("postid", isEqualTo: postid)

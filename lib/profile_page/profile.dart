@@ -1,4 +1,5 @@
 import 'package:artsvalley/profile_page/edit_Profile.dart';
+import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
@@ -20,12 +21,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<User>(context);
-    print("profile page line no. 25");
-    print("This is email & uid of current user");
-    print(user.email);
 
-    print(user.uid);
+    var user = Provider.of<User>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(
