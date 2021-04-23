@@ -2,7 +2,7 @@ import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
+import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

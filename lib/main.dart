@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
+import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
@@ -87,3 +87,12 @@ class AuthenticationWrapper extends StatelessWidget {
     return WelcomeScreen();
   }
 }
+
+
+//TODO: 
+//Profile page - tavhare
+//Gridview in profile
+//fetching the values in the profile page
+//
+//two stateless widgets first with header and second with
+//
