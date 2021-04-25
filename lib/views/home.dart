@@ -27,10 +27,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print("buid methd");
-    // log("build method started");
-    // Provider.of<UserDataProvider>(context)
-    // .intializeUserData(Provider.of<User>(context).uid);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -103,7 +99,9 @@ class _HomePageState extends State<HomePage> {
                   print(mypost['userId']);
 
                   return PostWidget(
-                    username: "dhgavali",
+                    username: (mypost['username'] == null)
+                        ? "error"
+                        : mypost['username'],
                     profileurl: (mypost['userProfile'].toString().length > 5)
                         ? mypost['userProfile']
                         : "assets/images/logo.png",

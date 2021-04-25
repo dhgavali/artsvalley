@@ -1,10 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/profile_page/updateProfilePhoto.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:artsvalley/profile_page/edit_Profile.dart';
@@ -15,9 +22,62 @@ class DatabaseService with ChangeNotifier {
 
   int get likescount => this._likescount;
 
+  final picker = ImagePicker();
+  File userProfileImage;
+  File get getUserProfileImage => userProfileImage;
+  String userProfileImageUrl;
+  String get getUserProfileImageUrl => userProfileImageUrl;
+
   // TODO: here we also need to create a setter for likes count
   // Stream set likescount(value) => this._likescount;
   //initial data for stream
+
+
+  Future pickProfileImage(BuildContext context, ImageSource source) async {
+    final pickedUserProfileImage = await picker.getImage(source: source);
+    pickedUserProfileImage == null
+        ? print('Please select image')
+        : userProfileImage = File(pickedUserProfileImage.path);
+    print(userProfileImage.path);
+
+    userProfileImage != null
+        ? Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => UpdateProfileImage(),
+            ))
+        : print('Image Upload Eroor');
+    notifyListeners();
+  }
+
+  //crop profile image
+  Future<void> cropImage(BuildContext context) async {
+    File _croppedImage = await ImageCropper.cropImage(
+      sourcePath: userProfileImage.path,
+      cropStyle: CropStyle.circle,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      compressQuality: 100,
+      maxWidth: 500,
+      maxHeight: 500,
+      compressFormat: ImageCompressFormat.jpg,
+      androidUiSettings: AndroidUiSettings(
+          toolbarColor: Colors.white,
+          toolbarTitle: "Edit Image",
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+    );
+    userProfileImage = _croppedImage;
+    notifyListeners();
+  }
+
+
+
 
 //for profile picture
   //user Profile image upload task

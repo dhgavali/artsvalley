@@ -1,8 +1,7 @@
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/providers/usersdata.dart';
+import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,8 +20,12 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<User>(context);
+    print("profile page line no. 25");
+    print("This is email & uid of current user");
+    print(user.email);
 
-    var user = Provider.of<User>(context, listen: false);
+    print(user.uid);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -130,6 +133,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+//TODO: this widget is repeated 2 times (in this file and profilepage).🙄🙄🤔🤔
   Widget _profilePhoto() {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance

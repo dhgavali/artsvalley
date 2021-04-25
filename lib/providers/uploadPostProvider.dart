@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:artsvalley/profile_page/posts/selectedimage.dart';
+import 'package:artsvalley/posts/selectedimage.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 class UploadPost with ChangeNotifier {
-  TextEditingController captionController = new TextEditingController();
+  
 
   File uploadPostImage;
   final uuid = Uuid();
@@ -80,8 +80,8 @@ class UploadPost with ChangeNotifier {
     notifyListeners();
   }
 
-  //for selecting image either from galary or camera
-  selectPostImageType(BuildContext context) {
+
+ selectPostImageType(BuildContext context) {
     print("select post called");
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -157,6 +157,7 @@ class UploadPost with ChangeNotifier {
           );
         });
   }
+
 }
 //typedef can't be declared in classes so declared here . For Image Crop function
 

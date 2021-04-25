@@ -67,11 +67,11 @@ class _PostWidgetState extends State<PostWidget> {
                   padding: const EdgeInsets.all(8.0),
                   //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
                   child: CircleAvatar(
-                    backgroundImage: (widget.profileurl != null)
-                        ? NetworkImage("${widget.profileurl}")
-                        : AssetImage(
+                    backgroundImage: (widget.profileurl.startsWith("assets/"))
+                        ? AssetImage(
                             widget.profileurl,
-                          ),
+                          )
+                        : NetworkImage(widget.profileurl),
                     backgroundColor: Colors.yellow,
                   ),
                 ),

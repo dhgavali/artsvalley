@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           initialData: null,
-          create: (context) =>
+          create: (context) => 
               Provider.of<AuthMethods>(context, listen: false).authStateChanges,
         ),
         ChangeNotifierProvider(create: (context) => PassVisibleState()),

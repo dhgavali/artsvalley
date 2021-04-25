@@ -10,6 +10,9 @@ class ProConstants {
   static final Color shadowColor = Color(0xff303030);
   static final Color drawerColor = Color(0xfff1f1f1);
   static final Color appBarTitleColor = Colors.black;
+  static final Color lightText = Colors.white;
+  static final Color darkText = Colors.black87;
+
   static final double textsize = 16.0;
   static final double headingsize = 22.0;
   static final double iconSize = 32.0;
@@ -21,6 +24,12 @@ class ProConstants {
   //databases
   static final String usersCollection = "users";
   static final String postsCollection = "posts";
-  
+
   //TestStyling
+  static final TextStyle infoText = new TextStyle(
+      color: ProConstants.darkText,
+      fontSize: 18,
+      decoration: TextDecoration.underline,
+      decorationThickness: 2.0,
+      decorationColor: Colors.black);
 }
