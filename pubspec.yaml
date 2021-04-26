@@ -30,6 +30,7 @@ dependencies:
   image_cropper: ^1.4.0
   flutter_svg: ^0.21.0-nullsafety.0
   google_fonts: ^2.0.0
+  curved_navigation_bar: ^0.3.7
 
 dev_dependencies:
   flutter_test:

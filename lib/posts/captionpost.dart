@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
-import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/services/sharedPref.dart';
+import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,12 +18,8 @@ class CaptionPost extends StatefulWidget {
 class _CaptionPostState extends State<CaptionPost> {
   TextEditingController captionController = new TextEditingController();
   SharedPrefHelper _prefs = new SharedPrefHelper();
-  
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +114,13 @@ class _CaptionPostState extends State<CaptionPost> {
                     color: Colors.blueGrey,
                     //creating key value pair here
                     //TODO: Post map here
-                    onPressed: () {
-                      print("upload post time");
-                      print("Current user is: ");
+                    onPressed: () async {
+                      String _username = await _prefs.getUsername();
+                      String _userProfile = await _prefs.getUserProfile();
+
+                      log("upladoing post");
+                      log("username is $_username");
+                      log("username profile url is $_userProfile");
                       print(user.email);
                       var uid =
                           Provider.of<UploadPost>(context, listen: false).uuid;
@@ -132,17 +134,13 @@ class _CaptionPostState extends State<CaptionPost> {
                                 .uploadPostImageUrl,
                         'likes': 0,
                         'postId': _postid,
-                        'username': Provider.of<UserDataProvider>(context,
-                                listen: false)
-                            .usern,
-                        'userProfile': Provider.of<UserDataProvider>(context,
-                                listen: false)
-                            .userprof,
+                        'username': _username,
+                        'userProfile': _userProfile,
                       }, _postid).whenComplete(() {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (BuildContext context) => Profile()),
+                                builder: (BuildContext context) => CustomNavigationBar()),
                             (Route<dynamic> route) => false);
                       });
                     },

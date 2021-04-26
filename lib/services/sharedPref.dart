@@ -10,6 +10,10 @@ class SharedPrefHelper {
   static final String displayNameKey = "DISPLAYNAMEKEY";
 
   SharedPreferences _pref;
+// preferences.edit().remove("text").commit();
+//method to delete a certain shared prefs
+// value is basically from 0 to 4.. sequencially as declared as parameters
+
 
   //methods for setting sharedpreferences. accepts one parameter value to be save
   Future<void> saveUsername(String username) async {

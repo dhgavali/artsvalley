@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/services/sharedPref.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/views/home.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth;

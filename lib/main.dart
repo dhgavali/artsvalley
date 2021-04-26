@@ -8,6 +8,7 @@ import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
@@ -23,7 +24,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+    
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           initialData: null,
-          create: (context) => 
+          create: (context) =>
               Provider.of<AuthMethods>(context, listen: false).authStateChanges,
         ),
         ChangeNotifierProvider(create: (context) => PassVisibleState()),
@@ -82,14 +83,13 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = Provider.of<User>(context);
 
     if (firebaseUser != null) {
-      return HomePage();
+      return CustomNavigationBar();
     }
     return WelcomeScreen();
   }
 }
 
-
-//TODO: 
+//TODO:
 //Profile page - tavhare
 //Gridview in profile
 //fetching the values in the profile page

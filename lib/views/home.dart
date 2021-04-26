@@ -1,4 +1,3 @@
-import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -8,6 +7,7 @@ import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer';
 
@@ -19,7 +19,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     log("init state was called");
     UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
@@ -30,24 +29,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text(
+          "ArtsValley",
+          style: GoogleFonts.dancingScript(
+              textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+        ),
         centerTitle: true,
         actions: [
           Container(
             padding: const EdgeInsets.only(
               right: 16,
-            ),
-            child: IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    // builder: (context) => ProfilePage(),
-                    builder: (context) => Profile(),
-                  ),
-                );
-              },
             ),
           ),
         ],
@@ -56,13 +47,7 @@ class _HomePageState extends State<HomePage> {
         data: Theme.of(context).copyWith(canvasColor: ProConstants.drawerColor),
         child: MyDrawer(),
       ),
-      body:
-          //TODO:
-          //here we are basically going to create two separate classes or a single class which will contain the
-          //user and posts database. and fetch the data from the two databaase then return a single list which will be used
-          //here to fetch the data. and this will be a streabuilder which will be like using behavirol subject for fetching the data.
-          //
-          StreamBuilder(
+      body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection("posts").snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -75,36 +60,16 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return LinearProgressIndicator();
             }
-
-            String _username;
-            String _profileUrl;
             return ListView.builder(
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot mypost = snapshot.data.docs[index];
-                  FirebaseFirestore.instance
-                      .collection("users")
-                      .where('userId', isEqualTo: mypost['userId'])
-                      .get()
-                      .then((userdata) {
-                    userdata.docs.map((values) {
-                      _username = values.data()['username'];
-                      _profileUrl = values.data()['photoUrl'];
-                      print("inside a streambuilder");
-                      print(_username);
-                      print(_profileUrl);
-                    });
-                  });
-                  print("line no.86 home page");
-                  print(mypost['userId']);
 
                   return PostWidget(
-                    username: (mypost['username'] == null)
-                        ? "error"
-                        : mypost['username'],
+                    username: mypost['username'],
                     profileurl: (mypost['userProfile'].toString().length > 5)
                         ? mypost['userProfile']
-                        : "assets/images/logo.png",
+                        : "assets/images/profile.png",
                     posturl: mypost['postUrl'],
                     caption: mypost['caption'],
                     likescount: mypost['likes'],
@@ -113,16 +78,12 @@ class _HomePageState extends State<HomePage> {
                   );
                 });
           }
+
           return LinearProgressIndicator();
         },
       ),
     );
   }
-
-//   Widget myDrawer() {
-
-// }
-
 }
 
 class MyDrawer extends StatelessWidget {

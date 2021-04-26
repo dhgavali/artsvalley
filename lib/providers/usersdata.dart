@@ -1,12 +1,16 @@
+import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/services/sharedPref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-SharedPrefHelper _prefs = new SharedPrefHelper();
+
+
 class UserDataProvider with ChangeNotifier {
   String username;
   String userProfile;
+
+SharedPrefHelper _prefs = new SharedPrefHelper();
   get usern => this.username;
   get userprof => this.userProfile;
   void intializeUserData(String userid) async {
@@ -18,21 +22,22 @@ class UserDataProvider with ChangeNotifier {
 
     log(data.size.toString());
     data.docs.map((snapshot) {
-      String _username =  snapshot.data()['username'];
+      String _username = snapshot.data()['username'];
       String _userProfile = snapshot.data()['photoUrl'];
       if (snapshot.exists) {
         this.userProfile = _userProfile;
         this.username = _username;
         log("printing details in caption page");
-        // log(this.userProfile);
-        // log(this.username);
+        log(this.userProfile);
+        log(this.username);
+        UserProfileData.fromMap(snapshot.data());
         // log(_username);
         // log(_userProfile);
         // log("setting user daata");
         // log("setting user daata");
-       
+
         // bool res1, res2;
-      _prefs.saveUsername(_username);
+        _prefs.saveUsername(_username);
         _prefs
             .saveUserProfile(_userProfile)
             .then((value) => log("saved succcesffuly on sharedpreferences"));

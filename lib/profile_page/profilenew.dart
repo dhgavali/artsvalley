@@ -1,17 +1,14 @@
-import 'dart:developer';
-
-import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/profile_page/posts/uploadPostProvider.dart';
 import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:artsvalley/views/home.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -22,17 +19,19 @@ class _ProfileState extends State<Profile> {
   String _name;
 
   @override
-  Widget build(BuildContext context) { 
-    var user = Provider.of<User>(context);
-    print("profile page line no. 25");
-    print("This is email & uid of current user");
-    print(user.email);
-
-    print(user.uid);
+  Widget build(BuildContext context) {
+    var user = Provider.of<User>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(
           "Profile",
+          style: GoogleFonts.dancingScript(
+            textStyle: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: ProConstants.appBarTitleColor,
+            ),
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -128,7 +127,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-//TODO: this widget is repeated 2 times (in this file and profilepage).🙄🙄🤔🤔
   Widget _profilePhoto() {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance

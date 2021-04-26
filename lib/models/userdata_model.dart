@@ -1,36 +1,33 @@
 // import 'package:flutter/material.dart';
 
-// class UserProfileData {
-//  final String name;
-//  final String photoUrl;
-//  final String email;
-//  final int totalLikes;
-//  final int totalPosts;
-//   UserProfileData({
-//     @required this.name,
-//     @required this.photoUrl,
-//     @required this.email,
-//     @required this.totalLikes,
-//     @required this.totalPosts,
-//   });
+import 'package:flutter/material.dart';
 
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'name': name,
-//       'photoUrl': photoUrl,
-//       'email': email,
-//       'totalLikes': totalLikes,
-//       'totalPosts': totalPosts,
-//     };
-//   }
+class UserProfileData {
+  final String username;
+  final String email;
+  final String userProfile;
+  UserProfileData({
+    @required this.username,
+    @required this.userProfile,
+    @required this.email,
+  });
+  get usern => this.username;
+  get userphoto => this.userProfile;
+  get useremail => this.email;
 
-//   factory UserProfileData.fromMap(Map<String, dynamic> map) {
-//     return UserProfileData(
-//       name: map['name'],
-//       photoUrl: map['photoUrl'],
-//       email: map['email'],
-//       totalLikes: map['totalLikes'],
-//       totalPosts: map['totalPosts'],
-//     );
-//   }
-// }
+  Map<String, dynamic> toMap() {
+    return {
+      'name': username,
+      'photoUrl': userProfile,
+      'email': email,
+    };
+  }
+
+  factory UserProfileData.fromMap(Map<String, dynamic> map) {
+    return UserProfileData(
+      username: map['username'],
+      userProfile: map['photoUrl'],
+      email: map['email'],
+    );
+  }
+}

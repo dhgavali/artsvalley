@@ -22,16 +22,16 @@ class PostWidget extends StatefulWidget {
 // // These are named parameters so at the time of calling the constructor you will get hint what to pass to the constructor no need to remember.
 // // This constructor will be called at homepage inside a streambuilder where a values will be fetched from the datbase and then passed to this constructor.
 // //There are required some fixes in this that i have mentioned at the end of this page.
-  PostWidget({
-    this.profileurl,
-    this.username,
-    this.posturl,
-    this.likescount,
-    this.caption,
-    this.postId,
-    this.userId,
-    this.onLiked,
-  });
+  PostWidget(
+      {this.profileurl,
+      this.username,
+      this.posturl,
+      this.likescount,
+      this.caption,
+      this.postId,
+      this.userId,
+      this.onLiked,});
+
 
   @override
   _PostWidgetState createState() => _PostWidgetState();
@@ -61,27 +61,34 @@ class _PostWidgetState extends State<PostWidget> {
           Positioned(
             top: 0,
             left: 0,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
-                  child: CircleAvatar(
-                    backgroundImage: (widget.profileurl.startsWith("assets/"))
-                        ? AssetImage(
-                            widget.profileurl,
-                          )
-                        : NetworkImage(widget.profileurl),
-                    backgroundColor: Colors.yellow,
+            child: GestureDetector(
+              onTap: () {
+                // getUserID(){
+                //   navigate.profilePage(userid: userid);
+                // };
+              },
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
+                    child: CircleAvatar(
+                      backgroundImage: (widget.profileurl.startsWith("assets/"))
+                          ? AssetImage(
+                              widget.profileurl,
+                            )
+                          : NetworkImage(widget.profileurl),
+                      backgroundColor: Colors.yellow,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  //TODO: The text widget here represents the username. we need to get this from database.
-                  child: Text(widget.username ?? "username",
-                      style: TextStyle(fontSize: 20.0)),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    //TODO: The text widget here represents the username. we need to get this from database.
+                    child: Text(widget.username ?? "username",
+                        style: TextStyle(fontSize: 20.0)),
+                  ),
+                ],
+              ),
             ),
           ),
           Container(

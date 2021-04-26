@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
+import 'package:artsvalley/services/sharedPref.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:artsvalley/views/loginscreens/reset/resetPassword.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
@@ -52,8 +55,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  SharedPrefHelper _prefs;
   @override
   Widget build(BuildContext context) {
+    _prefs = new SharedPrefHelper();
+    // log(_prefs.getUserEmail());
     Size size = MediaQuery.of(context).size;
     // var load = context.watch<LoadingProvider>();
     var load = Provider.of<LoadingProvider>(context, listen: false);
@@ -123,6 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     GestureDetector(
                       onTap: () async {
                         load.loadPage();
+                        // String useremail = await _prefs.getUserEmail();
+                        log("outside the loggin");
+                        // log(useremail);
                         await context.read<AuthMethods>().signInWithGoogle();
 
                         FirebaseAuth.instance
