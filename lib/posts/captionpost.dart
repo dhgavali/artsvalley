@@ -1,10 +1,9 @@
 import 'dart:developer';
-
-import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/services/sharedPref.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/views/successpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,8 +17,6 @@ class CaptionPost extends StatefulWidget {
 class _CaptionPostState extends State<CaptionPost> {
   TextEditingController captionController = new TextEditingController();
   SharedPrefHelper _prefs = new SharedPrefHelper();
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +137,8 @@ class _CaptionPostState extends State<CaptionPost> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (BuildContext context) => CustomNavigationBar()),
+                                builder: (BuildContext context) =>
+                                    SuccessPage()),
                             (Route<dynamic> route) => false);
                       });
                     },

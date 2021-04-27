@@ -20,12 +20,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    log("init state was called");
     UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
   }
 
   @override
   Widget build(BuildContext context) {
+    log("Kindly check the TODO's for more information.");
+    log("If already checked then please Ignore..");
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(

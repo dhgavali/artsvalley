@@ -37,7 +37,7 @@ class ProConstants {
   static final double buttonWidth = 300.0;
   static final double buttonHeight = 60.0;
   static final double buttonfontsize = 20.0;
-
+  static final double titleSize = 20.0;
   //databases
   static final String usersCollection = "users";
   static final String postsCollection = "posts";
@@ -49,4 +49,7 @@ class ProConstants {
       decoration: TextDecoration.underline,
       decorationThickness: 2.0,
       decorationColor: Colors.black);
+
+  //settings page fontsize
+  static final double settingsText = 18.0;
 }
