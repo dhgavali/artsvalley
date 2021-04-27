@@ -8,7 +8,7 @@ import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/databaseService.dart';
-import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/shared/BottomNavigationBar.dart'; 
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
