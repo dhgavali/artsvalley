@@ -199,4 +199,3 @@ class _PostWidgetState extends State<PostWidget> {
 // 2. We need to insure that if image failed to load then it will reload after receiving a network.
 // 3. Image should not overflow out of the box. we need to display full image not cropped inside the layout.
 // 4. other things are mentioned in todo kindly check that.
-// 5. Note: we will have seprate database to maintain the post data where a username / userid will be the foreign key.

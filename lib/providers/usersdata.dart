@@ -5,12 +5,11 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 
-
 class UserDataProvider with ChangeNotifier {
   String username;
   String userProfile;
 
-SharedPrefHelper _prefs = new SharedPrefHelper();
+  SharedPrefHelper _prefs = new SharedPrefHelper();
   get usern => this.username;
   get userprof => this.userProfile;
   void intializeUserData(String userid) async {
@@ -31,12 +30,6 @@ SharedPrefHelper _prefs = new SharedPrefHelper();
         log(this.userProfile);
         log(this.username);
         UserProfileData.fromMap(snapshot.data());
-        // log(_username);
-        // log(_userProfile);
-        // log("setting user daata");
-        // log("setting user daata");
-
-        // bool res1, res2;
         _prefs.saveUsername(_username);
         _prefs
             .saveUserProfile(_userProfile)

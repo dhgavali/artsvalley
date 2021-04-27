@@ -11,8 +11,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 class UploadPost with ChangeNotifier {
-  
-
   File uploadPostImage;
   final uuid = Uuid();
   File get getUploadPostImage => uploadPostImage;
@@ -50,21 +48,23 @@ class UploadPost with ChangeNotifier {
         CropAspectRatioPreset.ratio4x3,
         CropAspectRatioPreset.ratio16x9
       ],
-      //compressQuality: 100,
       maxWidth: 500,
       maxHeight: 500,
       compressFormat: ImageCompressFormat.jpg,
       androidUiSettings: AndroidUiSettings(
-          toolbarColor: Colors.white,
-          toolbarTitle: "Edit Image",
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false),
+        toolbarColor: Colors.white,
+        toolbarTitle: "Edit Image",
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: false,
+      ),
     );
 
     //cropping the image and assigning the postimage to the cropped image
     //and notifying listeners to update the image path
-    uploadPostImage = _croppedImage;
-    notifyListeners();
+    if (_croppedImage != null) {
+      uploadPostImage = _croppedImage;
+      notifyListeners();
+    }
   }
 
   //uploading Image to storage
@@ -80,8 +80,7 @@ class UploadPost with ChangeNotifier {
     notifyListeners();
   }
 
-
- selectPostImageType(BuildContext context) {
+  selectPostImageType(BuildContext context) {
     print("select post called");
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -157,7 +156,6 @@ class UploadPost with ChangeNotifier {
           );
         });
   }
-
 }
 //typedef can't be declared in classes so declared here . For Image Crop function
 

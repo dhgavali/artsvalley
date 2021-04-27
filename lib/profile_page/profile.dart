@@ -22,7 +22,7 @@ class _ProfileState extends State<Profile> {
   String _name;
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
     print("profile page line no. 25");
     print("This is email & uid of current user");
@@ -129,6 +129,7 @@ class _ProfileState extends State<Profile> {
   }
 
 //TODO: this widget is repeated 2 times (in this file and profilepage).🙄🙄🤔🤔
+//profilepage is the same copy of this page
   Widget _profilePhoto() {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:artsvalley/providers/uploadPostProvider.dart';
@@ -28,10 +29,13 @@ class DatabaseService with ChangeNotifier {
   String userProfileImageUrl;
   String get getUserProfileImageUrl => userProfileImageUrl;
 
+//database constatns
+  CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
+CollectionReference _favorites = FirebaseFirestore.instance.collection("favorites");
+CollectionReference _users = FirebaseFirestore.instance.collection("users");
   // TODO: here we also need to create a setter for likes count
   // Stream set likescount(value) => this._likescount;
   //initial data for stream
-
 
   Future pickProfileImage(BuildContext context, ImageSource source) async {
     final pickedUserProfileImage = await picker.getImage(source: source);
@@ -75,9 +79,6 @@ class DatabaseService with ChangeNotifier {
     userProfileImage = _croppedImage;
     notifyListeners();
   }
-
-
-
 
 //for profile picture
   //user Profile image upload task
@@ -160,6 +161,28 @@ class DatabaseService with ChangeNotifier {
         .then((value) => print("Follower count updated to $value"))
         .catchError(
             (error) => print("Failed to update user followers: $error"));
+  }
+
+  //TOOD: method for uploading the likedby collection in database
+  //The flow of liking the post what things will be affected
+  //1. Post will liked and true /false will be set to the icon in database
+  //2. Count increment and update in the ui
+  //3. userid will be added in likedby table
+  //also. based on the value of the true or false
+  likePost(String postId, String userId) async {
+      
+    //   DocumentSnapshot _data = await _subColl.doc(postId).get();
+    //  bool isLiked =  _data.data()['isliked'];
+
+    // _subColl.doc(postId).collection("likedBy").doc(userId).set(
+    //   {
+    //     'userId': userId,
+
+    //   },
+    //   SetOptions(merge: true),
+    // ).whenComplete(() {
+    //   log("updated successfully liikes count");
+    // });
   }
 }
 
