@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:artsvalley/views/userprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
@@ -20,6 +21,7 @@ class PostWidget extends StatefulWidget {
   final String caption;
   final String userId;
   final Function(bool) onLiked;
+
 // //This is the constructor for this class which initializes the values that are required to create a post template.
 // // These are named parameters so at the time of calling the constructor you will get hint what to pass to the constructor no need to remember.
 // // This constructor will be called at homepage inside a streambuilder where a values will be fetched from the datbase and then passed to this constructor.
@@ -62,9 +64,13 @@ class _PostWidgetState extends State<PostWidget> {
         children: [
           GestureDetector(
             onTap: () {
-              // getUserID(){
               //   navigate.profilePage(userid: userid);
-              // };
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfilePage(userid: widget.userId),
+                ),
+              );
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +112,7 @@ class _PostWidgetState extends State<PostWidget> {
                           // post_id - the post which is reported
                           // and user_id2 - whose post is reported.. this is simple because we have user_id of user who uploaded the post and post id at the same time. in same collection
                           // and the user who reported can be obtained from Provider.of<User>(context).uid; or FirebaseAuth.currentUser;
-                          // 
+                          //
                         },
                       ),
                     ),

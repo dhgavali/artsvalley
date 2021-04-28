@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart'; 
-=======
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:flutter/material.dart';
->>>>>>> 28d8c89cf323691066eec6376d183c1402e56463
+import 'package:artsvalley/shared/shared_widgets.dart'; 
 
 class SettingsPage extends StatelessWidget {
   final TextEditingController nameController = new TextEditingController();
@@ -20,7 +16,7 @@ class SettingsPage extends StatelessWidget {
               title: Text("Account"),
             ),
             ListTile(
-              title: Text(" "),
+              title: Text("bhb "), 
             ),
             ListTile(
               leading: Icon(Icons.logout),
