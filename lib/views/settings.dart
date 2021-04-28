@@ -1,17 +1,29 @@
+import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
-//TODO: a settings page which will include follwing features
-//logout option
-//delete account option
-//change contact details
-//update profile photo and other details also
-//may be some other things will add as we find out
 class SettingsPage extends StatelessWidget {
+  final TextEditingController nameController = new TextEditingController();
+
+  validateName(String value) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Settings page"),
+      body: SafeArea(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text("Account"),
+            ),
+            ListTile(
+              title: Text(" "),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Logout"),
+            ),
+          ],
+        ),
       ),
     );
   }
