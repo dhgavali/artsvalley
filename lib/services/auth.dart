@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/views/home.dart';
@@ -15,7 +16,7 @@ class AuthMethods {
   UserCredential user;
   AuthMethods(this._auth);
   Stream<User> get authStateChanges => _auth.idTokenChanges();
-  
+
 //Sign in method no need to add data.
   Future<UserCredential> signInWithGoogle() async {
     //first trigger authentication
@@ -89,7 +90,7 @@ class AuthMethods {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage(),
+              builder: (context) => CustomNavigationBar(),
             ),
           );
 
