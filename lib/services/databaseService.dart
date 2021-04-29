@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/profile_page/updateProfilePhoto.dart';
 
@@ -31,8 +28,9 @@ class DatabaseService with ChangeNotifier {
 
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
-CollectionReference _favorites = FirebaseFirestore.instance.collection("favorites");
-CollectionReference _users = FirebaseFirestore.instance.collection("users");
+  CollectionReference _favorites =
+      FirebaseFirestore.instance.collection("favorites");
+  CollectionReference _users = FirebaseFirestore.instance.collection("users");
   // TODO: here we also need to create a setter for likes count
   // Stream set likescount(value) => this._likescount;
   //initial data for stream
@@ -118,12 +116,10 @@ CollectionReference _users = FirebaseFirestore.instance.collection("users");
 //
 //
 // Create a reference to the document the transaction will use
-  updateLikesDB(String documentId, bool actionType) {
-    DocumentReference documentReference = FirebaseFirestore.instance
-        .collection(ProConstants.postsCollection)
-        .doc(documentId);
+  updateLikesDB(String documentId, String userid, bool actionType) {
+    DocumentReference documentReference = _posts.doc(documentId);
 
-    return FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .runTransaction((transaction) async {
           // Get the document
           DocumentSnapshot snapshot = await transaction.get(documentReference);
@@ -170,7 +166,6 @@ CollectionReference _users = FirebaseFirestore.instance.collection("users");
   //3. userid will be added in likedby table
   //also. based on the value of the true or false
   likePost(String postId, String userId) async {
-      
     //   DocumentSnapshot _data = await _subColl.doc(postId).get();
     //  bool isLiked =  _data.data()['isliked'];
 

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
-import 'package:artsvalley/services/sharedPref.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/views/home.dart';
@@ -10,16 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth;
   UserCredential user;
   AuthMethods(this._auth);
   Stream<User> get authStateChanges => _auth.idTokenChanges();
-
-  // Stream<User> get user => _auth.authStateChanges();
-
+  
 //Sign in method no need to add data.
   Future<UserCredential> signInWithGoogle() async {
     //first trigger authentication
@@ -149,22 +145,8 @@ class AuthMethods {
   }
 
 // Sign out method
-  void signOut(BuildContext context) async {
+  Future<void> signOut() async {
     await _auth.signOut();
-    _auth.authStateChanges().listen((User user) {
-      if (user == null) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => WelcomeScreen(),
-            ),
-            (Route<dynamic> route) => false);
-      } else {
-        return Center(
-          child: Text("Failed to Logout"),
-        );
-      }
-    });
   }
 
   Future<void> resetPassword(String email) async {

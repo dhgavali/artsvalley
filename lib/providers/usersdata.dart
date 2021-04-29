@@ -22,7 +22,7 @@ class UserDataProvider with ChangeNotifier {
     log(data.size.toString());
     data.docs.map((snapshot) {
       String _username = snapshot.data()['username'];
-      String _userProfile = snapshot.data()['photoUrl'];
+      String _userProfile = snapshot.data()['photoUrl'] ?? "null";
       if (snapshot.exists) {
         this.userProfile = _userProfile;
         this.username = _username;

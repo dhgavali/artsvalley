@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
@@ -19,31 +21,71 @@ class PostWidget extends StatefulWidget {
   final String postId;
   final String caption;
   final String userId;
-  final Function(bool) onLiked;
+  final Function onLiked;
+  final bool isLiked;
+  final Map likes;
+
 // //This is the constructor for this class which initializes the values that are required to create a post template.
 // // These are named parameters so at the time of calling the constructor you will get hint what to pass to the constructor no need to remember.
 // // This constructor will be called at homepage inside a streambuilder where a values will be fetched from the datbase and then passed to this constructor.
 // //There are required some fixes in this that i have mentioned at the end of this page.
-  PostWidget({
-    this.profileurl,
-    this.username,
-    this.posturl,
-    this.likescount,
-    this.caption,
-    this.postId,
-    this.userId,
-    this.onLiked,
-  });
+  PostWidget(
+      {this.profileurl,
+      this.username,
+      this.posturl,
+      this.likescount,
+      this.caption,
+      this.postId,
+      this.userId,
+      this.onLiked,
+      this.likes,
+      this.isLiked});
 
   @override
   _PostWidgetState createState() => _PostWidgetState();
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  bool _isLiked = false;
+  int likescount = 0;
+  DocumentSnapshot likeRef;
+  bool isLiked = false;
+  // bool isLiked;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  doLike() {
+    String _currentUser = Provider.of<User>(context, listen: false).uid;
+    bool _isliked = widget.likes[_currentUser] == true;
+    if (_isliked) {
+      FirebaseFirestore.instance
+          .collection("posts")
+          .doc(widget.postId)
+          .update({'likes.$_currentUser': FieldValue.delete()});
+      setState(() {
+        likescount -= 1;
+        isLiked = false;
+        widget.likes[_currentUser] = false;
+      });
+    } else {
+      FirebaseFirestore.instance
+          .collection("posts")
+          .doc(widget.postId)
+          .update({'likes.$_currentUser': true});
+      setState(() {
+        likescount += 1;
+        isLiked = true;
+        widget.likes[_currentUser] = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var _likeProvider = context.watch<LikedCheck>();
+    // isLiked
+
     return Container(
       width: MediaQuery.of(context).size.width - 50,
       height: 500,
@@ -99,14 +141,7 @@ class _PostWidgetState extends State<PostWidget> {
                       child: IconButton(
                         icon: Icon(Icons.more_vert),
                         onPressed: () {
-                          //TODO: Implement a dropdown menu. which will have two options report.. report will show a
-                          //dialogue or new screen which has two options not an art or copied from
-                          //another source.. Create a new collection called reports. which will have fields like
-                          // user_id -  of the user who reported
-                          // post_id - the post which is reported
-                          // and user_id2 - whose post is reported.. this is simple because we have user_id of user who uploaded the post and post id at the same time. in same collection
-                          // and the user who reported can be obtained from Provider.of<User>(context).uid; or FirebaseAuth.currentUser;
-                          // 
+                          //TODO: done
                         },
                       ),
                     ),
@@ -148,29 +183,23 @@ class _PostWidgetState extends State<PostWidget> {
                 InkWell(
                   //TODO : here is like functionality
                   onTap: () {
-                    _likeProvider.updateLike();
-                    DatabaseService().updateLikesDB(
-                        widget.postId,
-                        Provider.of<LikedCheck>(context, listen: false)
-                            .isLiked);
+                    doLike();
+                    // widget.onLiked;
+                    // DatabaseService().updateLikesDB(widget.postId,
+                    // log(widget.isLiked.toString());
+                    //     Provider.of<User>(context, listen: false).uid, true);
                   },
-                  child: Consumer<LikedCheck>(
-                    builder: (context, value, child) {
-                      print(value);
-                      print(_likeProvider.isLiked);
-                      return Icon(
-                        _likeProvider.isLiked
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        size: 40,
-                        color: Colors.redAccent,
-                      );
-                    },
+
+                  child: Icon(
+                    widget.isLiked ? Icons.favorite : Icons.favorite_border,
+                    size: 40,
+                    color: Colors.redAccent,
                   ),
                 ),
                 Text(
                   // _likeProvider.count.toString(),
                   //
+                  // "${widget.likescount}",
                   "${widget.likescount}",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                 )

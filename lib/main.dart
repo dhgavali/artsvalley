@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DatabaseService()),
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
-        ChangeNotifierProvider(create: (context) => LikedCheck()),
         ChangeNotifierProvider(create: (context) => UserDataProvider()),
+        ChangeNotifierProvider(create: (context) => LikedCheck()),
       ],
       child: MaterialApp(
         title: "Arts Valley",
@@ -88,11 +88,3 @@ class AuthenticationWrapper extends StatelessWidget {
     return WelcomeScreen();
   }
 }
-
-//TODO:
-//Profile page - tavhare
-//Gridview in profile
-//fetching the values in the profile page
-//
-//two stateless widgets first with header and second with
-//

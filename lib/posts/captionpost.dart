@@ -129,8 +129,8 @@ class _CaptionPostState extends State<CaptionPost> {
                         'postUrl':
                             Provider.of<UploadPost>(context, listen: false)
                                 .uploadPostImageUrl,
-                        'likes': 0,
                         'postId': _postid,
+                        'likes': {},
                         'username': _username,
                         'userProfile': _userProfile,
                       }, _postid).whenComplete(() {

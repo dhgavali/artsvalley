@@ -11,8 +11,8 @@ class LoadingProvider with ChangeNotifier {
 
   set isLoaded(value) => this._isLoaded;
 
-  void loadPage() {
-    _isLoaded = !_isLoaded;
+  void loadPage(bool state) {
+    _isLoaded = state;
     notifyListeners();
   }
 }
