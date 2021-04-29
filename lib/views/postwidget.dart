@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -104,9 +105,14 @@ class _PostWidgetState extends State<PostWidget> {
         children: [
           GestureDetector(
             onTap: () {
-              // getUserID(){
-              //   navigate.profilePage(userid: userid);
-              // };
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfilePage(
+                    userid: widget.userId,
+                  ),
+                ),
+              );
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
