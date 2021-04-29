@@ -1,17 +1,9 @@
-import 'dart:developer';
-
-import 'package:artsvalley/providers/likedcheck.dart';
-import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
-
-//TODO: this is a stateless widget
-//we will be adding the contents from the constructor in this
-
 class PostWidget extends StatefulWidget {
   final String profileurl;
   // //either we will display a username or full name here
