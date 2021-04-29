@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'dart:developer';
 
 import 'package:artsvalley/services/auth.dart';
@@ -8,11 +7,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-=======
+
 import 'package:flutter/material.dart'; 
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart'; 
->>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
 
 class SettingsPage extends StatelessWidget {
   final TextEditingController nameController = new TextEditingController();
@@ -25,52 +23,12 @@ class SettingsPage extends StatelessWidget {
         child: ListView(
           children: [
             ListTile(
-<<<<<<< HEAD
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyAnimation(),
-                  ),
-                );
-              },
-              leading: Icon(Icons.person),
               title: Text("Account"),
             ),
             ListTile(
-              onTap: () {
-                showSecurity("Plese connect to Internet..", context);
-              },
-              leading: Icon(Icons.security),
-              title: Text("Security"),
+              title: Text("b "), 
             ),
             ListTile(
-              onTap: () async {
-                await Provider.of<AuthMethods>(context, listen: false)
-                    .signOut();
-                if (Provider.of<User>(context, listen: false) == null) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => WelcomeScreen(),
-                      ),
-                      (Route<dynamic> route) => false);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Failed to Logout.. try Later"),
-                    ),
-                  );
-                }
-              },
-=======
-              title: Text("Account"),
-            ),
-            ListTile(
-              title: Text("bhb "), 
-            ),
-            ListTile(
->>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
               leading: Icon(Icons.logout),
               title: Text("Logout"),
             ),

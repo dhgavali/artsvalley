@@ -11,11 +11,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
-=======
+
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
->>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,90 +21,87 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-<<<<<<< HEAD
   var likeRef;
   @override
-  void initState() {
-    super.initState();
-    print(FirebaseAuth.instance.currentUser.uid);
+ 
+    @override
+    void initState() {
+      super.initState();
+      UserDataProvider()
+          .intializeUserData(FirebaseAuth.instance.currentUser.uid);
+    }
 
-=======
-
-  @override
-  void initState() {
-    super.initState();
->>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
-    UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    log("Kindly check the TODO's for more information.");
-    log("If already checked then please Ignore..");
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        title: Text(
-          "ArtsValley",
-          style: GoogleFonts.dancingScript(
-              textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        ),
-        centerTitle: true,
-        actions: [
-          Container(
-            padding: const EdgeInsets.only(
-              right: 16,
-            ),
+    @override
+    Widget build(BuildContext context) {
+      log("Kindly check the TODO's for more information.");
+      log("If already checked then please Ignore..");
+      return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          title: Text(
+            "ArtsValley",
+            style: GoogleFonts.dancingScript(
+                textStyle:
+                    TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
           ),
-        ],
-      ),
-      drawer: Theme(
-        data: Theme.of(context).copyWith(canvasColor: ProConstants.drawerColor),
-        child: MyDrawer(),
-      ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error.toString()),
-            );
-          }
-          print("Stream builder started");
-          if (snapshot.hasData) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return LinearProgressIndicator();
+          centerTitle: true,
+          actions: [
+            Container(
+              padding: const EdgeInsets.only(
+                right: 16,
+              ),
+            ),
+          ],
+        ),
+        drawer: Theme(
+          data:
+              Theme.of(context).copyWith(canvasColor: ProConstants.drawerColor),
+          child: MyDrawer(),
+        ),
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
             }
-            return ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot mypost = snapshot.data.docs[index];
-                  Map likescount = mypost['likes'];
-                  String currentUser =
-                      Provider.of<User>(context, listen: false).uid;
-                  bool isLiked = likescount[currentUser] == true;
-                  return PostWidget(
-                    username: mypost['username'],
-                    profileurl: (mypost['userProfile'].toString().length > 5)
-                        ? mypost['userProfile']
-                        : "assets/images/profile.png",
-                    posturl: mypost['postUrl'],
-                    caption: mypost['caption'],
-                    likescount: likescount.length,
-                    postId: mypost['postId'],
-                    userId: mypost['userId'],
-                    likes: mypost['likes'],
-                    isLiked: isLiked,
-                  );
-                });
-          }
+            print("Stream builder started");
+            if (snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return LinearProgressIndicator();
+              }
+              return ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot mypost = snapshot.data.docs[index];
+                    Map likescount = mypost['likes'];
+                    String currentUser =
+                        Provider.of<User>(context, listen: false).uid;
+                    bool isLiked = likescount[currentUser] == true;
+                    return PostWidget(
+                      username: mypost['username'],
+                      profileurl: (mypost['userProfile'].toString().length > 5)
+                          ? mypost['userProfile']
+                          : "assets/images/profile.png",
+                      posturl: mypost['postUrl'],
+                      caption: mypost['caption'],
+                      likescount: likescount.length,
+                      postId: mypost['postId'],
+                      userId: mypost['userId'],
+                      likes: mypost['likes'],
+                      isLiked: isLiked,
+                    );
+                  });
+            }
 
-          return LinearProgressIndicator();
-        },
-      ),
-    );
+            return LinearProgressIndicator();
+          },
+        ),
+      );
+    }
   }
-}
+
 
 class MyDrawer extends StatelessWidget {
   @override
