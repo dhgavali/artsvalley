@@ -1,4 +1,9 @@
 import 'dart:async';
+<<<<<<< HEAD
+=======
+import 'dart:convert';
+import 'dart:developer';
+>>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
 import 'dart:io';
 
 import 'package:artsvalley/shared/constants.dart';
@@ -28,9 +33,14 @@ class DatabaseService with ChangeNotifier {
 
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
+<<<<<<< HEAD
   CollectionReference _favorites =
       FirebaseFirestore.instance.collection("favorites");
   CollectionReference _users = FirebaseFirestore.instance.collection("users");
+=======
+CollectionReference _favorites = FirebaseFirestore.instance.collection("favorites");
+CollectionReference _users = FirebaseFirestore.instance.collection("users");
+>>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
   // TODO: here we also need to create a setter for likes count
   // Stream set likescount(value) => this._likescount;
   //initial data for stream
@@ -166,6 +176,10 @@ class DatabaseService with ChangeNotifier {
   //3. userid will be added in likedby table
   //also. based on the value of the true or false
   likePost(String postId, String userId) async {
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
     //   DocumentSnapshot _data = await _subColl.doc(postId).get();
     //  bool isLiked =  _data.data()['isliked'];
 

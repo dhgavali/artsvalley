@@ -7,9 +7,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
+=======
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+>>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,17 +23,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+<<<<<<< HEAD
   var likeRef;
   @override
   void initState() {
     super.initState();
     print(FirebaseAuth.instance.currentUser.uid);
 
+=======
+
+  @override
+  void initState() {
+    super.initState();
+>>>>>>> 84be5644b0d1b63654b7e95c525e360b42a30abc
     UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
   }
 
   @override
   Widget build(BuildContext context) {
+    log("Kindly check the TODO's for more information.");
+    log("If already checked then please Ignore..");
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
