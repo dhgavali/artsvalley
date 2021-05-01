@@ -95,14 +95,14 @@ class _PostWidgetState extends State<PostWidget> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(
+             /*  Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => UserProfilePage(
                     userid: widget.userId,
                   ),
                 ),
-              );
+              ); */
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

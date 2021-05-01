@@ -52,7 +52,13 @@ class UserProfilePage extends StatelessWidget {
 class UserProfile extends StatelessWidget {
   final String profileurl;
   final String useremail;
+<<<<<<< HEAD
   final String id;
+=======
+
+  final String id;
+
+>>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
   String _name;
   UserProfile({
     this.profileurl,
@@ -77,11 +83,25 @@ class UserProfile extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(10),
-                child: _profilePhoto(context),
+                // child: _profilePhoto(context, id),
+                child: CircleAvatar(
+                  radius: 60,
+                  // backgroundImage: NetworkImage("_profileurl") ??
+                  backgroundImage: (profileurl.length > 0)
+                      ? NetworkImage(profileurl)
+                      : AssetImage('assets/images/profile.png'),
+                  backgroundColor: Colors.white38,
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
+<<<<<<< HEAD
+              SizedBox(
+                height: 10,
+              ),
+=======
+>>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
               Column(
                 children: [
                   Text(
@@ -98,7 +118,11 @@ class UserProfile extends StatelessWidget {
                   SizedBox(
                     height: 50,
                   ),
+<<<<<<< HEAD
                   customDivider(context, Colors.grey),
+=======
+                  customDivider(context),
+>>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
                 ],
               )
             ],
@@ -108,14 +132,15 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget _profilePhoto(BuildContext context) {
+/*   Widget _profilePhoto(BuildContext context, String userid) {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
             .collection("users")
-            .where("userid", isEqualTo: this.id)
+            .where("userid", isEqualTo: userid)
             .get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           String _profileurl;
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return LinearProgressIndicator();
           }
@@ -144,5 +169,5 @@ class UserProfile extends StatelessWidget {
           }
           return LinearProgressIndicator();
         });
-  }
+  } */
 }
