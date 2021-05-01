@@ -13,43 +13,38 @@ class UserProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: //UserProfile(id: this.userid,),
-      FutureBuilder<QuerySnapshot>(
-          future: FirebaseFirestore.instance
-              .collection("users")
-              .where('userid', isEqualTo: this.userid)
-              .get(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
+          FutureBuilder<QuerySnapshot>(
+              future: FirebaseFirestore.instance
+                  .collection("users")
+                  .where('userid', isEqualTo: this.userid)
+                  .get(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 String _useremail;
-                
-                if(snapshot.connectionState == ConnectionState.waiting){
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return LinearProgressIndicator();
                 }
-                if(snapshot.connectionState == ConnectionState .done){
-                  if(snapshot.hasData){
-                    if(snapshot.hasError){
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    if (snapshot.hasError) {
                       return Center(
-                      child: Text('Opps !! Something Went Wrong Please Try Again'),
-                    );
+                        child: Text(
+                            'Opps !! Something Went Wrong Please Try Again'),
+                      );
                     }
                     snapshot.data.docs.map((values) {
                       _useremail = values.data()['useremail'];
                       log(_useremail);
                     }).toList();
 
-                     return UserProfile(
+                    return UserProfile(
                       id: this.userid,
                       useremail: _useremail,
-
-                      );
+                    );
                   }
-                 
                 }
-                  return CircularProgressIndicator();
-              }
-              
-              
-              
-              ),
+                return CircularProgressIndicator();
+              }),
     );
   }
 }
@@ -57,14 +52,8 @@ class UserProfilePage extends StatelessWidget {
 class UserProfile extends StatelessWidget {
   final String profileurl;
   final String useremail;
-  //final String posturl;
-  //final int likescount;
-  //final String postId;
-  //final String caption;
   final String id;
-  
   String _name;
-
   UserProfile({
     this.profileurl,
     this.useremail,
@@ -73,10 +62,9 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-         title: Text(
+        title: Text(
           "Profile",
         ),
         centerTitle: true,
@@ -91,24 +79,26 @@ class UserProfile extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 child: _profilePhoto(context),
               ),
-              SizedBox(height: 10,),
-
+              SizedBox(
+                height: 10,
+              ),
               Column(
                 children: [
                   Text(
                     (_name != null) ? _name.toString() : "Welcome To Profile",
-                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 5,),
-                  
+                  SizedBox(
+                    height: 5,
+                  ),
                   Text(
                     useremail,
                     style: TextStyle(fontSize: 18),
                   ),
-
-                  SizedBox(height: 50,),
-                  customDivider(context),
-                 
+                  SizedBox(
+                    height: 50,
+                  ),
+                  customDivider(context, Colors.grey),
                 ],
               )
             ],
@@ -156,4 +146,3 @@ class UserProfile extends StatelessWidget {
         });
   }
 }
-

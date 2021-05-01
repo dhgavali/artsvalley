@@ -10,9 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-import 'dart:developer';
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -31,8 +28,6 @@ class _HomePageState extends State<HomePage> {
 
     @override
     Widget build(BuildContext context) {
-      log("Kindly check the TODO's for more information.");
-      log("If already checked then please Ignore..");
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
@@ -64,7 +59,6 @@ class _HomePageState extends State<HomePage> {
                 child: Text(snapshot.error.toString()),
               );
             }
-            print("Stream builder started");
             if (snapshot.hasData) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return LinearProgressIndicator();
@@ -144,7 +138,7 @@ class MyDrawer extends StatelessWidget {
               onTap: () async {
                 await Provider.of<AuthMethods>(context, listen: false)
                     .signOut();
-                if (Provider.of<User>(context, listen: false) == null) {
+                if (Provider   .of<User>(context, listen: false) == null) {
                   Navigator.pushAndRemoveUntil(
                       context,
                       CupertinoPageRoute(

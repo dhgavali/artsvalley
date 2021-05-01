@@ -77,8 +77,6 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // isLiked
-
     return Container(
       width: MediaQuery.of(context).size.width - 50,
       height: 500,

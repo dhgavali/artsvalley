@@ -1,17 +1,13 @@
-import 'dart:developer';
-
-import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
-import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/profile_page/image_widget.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:artsvalley/views/home.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -23,75 +19,108 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    String userId = Provider.of<User>(context, listen: false).uid;
     var user = Provider.of<User>(context);
-    print("profile page line no. 25");
-    print("This is email & uid of current user");
-    print(user.email);
-
-    print(user.uid);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Profile",
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (_) => SettingsPage(),
-                  ),
-                );
-              })
-        ],
-      ),
-
-      //fetching data here by calling methods from Profile data helpers
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Provider.of<EditProfile>(context, listen: false)
-                      .selectProfileImageType(context);
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(10),
-                  child: _profilePhoto(),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 300,
+            backgroundColor: Colors.yellow,
+            title: Text(
+              "Sliver AppBar",
+              style: GoogleFonts.dancingScript(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(315.0),
+              child: Container(
+                height: 365,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<EditProfile>(context, listen: false)
+                            .selectProfileImageType(context);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                        child: _profilePhoto(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          (_name != null)
+                              ? _name.toString()
+                              : "Welcome To profile",
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          user.email,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 50),
+                    CountData(
+                      postcount: 3,
+                    ),
+                    customDivider(context, Colors.grey),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Column(
-                children: [
-                  Text(
-                    (_name != null) ? _name.toString() : "Welcome To profile",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    user.email,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ],
-              ),
-              SizedBox(height: 50),
-              CountData(),
-              customDivider(context),
-
-              // customDivider(context),
-              //
-              //TODO: GridView of Post or Listview of Posts; all the profile section will be converted into silvers and gridview will be below
-            ],
+            ),
           ),
-        ),
+          SliverToBoxAdapter(
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("posts")
+                    .where("userId", isEqualTo: userId)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.none) {
+                    return LinearProgressIndicator();
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return LinearProgressIndicator();
+                  }
+
+                  if (snapshot.hasError) {
+                    return Center(child: Text("error occured"));
+                  } //parat avaj gela
+
+                  if (snapshot.hasData) {
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot mypost = snapshot.data.docs[index];
+
+                        return ImageWidget(
+                          index: index,
+                          posturl: mypost['postUrl'],
+                          userId: mypost['userId'],
+                        );
+                      },
+                    );
+                  }
+                }),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -103,7 +132,6 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      //
     );
   }
 
@@ -128,8 +156,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-//TODO: this widget is repeated 2 times (in this file and profilepage).🙄🙄🤔🤔
-//profilepage is the same copy of this page
   Widget _profilePhoto() {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
@@ -157,7 +183,6 @@ class _ProfileState extends State<Profile> {
 
             return CircleAvatar(
               radius: 60,
-              // backgroundImage: NetworkImage("_profileurl") ??
               backgroundImage: (_profileurl.length > 0)
                   ? NetworkImage(_profileurl)
                   : AssetImage('assets/images/profile.png'),
@@ -167,13 +192,25 @@ class _ProfileState extends State<Profile> {
           return LinearProgressIndicator();
         });
   }
+
+  Widget buildImages() {
+    return SliverToBoxAdapter(
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          primary: false,
+          shrinkWrap: true,
+          itemCount: 20,
+          itemBuilder: (context, index) => ImageWidget(index: index),
+        ),
+      );
+  }
 }
 
 class CountData extends StatelessWidget {
-  const CountData({
-    Key key,
-  }) : super(key: key);
-
+  final int postcount;
+  CountData({this.postcount});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -181,7 +218,7 @@ class CountData extends StatelessWidget {
       children: [
         BoxContent(
           textInside: "Total Posts",
-          numvalue: 25,
+          numvalue: postcount,
         ),
         BoxContent(
           textInside: "Total Likes",

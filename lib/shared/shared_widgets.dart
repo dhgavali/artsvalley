@@ -184,13 +184,13 @@ Widget createAccountLabel(String label, String action) {
   );
 }
 
-Widget customDivider(BuildContext context) {
+Widget customDivider(BuildContext context, Color color) {
   return Center(
     child: SizedBox(
       height: 5,
       width: MediaQuery.of(context).size.width,
       child: Divider(
-        color: Colors.lightGreen,
+        color: color,
       ),
     ),
   );
@@ -225,12 +225,25 @@ class HorizontalLine extends StatelessWidget {
         color: Colors.white10,
       ),
     );
-  }
+}
 }
 
-
+Widget infoLabel(String label, double fontsize, {Color color = Colors.black}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
+    child: Text(
+      label,
+      overflow: TextOverflow.visible,
+      maxLines: 5,
+      style: TextStyle(
+        fontSize: fontsize,
+        color: color,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  );
+}
 
 /// Select post ///
-/// 
+///
 ///   //for selecting image either from galary or camera
- 

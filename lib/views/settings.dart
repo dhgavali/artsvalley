@@ -1,16 +1,9 @@
-import 'dart:developer';
-
 import 'package:artsvalley/services/auth.dart';
-import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
-import 'package:artsvalley/views/myanimation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:artsvalley/views/accounts.dart';
+import 'package:artsvalley/views/info/postupload.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:flutter/material.dart'; 
-import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/shared_widgets.dart'; 
 
 class SettingsPage extends StatelessWidget {
   final TextEditingController nameController = new TextEditingController();
@@ -23,14 +16,37 @@ class SettingsPage extends StatelessWidget {
         child: ListView(
           children: [
             ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AccountsPage(),
+                  ),
+                );
+              },
+              leading: Icon(Icons.person),
               title: Text("Account"),
             ),
             ListTile(
-              title: Text("b "), 
-            ),
-            ListTile(
+              onTap: () {
+                Provider.of<AuthMethods>(context, listen: false).signOut();
+              },
               leading: Icon(Icons.logout),
               title: Text("Logout"),
+            ),
+            ListTile(
+              onTap: () {
+                showTutorial(context);
+              },
+              leading: Icon(Icons.info),
+              title: Text("Tutorial"),
+            ),
+            ListTile(
+              onTap: () {
+                checkTheDb("aEn7bpiTNM8GceD50SaQ");
+              },
+              leading: Icon(Icons.info),
+              title: Text("Tutorial"),
             ),
           ],
         ),

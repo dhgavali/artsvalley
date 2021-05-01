@@ -13,28 +13,23 @@ class UserDataProvider with ChangeNotifier {
   get usern => this.username;
   get userprof => this.userProfile;
   void intializeUserData(String userid) async {
-    log("initialzie mehos wa clled");
+    log("Initialize method was called");
     QuerySnapshot data = await FirebaseFirestore.instance
         .collection("users")
         .where("userid", isEqualTo: userid)
         .get();
-
-    log(data.size.toString());
+    
     data.docs.map((snapshot) {
       String _username = snapshot.data()['username'];
       String _userProfile = snapshot.data()['photoUrl'] ?? "null";
       if (snapshot.exists) {
         this.userProfile = _userProfile;
         this.username = _username;
-        log("printing details in caption page");
-        log(this.userProfile);
-        log(this.username);
         UserProfileData.fromMap(snapshot.data());
         _prefs.saveUsername(_username);
         _prefs
             .saveUserProfile(_userProfile)
             .then((value) => log("saved succcesffuly on sharedpreferences"));
-
         notifyListeners();
       }
     }).toList();
