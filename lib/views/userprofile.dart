@@ -57,12 +57,9 @@ class UserProfilePage extends StatelessWidget {
 class UserProfile extends StatelessWidget {
   final String profileurl;
   final String useremail;
-  //final String posturl;
-  //final int likescount;
-  //final String postId;
-  //final String caption;
+
   final String id;
-  
+
   String _name;
 
   UserProfile({
@@ -73,10 +70,9 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-         title: Text(
+        title: Text(
           "Profile",
         ),
         centerTitle: true,
@@ -89,26 +85,36 @@ class UserProfile extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(10),
-                child: _profilePhoto(context),
+                // child: _profilePhoto(context, id),
+                child: CircleAvatar(
+                  radius: 60,
+                  // backgroundImage: NetworkImage("_profileurl") ??
+                  backgroundImage: (profileurl.length > 0)
+                      ? NetworkImage(profileurl)
+                      : AssetImage('assets/images/profile.png'),
+                  backgroundColor: Colors.white38,
+                ),
               ),
-              SizedBox(height: 10,),
-
+              SizedBox(
+                height: 10,
+              ),
               Column(
                 children: [
                   Text(
                     (_name != null) ? _name.toString() : "Welcome To Profile",
-                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 5,),
-                  
+                  SizedBox(
+                    height: 5,
+                  ),
                   Text(
                     useremail,
                     style: TextStyle(fontSize: 18),
                   ),
-
-                  SizedBox(height: 50,),
+                  SizedBox(
+                    height: 50,
+                  ),
                   customDivider(context),
-                 
                 ],
               )
             ],
@@ -118,14 +124,15 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget _profilePhoto(BuildContext context) {
+/*   Widget _profilePhoto(BuildContext context, String userid) {
     return FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
             .collection("users")
-            .where("userid", isEqualTo: this.id)
+            .where("userid", isEqualTo: userid)
             .get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           String _profileurl;
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return LinearProgressIndicator();
           }
@@ -154,6 +161,5 @@ class UserProfile extends StatelessWidget {
           }
           return LinearProgressIndicator();
         });
-  }
+  } */
 }
-
