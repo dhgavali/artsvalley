@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:flutter/material.dart';
-import 'package:artsvalley/profile_page/profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -75,10 +74,6 @@ class Image_uploadState extends State<Image_upload> {
     }).catchError((e) {
       return e.toString(); //Firebase Exception
     });
-
-    //TaskSnapshot taskSnapshot ;
-    // taskSnapshot.ref.getDownloadURL();
-    //uploadTask.then((res) => res.ref.getDownloadURL());
   }
 
   // key declaration for snackbar
@@ -114,7 +109,7 @@ class Image_uploadState extends State<Image_upload> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Profile()));
+                        MaterialPageRoute(builder: (context) => CustomNavigationBar()));
                   },
                   child: Text(
                     'Back',
@@ -228,8 +223,6 @@ class Image_uploadState extends State<Image_upload> {
                           ),
                         ),
                 ),
-
-                //for progress indicator
                 Container(
                   margin: EdgeInsets.only(right: 10.0, left: 10.0, bottom: 4.0),
                   padding: EdgeInsets.all(4.0),

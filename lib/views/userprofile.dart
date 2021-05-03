@@ -1,9 +1,14 @@
 import 'dart:developer';
-
+import 'package:artsvalley/models/userdata_model.dart';
+import 'package:artsvalley/profile_page/image_widget.dart';
+import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/services/fetchuserdata.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UserProfilePage extends StatelessWidget {
   final String userid;
@@ -12,39 +17,152 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: //UserProfile(id: this.userid,),
-          FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance
-                  .collection("users")
-                  .where('userid', isEqualTo: this.userid)
-                  .get(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                String _useremail;
+      appBar: AppBar(
+        title: Text("usersProfile"),
+      ),
+      body: StreamBuilder<UserProfileData>(
+        stream: FetchUserData(userid: userid).userData,
+        builder: (context, snapshot) {
+          UserProfileData userData = snapshot.data;
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Oops!! Some Error Occured"),
+            );
+          }
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return LinearProgressIndicator();
-                }
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasData) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text(
-                            'Opps !! Something Went Wrong Please Try Again'),
-                      );
-                    }
-                    snapshot.data.docs.map((values) {
-                      _useremail = values.data()['useremail'];
-                      log(_useremail);
-                    }).toList();
+          if (snapshot.hasData) {
+            log("Into the streambuilder new profile page");
+            return CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  expandedHeight: 215.0,
+                  backgroundColor: Colors.white,
+                  bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(215.0),
+                    child: Container(
+                      height: 245,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage: (userData.userProfile !=
+                                          null)
+                                      ? NetworkImage(userData.userProfile)
+                                      : AssetImage('assets/images/profile.png'),
+                                  backgroundColor: Colors.white38,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 28.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      userData.displayName,
+                                      style: GoogleFonts.pacifico(
+                                        textStyle: TextStyle(
+                                          fontSize: 24,
+                                          letterSpacing: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 1.0),
+                                            child: Text(
+                                              "@${userData.username}",
+                                              style: GoogleFonts.lora(
+                                                textStyle: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ProConstants
+                                                      .profileTextColor,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          CountData(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("posts")
+                          .where("userId", isEqualTo: userid)
+                          .snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none) {
+                          return LinearProgressIndicator();
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          log("bulder here");
+                          return LinearProgressIndicator();
+                        }
 
-                    return UserProfile(
-                      id: this.userid,
-                      useremail: _useremail,
-                    );
-                  }
-                }
-                return CircularProgressIndicator();
-              }),
+                        if (snapshot.hasError) {
+                          return Center(child: Text("error occured"));
+                        } //parat avaj gela
+
+                        if (snapshot.hasData) {
+                          return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                            ),
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot mypost =
+                                  snapshot.data.docs[index];
+                              log(mypost.data().length.toString());
+                              return ImageWidget(
+                                index: index,
+                                posturl: mypost['postUrl'],
+                                userId: mypost['userId'],
+                              );
+                            },
+                          );
+                        }
+                        return CircularProgressIndicator();
+                      }),
+                ),
+              ],
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
@@ -52,14 +170,9 @@ class UserProfilePage extends StatelessWidget {
 class UserProfile extends StatelessWidget {
   final String profileurl;
   final String useremail;
-<<<<<<< HEAD
-  final String id;
-=======
 
   final String id;
 
->>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
-  String _name;
   UserProfile({
     this.profileurl,
     this.useremail,
@@ -68,6 +181,7 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _name;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -87,7 +201,7 @@ class UserProfile extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 60,
                   // backgroundImage: NetworkImage("_profileurl") ??
-                  backgroundImage: (profileurl.length > 0)
+                  backgroundImage: (profileurl != null)
                       ? NetworkImage(profileurl)
                       : AssetImage('assets/images/profile.png'),
                   backgroundColor: Colors.white38,
@@ -96,12 +210,6 @@ class UserProfile extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-<<<<<<< HEAD
-              SizedBox(
-                height: 10,
-              ),
-=======
->>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
               Column(
                 children: [
                   Text(
@@ -118,11 +226,7 @@ class UserProfile extends StatelessWidget {
                   SizedBox(
                     height: 50,
                   ),
-<<<<<<< HEAD
                   customDivider(context, Colors.grey),
-=======
-                  customDivider(context),
->>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
                 ],
               )
             ],
@@ -131,43 +235,4 @@ class UserProfile extends StatelessWidget {
       ),
     );
   }
-
-/*   Widget _profilePhoto(BuildContext context, String userid) {
-    return FutureBuilder<QuerySnapshot>(
-        future: FirebaseFirestore.instance
-            .collection("users")
-            .where("userid", isEqualTo: userid)
-            .get(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          String _profileurl;
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return LinearProgressIndicator();
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text("OOPS eerror occuered"),
-                );
-              }
-              snapshot.data.docs.map((value) {
-                _profileurl = value.data()['photoUrl'] ?? "";
-                _name = value.data()['displayname'];
-                print(_name);
-              }).toList();
-            }
-
-            return CircleAvatar(
-              radius: 60,
-              // backgroundImage: NetworkImage("_profileurl") ??
-              backgroundImage: (_profileurl.length > 0)
-                  ? NetworkImage(_profileurl)
-                  : AssetImage('assets/images/profile.png'),
-              backgroundColor: Colors.white38,
-            );
-          }
-          return LinearProgressIndicator();
-        });
-  } */
 }

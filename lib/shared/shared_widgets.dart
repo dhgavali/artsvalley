@@ -184,13 +184,14 @@ Widget createAccountLabel(String label, String action) {
   );
 }
 
-Widget customDivider(BuildContext context, Color color) {
+Widget customDivider(BuildContext context, Color color, {double thikness}) {
   return Center(
     child: SizedBox(
       height: 5,
       width: MediaQuery.of(context).size.width,
       child: Divider(
         color: color,
+        thickness: thikness,
       ),
     ),
   );
@@ -225,7 +226,7 @@ class HorizontalLine extends StatelessWidget {
         color: Colors.white10,
       ),
     );
-}
+  }
 }
 
 Widget infoLabel(String label, double fontsize, {Color color = Colors.black}) {

@@ -1,3 +1,4 @@
+import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/views/settings.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/views/home.dart';

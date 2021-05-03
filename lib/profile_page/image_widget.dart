@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-
-import '../views/postwidget.dart';
-
 class ImageWidget extends StatelessWidget {
   final int index;
   final String posturl;
@@ -19,9 +15,6 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) { 
-  print("post url");
-  print(posturl);
-  print("userid :$userId");
       return Container(
         height: 150,
         child: Card(
@@ -31,10 +24,7 @@ class ImageWidget extends StatelessWidget {
                 : AssetImage("assets/images/painter.png"),
             placeholder: AssetImage("assets/images/painter.png"),
           ),
-          // child: Image.network(
-          //   'https://source.unsplash.com/random?sig=$index',
-          //   fit: BoxFit.cover,
-          // ),
+        
         ),
       );
   }

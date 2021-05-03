@@ -1,13 +1,11 @@
 import 'dart:async';
-
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/updateProfilePhoto.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +34,7 @@ class DatabaseService with ChangeNotifier {
       FirebaseFirestore.instance.collection("favorites");
   CollectionReference _users = FirebaseFirestore.instance.collection("users");
 
- // TODO: here we also need to create a setter for likes count
+  // TODO: here we also need to create a setter for likes count
   // Stream set likescount(value) => this._likescount;
   //initial data for stream
 
@@ -164,15 +162,4 @@ class DatabaseService with ChangeNotifier {
             (error) => print("Failed to update user followers: $error"));
   }
 
-  //TOOD: method for uploading the likedby collection in database
-  //The flow of liking the post what things will be affected
-  //1. Post will liked and true /false will be set to the icon in database
-  //2. Count increment and update in the ui
-  //3. userid will be added in likedby table
-  //also. based on the value of the true or false
-
 }
-
-//TODO: method for fetching data from the firebase
-
-//

@@ -26,6 +26,12 @@ class ProConstants {
   static final Color bgcolor = Color(0Xff212121);
   static final Color shadowColor = Color(0xff303030);
   static final Color drawerColor = Color(0xfff1f1f1);
+  static final Color seagreen = Color(0xff09814a);
+  static final Color etonblue = Color(0xff7FC6A4);
+  static final Color celadonblue = Color(0xff2978A0);
+  static final Color mellowapricot = Color(0xffFFC07F);
+  static final Color profileTextColor = Colors.black;
+  static final Color secondaryBGColor = Colors.teal;
   static final Color appBarTitleColor = Colors.black;
   static final Color lightText = Colors.white;
   static final Color darkText = Colors.black87;

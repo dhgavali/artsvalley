@@ -1,3 +1,5 @@
+import 'package:artsvalley/components/mydrawer.dart';
+import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -21,17 +23,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var likeRef;
-  @override
+
   @override
   void initState() {
-    super.initState();
     UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    log("Kindly check the TODO's for more information.");
-    log("If already checked then please Ignore..");
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -43,13 +43,12 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [
           Builder(
-                builder: (context) => IconButton(
-              onPressed: () async{
+            builder: (context) => IconButton(
+              onPressed: () async {
                 final searchdata = await showSearch(
                   context: context,
                   delegate: SearchUser(),
                 );
-                
               },
               icon: Icon(Icons.search),
             ),
@@ -101,90 +100,8 @@ class _HomePageState extends State<HomePage> {
                   );
                 });
           }
-
           return LinearProgressIndicator();
         },
-      ),
-    );
-  }
-}
-
-class MyDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      elevation: 0.0,
-      child: ListView(
-        children: [
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            leading: Icon(
-              Icons.close,
-              size: 32.0,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(
-            height: 150,
-            child: Container(
-              child: Column(
-                children: [],
-              ),
-            ),
-          ),
-          menuItem("Home", Icons.home),
-          menuItem("Profile", Icons.person),
-          menuItem("Explore", Icons.explore),
-          GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => SettingsPage(),
-                  ),
-                );
-              },
-              child: menuItem("settings", Icons.settings)),
-          menuItem("About us", Icons.info),
-          GestureDetector(
-              onTap: () async {
-                await Provider.of<AuthMethods>(context, listen: false)
-                    .signOut();
-                if (Provider   .of<User>(context, listen: false) == null) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => WelcomeScreen(),
-                      ),
-                      (Route<dynamic> route) => false);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Failed to Logout.. try Later"),
-                    ),
-                  );
-                }
-              },
-              child: menuItem("Logout", Icons.logout)),
-        ],
-      ),
-    );
-  }
-
-  Widget menuItem(String value, IconData icons) {
-    return ListTile(
-      leading: Icon(
-        icons,
-        color: ProConstants.bgcolor,
-      ),
-      title: Text(
-        value,
-        style: TextStyle(
-          fontSize: 20,
-          color: ProConstants.bgcolor,
-        ),
       ),
     );
   }

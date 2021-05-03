@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
-import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
@@ -10,7 +9,6 @@ import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart'; 
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,6 +43,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserDataProvider()),
         ChangeNotifierProvider(create: (context) => LikedCheck()),
       ],
+
       child: MaterialApp(
         title: "Arts Valley",
         theme: ThemeData(
@@ -68,10 +67,6 @@ class MyApp extends StatelessWidget {
         ),
         home: AuthenticationWrapper(),
         debugShowCheckedModeBanner: false,
-        routes: {
-          '/home': (context) => HomePage(),
-          '/profile': (context) => Profile(),
-        },
       ),
     );
   }

@@ -1,9 +1,11 @@
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
+
 class PostWidget extends StatefulWidget {
   final String profileurl;
   // //either we will display a username or full name here
@@ -93,42 +95,51 @@ class _PostWidgetState extends State<PostWidget> {
           color: Colors.white),
       child: Stack(
         children: [
-          GestureDetector(
-            onTap: () {
-             /*  Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserProfilePage(
-                    userid: widget.userId,
-                  ),
-                ),
-              ); */
-            },
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black87,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
-                      child: CircleAvatar(
-                        backgroundImage:
-                            (widget.profileurl.startsWith("assets/"))
-                                ? AssetImage(
-                                    widget.profileurl,
-                                  )
-                                : NetworkImage(widget.profileurl),
-                        backgroundColor: Colors.yellow,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserProfilePage(
+                          userid: widget.userId,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      //TODO: The text widget here represents the username. we need to get this from database.
-                      child: Text(widget.username ?? "username",
-                          style: TextStyle(fontSize: 20.0)),
-                    ),
-                  ],
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        //TODO: Here implement the gestureDetector which will be invoked on click of the profile photo. as user click on profile photo a viewProfile will be opened. This profile page will be view only. Which will shown the user profile. Basically we have two types of profile pages. One is for the user itself. Where he can change his details update the data or profile photo. and other one is to display to other users. which will show only read only information. and may be we can do a follow option. or we need to find something different than follow. but initially we need to show the details.
+                        child: CircleAvatar(
+                          backgroundImage:
+                              (widget.profileurl.startsWith("assets/"))
+                                  ? AssetImage(
+                                      widget.profileurl,
+                                    )
+                                  : NetworkImage(widget.profileurl),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        //TODO: The text widget here represents the username. we need to get this from database.
+                        child: Text(widget.username ?? "username",
+                            style:
+                                TextStyle(fontSize: 20.0, color: Colors.white)),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
@@ -149,7 +160,7 @@ class _PostWidgetState extends State<PostWidget> {
           Container(
             margin: const EdgeInsets.only(top: 55),
             constraints: BoxConstraints.expand(
-              height: 340,
+              height: 300,
             ),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
             //TODO: this is the image fetched from the database which is user post.
@@ -160,59 +171,65 @@ class _PostWidgetState extends State<PostWidget> {
               placeholder: AssetImage("assets/images/painter.png"),
             ),
           ),
+          Row(
+            children: [
+              
+            ],
+          )
+          ,
           //TODO: we need to add these icons with changable colors on tap. based on that we need to increment likes or decrement on server and also change the saving priority
-          Positioned(
-            bottom: 60,
-            right: 10,
-            child: Icon(
-              Icons.share,
-              size: 40,
-              color: Colors.teal,
-            ),
-          ),
-          Positioned(
-            bottom: 60,
-            left: 10,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  //TODO : here is like functionality
-                  onTap: () {
-                    doLike();
-                    // widget.onLiked;
-                    // DatabaseService().updateLikesDB(widget.postId,
-                    // log(widget.isLiked.toString());
-                    //     Provider.of<User>(context, listen: false).uid, true);
-                  },
+          // Positioned(
+          //   bottom: 60,
+          //   right: 10,
+          //   child: Icon(
+          //     Icons.share,
+          //     size: 40,
+          //     color: Colors.teal,
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 60,
+          //   left: 10,
+          //   child: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       InkWell(
+          //         //TODO : here is like functionality
+          //         onTap: () {
+          //           doLike();
+          //           // widget.onLiked;
+          //           // DatabaseService().updateLikesDB(widget.postId,
+          //           // log(widget.isLiked.toString());
+          //           //     Provider.of<User>(context, listen: false).uid, true);
+          //         },
 
-                  child: Icon(
-                    widget.isLiked ? Icons.favorite : Icons.favorite_border,
-                    size: 40,
-                    color: Colors.redAccent,
-                  ),
-                ),
-                Text(
-                  // _likeProvider.count.toString(),
-                  //
-                  // "${widget.likescount}",
-                  "${widget.likescount}",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-            top: 450,
-            left: 16,
-            child: Container(
-              //TODO: needs to fix this text. When the text is bigger than width we need to adjust it to multiline text. So the text will be displayed on next line automatically. and after 3 lines the readmore button will be shown for the longer captions. So when clicked on readmore text will expand to full size page
-              child: Text(
-                "${widget.caption}",
-                overflow: TextOverflow.visible,
-              ),
-            ),
-          ),
+          //         child: Icon(
+          //           widget.isLiked ? Icons.favorite : Icons.favorite_border,
+          //           size: 40,
+          //           color: Colors.redAccent,
+          //         ),
+          //       ),
+          //       Text(
+          //         // _likeProvider.count.toString(),
+          //         //
+          //         // "${widget.likescount}",
+          //         "${widget.likescount}",
+          //         style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 450,
+          //   left: 16,
+          //   child: Container(
+          //     //TODO: needs to fix this text. When the text is bigger than width we need to adjust it to multiline text. So the text will be displayed on next line automatically. and after 3 lines the readmore button will be shown for the longer captions. So when clicked on readmore text will expand to full size page
+          //     child: Text(
+          //       "${widget.caption}",
+          //       overflow: TextOverflow.visible,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

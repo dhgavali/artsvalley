@@ -1,7 +1,12 @@
+import 'dart:developer';
+import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/profile_page/image_widget.dart';
+import 'package:artsvalley/providers/uploadPostProvider.dart';
+import 'package:artsvalley/services/fetchuserdata.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,118 +14,166 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class Profile extends StatefulWidget {
-  @override
-  _ProfileState createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
-  String _name;
-
+class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String userId = Provider.of<User>(context, listen: false).uid;
-    var user = Provider.of<User>(context);
+    var user = Provider.of<User>(context, listen: false);
+
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 300,
-            backgroundColor: Colors.yellow,
-            title: Text(
-              "Sliver AppBar",
-              style: GoogleFonts.dancingScript(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+      appBar: AppBar(
+        title: Text(user.displayName),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: IconButton(
+              icon: Icon(Icons.settings, size: 28),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()));
+              },
             ),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(315.0),
-              child: Container(
-                height: 365,
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Provider.of<EditProfile>(context, listen: false)
-                            .selectProfileImageType(context);
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.all(10),
-                        child: _profilePhoto(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          (_name != null)
-                              ? _name.toString()
-                              : "Welcome To profile",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          user.email,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 50),
-                    CountData(
-                      postcount: 3,
-                    ),
-                    customDivider(context, Colors.grey),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("posts")
-                    .where("userId", isEqualTo: userId)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.none) {
-                    return LinearProgressIndicator();
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return LinearProgressIndicator();
-                  }
-
-                  if (snapshot.hasError) {
-                    return Center(child: Text("error occured"));
-                  } //parat avaj gela
-
-                  if (snapshot.hasData) {
-                    return GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                      ),
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        DocumentSnapshot mypost = snapshot.data.docs[index];
-
-                        return ImageWidget(
-                          index: index,
-                          posturl: mypost['postUrl'],
-                          userId: mypost['userId'],
-                        );
-                      },
-                    );
-                  }
-                }),
           ),
         ],
+      ),
+      body: StreamBuilder<UserProfileData>(
+        stream: FetchUserData(userid: user.uid).userData,
+        builder: (context, snapshot) {
+          UserProfileData userData = snapshot.data;
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Oops!! Some Error Occured"),
+            );
+          }
+
+          if (snapshot.hasData) {
+            log("Into the streambuilder new profile page");
+            return Column(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, top: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              Provider.of<EditProfile>(context, listen: false)
+                                  .selectProfileImageType(context,
+                                      imageurl: userData.userProfile);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: CircleAvatar(
+                                radius: 50,
+                                backgroundImage: (userData.userProfile != null)
+                                    ? NetworkImage(userData.userProfile)
+                                    : AssetImage('assets/images/profile.png'),
+                                backgroundColor: Colors.white38,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 28.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                userData.displayName,
+                                style: GoogleFonts.pacifico(
+                                  textStyle: TextStyle(
+                                    fontSize: 24,
+                                    letterSpacing: 1.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 1.0),
+                                      child: Text(
+                                        "@${userData.username}",
+                                        style: GoogleFonts.lora(
+                                          textStyle: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                ProConstants.profileTextColor,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    CountData(),
+                    customDivider(context, Colors.black87, thikness: 3.0)
+                  ],
+                ),
+                Expanded(
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("posts")
+                          .where("userId", isEqualTo: user.uid)
+                          .snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none) {
+                          return LinearProgressIndicator();
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          log("bulder here");
+                          return LinearProgressIndicator();
+                        }
+
+                        if (snapshot.hasError) {
+                          return Center(child: Text("error occured"));
+                        }
+
+                        if (snapshot.hasData) {
+                          return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                            ),
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot mypost =
+                                  snapshot.data.docs[index];
+                              return ImageWidget(
+                                index: index,
+                                posturl: mypost['postUrl'],
+                                userId: mypost['userId'],
+                              );
+                            },
+                          );
+                        }
+                        return CircularProgressIndicator();
+                      }),
+                ),
+              ],
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -130,105 +183,84 @@ class _ProfileState extends State<Profile> {
         child: Icon(
           Icons.add_a_photo,
         ),
+        backgroundColor: ProConstants.secondaryBGColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
+}
 
-  Widget addPostButton() {
-    return Container(
-      padding: const EdgeInsets.all(5.0),
-      decoration: BoxDecoration(
-        color: Colors.teal,
-        borderRadius: BorderRadius.circular(50),
-        boxShadow: customShadowButton(),
-      ),
-      child: IconButton(
-        icon: Icon(
-          Icons.add_a_photo,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          Provider.of<UploadPost>(context, listen: false)
-              .selectPostImageType(context);
-        },
+//TODO: Modify this class so it can be reuse.
+class CountData extends StatelessWidget {
+  const CountData({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          const EdgeInsets.only(right: 38.0, left: 38, top: 15, bottom: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          dataColumn("17K", "Likes"),
+          verticalLine(),
+          dataColumn("512", "Posts"),
+          verticalLine(),
+          Container(
+            alignment: Alignment.center,
+            width: 120,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(25)),
+              gradient: LinearGradient(
+                colors: [Color(0xFFFF3CAC), Color(0xFF2B86C5)],
+                begin: Alignment.bottomRight,
+                end: Alignment.centerLeft,
+              ),
+              // color: kPrimaryColor,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                print("Follwed ....");
+              },
+              child: Text(
+                "Follow",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
-  }
-
-  Widget _profilePhoto() {
-    return FutureBuilder<QuerySnapshot>(
-        future: FirebaseFirestore.instance
-            .collection("users")
-            .where("userid", isEqualTo: Provider.of<User>(context).uid)
-            .get(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          String _profileurl;
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return LinearProgressIndicator();
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text("OOPS eerror occuered"),
-                );
-              }
-              snapshot.data.docs.map((value) {
-                _profileurl = value.data()['photoUrl'] ?? "";
-                _name = value.data()['displayname'];
-                print(_name);
-              }).toList();
-            }
-
-            return CircleAvatar(
-              radius: 60,
-              backgroundImage: (_profileurl.length > 0)
-                  ? NetworkImage(_profileurl)
-                  : AssetImage('assets/images/profile.png'),
-              backgroundColor: Colors.white38,
-            );
-          }
-          return LinearProgressIndicator();
-        });
-  }
-
-  Widget buildImages() {
-    return SliverToBoxAdapter(
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          primary: false,
-          shrinkWrap: true,
-          itemCount: 20,
-          itemBuilder: (context, index) => ImageWidget(index: index),
-        ),
-      );
   }
 }
 
-class CountData extends StatelessWidget {
-  final int postcount;
-  CountData({this.postcount});
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        BoxContent(
-          textInside: "Total Posts",
-          numvalue: postcount,
-        ),
-        BoxContent(
-          textInside: "Total Likes",
-          numvalue: 250,
-        ),
-        BoxContent(
-          textInside: "Arts Sold",
-          numvalue: 2,
-        ),
-      ],
+Widget verticalLine() => Container(
+      color: Colors.black,
+      width: 0.2,
+      height: 22,
     );
-  }
+
+Widget dataColumn(String title, String subtitle) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Text(
+        "$title",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),
+      ),
+      Text(
+        "$subtitle",
+      ),
+    ],
+  );
 }

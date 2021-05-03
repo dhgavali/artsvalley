@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/services/databaseService.dart';
@@ -154,88 +152,61 @@ class EditProfile with ChangeNotifier {
         });
   }
 
-  selectProfileImageType(BuildContext context) {
+  selectProfileImageType(BuildContext context, {String imageurl}) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.3 / 2.5,
+            height: 200,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: Colors.teal[900],
-                borderRadius: BorderRadius.circular(14)),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 150),
-                  child: Divider(
-                    thickness: 4.0,
-                    color: Colors.white10,
-                  ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
+            child: ListView(
+              children: [
+                ListTile(
+                  onTap: () {
+                    showImage(context, imageurl);
+                  },
+                  leading: Icon(Icons.photo),
+                  title: Text("View Photo"),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      child: Column(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.add_photo_alternate_rounded),
-                            iconSize: 35,
-                            color: Colors.lightGreen,
-                            onPressed: () {
-                              Provider.of<EditProfile>(context, listen: false)
-                                  .pickProfileImage(
-                                      context, ImageSource.gallery);
-                            },
-                          ),
-                          SizedBox(
-                            height: 1,
-                          ),
-                          Text(
-                            'Gallery',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 80,
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.add_a_photo),
-                            iconSize: 35,
-                            color: Colors.lightGreen,
-                            onPressed: () {
-                              Provider.of<EditProfile>(context, listen: false)
-                                  .pickProfileImage(
-                                      context, ImageSource.camera);
-                            },
-                          ),
-                          SizedBox(
-                            height: 1,
-                          ),
-                          Text(
-                            'Camera',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                ListTile(
+                  onTap: () {
+                    Provider.of<EditProfile>(context, listen: false)
+                        .pickProfileImage(context, ImageSource.gallery);
+                  },
+                  leading: Icon(Icons.photo),
+                  title: Text("Upload Image From gallary"),
+                ),
+                ListTile(
+                  onTap: () {
+                    Provider.of<EditProfile>(context, listen: false)
+                        .pickProfileImage(context, ImageSource.camera);
+                  },
+                  leading: Icon(Icons.add_a_photo),
+                  title: Text("Upload Image From Camera"),
                 ),
               ],
+            ),
+          );
+        });
+  }
+
+  showImage(BuildContext context, String imageUrl) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            child: FadeInImage(
+              width: 250,
+              height: 250,
+              image: NetworkImage(imageUrl) ?? CircularProgressIndicator(),
+              placeholder: AssetImage("assets/images/spinner.gif"),
             ),
           );
         });

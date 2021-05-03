@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
+import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
-import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
-import 'package:artsvalley/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +60,6 @@ class AuthMethods {
         }
       }
       _sharedpref.saveUserEmail(firebaseUser.user.email);
-      _sharedpref.saveUserName(_username);
       _sharedpref.saveUserId(firebaseUser.user.uid);
       return firebaseUser;
     } catch (error) {
@@ -82,9 +80,8 @@ class AuthMethods {
       final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
       SharedPrefsHelper _sharedpref = SharedPrefsHelper();
       _sharedpref.saveUserEmail(_user.user.email);
-      _sharedpref.saveUserName(_username);
       _sharedpref.saveUserId(_user.user.uid);
-
+       UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
       FirebaseAuth.instance.authStateChanges().listen((User user) {
         if (user != null) {
           Navigator.pushReplacement(
