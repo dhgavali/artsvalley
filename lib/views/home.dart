@@ -6,6 +6,7 @@ import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/views/networkdepend.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings.dart';
+import 'package:artsvalley/views/slideshow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'searchUser.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -63,45 +65,60 @@ class _HomePageState extends State<HomePage> {
               Theme.of(context).copyWith(canvasColor: ProConstants.drawerColor),
           child: MyDrawer(),
         ),
-        body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("posts").snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
-            }
-            print("Stream builder started");
-            if (snapshot.hasData) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return LinearProgressIndicator();
-              }
-              return ListView.builder(
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot mypost = snapshot.data.docs[index];
-                    Map likescount = mypost['likes'];
-                    String currentUser =
-                        Provider.of<User>(context, listen: false).uid;
-                    bool isLiked = likescount[currentUser] == true;
-                    return PostWidget(
-                      username: mypost['username'],
-                      profileurl: (mypost['userProfile'].toString().length > 5)
-                          ? mypost['userProfile']
-                          : "assets/images/profile.png",
-                      posturl: mypost['postUrl'],
-                      caption: mypost['caption'],
-                      likescount: likescount.length,
-                      postId: mypost['postId'],
-                      userId: mypost['userId'],
-                      likes: mypost['likes'],
-                      isLiked: isLiked,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 400,
+                child: Slideshow(),
+              ),
+              StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection("posts").snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(snapshot.error.toString()),
                     );
-                  });
-            }
+                  }
+                  print("Stream builder started");
+                  if (snapshot.hasData) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return LinearProgressIndicator();
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot mypost = snapshot.data.docs[index];
+                          Map likescount = mypost['likes'];
+                          String currentUser =
+                              Provider.of<User>(context, listen: false).uid;
+                          bool isLiked = likescount[currentUser] == true;
+                          return PostWidget(
+                            username: mypost['username'],
+                            profileurl:
+                                (mypost['userProfile'].toString().length > 5)
+                                    ? mypost['userProfile']
+                                    : "assets/images/profile.png",
+                            posturl: mypost['postUrl'],
+                            caption: mypost['caption'],
+                            likescount: likescount.length,
+                            postId: mypost['postId'],
+                            userId: mypost['userId'],
+                            likes: mypost['likes'],
+                            isLiked: isLiked,
+                          );
+                        });
+                  }
 
-            return LinearProgressIndicator();
-          },
+                  return LinearProgressIndicator();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
