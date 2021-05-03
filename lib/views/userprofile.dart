@@ -145,11 +145,13 @@ class UserProfilePage extends StatelessWidget {
                             itemBuilder: (context, index) {
                               DocumentSnapshot mypost =
                                   snapshot.data.docs[index];
-                              log(mypost.data().length.toString());
+                              Map likes = mypost['likes'];
                               return ImageWidget(
                                 index: index,
                                 posturl: mypost['postUrl'],
                                 userId: mypost['userId'],
+                                likescount: likes.length.toString(),
+                                caption: mypost['caption'],
                               );
                             },
                           );

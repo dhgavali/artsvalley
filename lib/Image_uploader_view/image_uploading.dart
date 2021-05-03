@@ -21,7 +21,6 @@ class Image_uploadState extends State<Image_upload> {
   PickedFile pickedFile; //for stoing selected file
 
   Future<void> pickImage(ImageSource source) async {
-    // ignore: non_constant_identifier_names
     pickedFile = await picker.getImage(source: source);
 
     setState(() {
@@ -281,57 +280,6 @@ class Image_uploadState extends State<Image_upload> {
       ),
     );
   }
-  /* Widget progress(){
-  return Container(
-    width: 300,
-    margin: const EdgeInsets.all(10.0),
-      child: Center(
-        child: new LiquidLinearProgressIndicator(
-          value: _per  ,
-          valueColor: AlwaysStoppedAnimation(Colors.orangeAccent[100]),
-          backgroundColor: Colors.white,
-          borderColor: Colors.orange[900],
-          borderWidth: 3.0,
-          direction: Axis.horizontal,
-          center: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('${_progress.toString()} % ',
-            style: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-            ),
-          ),
-        ),
-      ),
-  );
-} */
-
-/* Widget Action(){
-  return Padding(
-    padding: EdgeInsets.only(right: 20.0),
-    child: Align(
-      alignment: Alignment.bottomRight,
-      child: FloatingActionButton(
-        onPressed: (){
-          setState(() {
-            if(_current == _runningstate){
-            return CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            );
-          }
-          else if (_current == _successState){
-            return Icon(Icons.check, color: Colors.white,);
-          }
-          });
-          
-        }
-      ),
-    ),
-  );  
-} */
-
   //For Profile picture
   void showPicker(context) {
     showModalBottomSheet(

@@ -1,4 +1,3 @@
-
 import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +19,7 @@ class PostWidget extends StatefulWidget {
   final bool isLiked;
   final Map likes;
 
- PostWidget(
+  PostWidget(
       {this.profileurl,
       this.username,
       this.posturl,
@@ -69,9 +68,10 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double postHeight = (widget.caption.isEmpty) ? 425.0 : 450.0;
     return Container(
       width: MediaQuery.of(context).size.width - 50,
-    height: 450,
+      height: postHeight,
       margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -123,7 +123,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                         child: Text(widget.username ?? "username",
+                        child: Text(widget.username ?? "username",
                             style:
                                 TextStyle(fontSize: 20.0, color: Colors.white)),
                       ),
