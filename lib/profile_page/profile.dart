@@ -175,17 +175,6 @@ class Profile extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<UploadPost>(context, listen: false)
-              .selectPostImageType(context);
-        },
-        child: Icon(
-          Icons.add_a_photo,
-        ),
-        backgroundColor: ProConstants.secondaryBGColor,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
@@ -199,8 +188,7 @@ class CountData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(right: 38.0, left: 38, top: 15, bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

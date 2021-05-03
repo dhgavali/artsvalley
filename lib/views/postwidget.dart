@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -81,7 +84,7 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width - 50,
-      height: 500,
+      height: 450,
       margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -93,7 +96,7 @@ class _PostWidgetState extends State<PostWidget> {
             ),
           ],
           color: Colors.white),
-      child: Stack(
+      child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -146,7 +149,7 @@ class _PostWidgetState extends State<PostWidget> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: IconButton(
-                        icon: Icon(Icons.more_vert),
+                        icon: Icon(Icons.more_vert, color: Colors.white),
                         onPressed: () {
                           //TODO: done
                         },
@@ -158,12 +161,10 @@ class _PostWidgetState extends State<PostWidget> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 55),
-            constraints: BoxConstraints.expand(
-              height: 300,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
             ),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            //TODO: this is the image fetched from the database which is user post.
+            height: 300,
             child: FadeInImage(
               image: (widget.posturl.length > 1)
                   ? NetworkImage(widget.posturl)
@@ -171,73 +172,69 @@ class _PostWidgetState extends State<PostWidget> {
               placeholder: AssetImage("assets/images/painter.png"),
             ),
           ),
-          Row(
-            children: [
-              
-            ],
-          )
-          ,
-          //TODO: we need to add these icons with changable colors on tap. based on that we need to increment likes or decrement on server and also change the saving priority
-          // Positioned(
-          //   bottom: 60,
-          //   right: 10,
-          //   child: Icon(
-          //     Icons.share,
-          //     size: 40,
-          //     color: Colors.teal,
-          //   ),
-          // ),
-          // Positioned(
-          //   bottom: 60,
-          //   left: 10,
-          //   child: Row(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     children: [
-          //       InkWell(
-          //         //TODO : here is like functionality
-          //         onTap: () {
-          //           doLike();
-          //           // widget.onLiked;
-          //           // DatabaseService().updateLikesDB(widget.postId,
-          //           // log(widget.isLiked.toString());
-          //           //     Provider.of<User>(context, listen: false).uid, true);
-          //         },
-
-          //         child: Icon(
-          //           widget.isLiked ? Icons.favorite : Icons.favorite_border,
-          //           size: 40,
-          //           color: Colors.redAccent,
-          //         ),
-          //       ),
-          //       Text(
-          //         // _likeProvider.count.toString(),
-          //         //
-          //         // "${widget.likescount}",
-          //         "${widget.likescount}",
-          //         style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // Positioned(
-          //   top: 450,
-          //   left: 16,
-          //   child: Container(
-          //     //TODO: needs to fix this text. When the text is bigger than width we need to adjust it to multiline text. So the text will be displayed on next line automatically. and after 3 lines the readmore button will be shown for the longer captions. So when clicked on readmore text will expand to full size page
-          //     child: Text(
-          //       "${widget.caption}",
-          //       overflow: TextOverflow.visible,
-          //     ),
-          //   ),
-          // ),
+          Expanded(
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+              alignment: Alignment.topCenter,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+                color: Colors.black87,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              doLike();
+                            },
+                            child: Icon(
+                              widget.isLiked
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 40,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          Text(
+                            "${widget.likescount}",
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
+                      Icon(
+                        Icons.share,
+                        size: 35,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      widget.caption,
+                      style: TextStyle(color: Colors.white),
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
-//The fixes:
-// 1. we need to check that image quality is maintained based on the data / network speed
-// 2. We need to insure that if image failed to load then it will reload after receiving a network.
-// 3. Image should not overflow out of the box. we need to display full image not cropped inside the layout.
-// 4. other things are mentioned in todo kindly check that.

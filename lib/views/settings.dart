@@ -1,5 +1,4 @@
 import 'package:artsvalley/services/auth.dart';
-import 'package:artsvalley/views/accounts.dart';
 import 'package:artsvalley/views/info/postupload.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +16,12 @@ class SettingsPage extends StatelessWidget {
           children: [
             ListTile(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AccountsPage(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   // MaterialPageRoute(
+                //     // builder: (context) => (),
+                //   ),
+                // );
               },
               leading: Icon(Icons.person),
               title: Text("Account"),
