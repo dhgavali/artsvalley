@@ -52,13 +52,8 @@ class UserProfilePage extends StatelessWidget {
 class UserProfile extends StatelessWidget {
   final String profileurl;
   final String useremail;
-<<<<<<< HEAD
-  final String id;
-=======
-
   final String id;
 
->>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
   String _name;
   UserProfile({
     this.profileurl,
@@ -96,12 +91,6 @@ class UserProfile extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-<<<<<<< HEAD
-              SizedBox(
-                height: 10,
-              ),
-=======
->>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
               Column(
                 children: [
                   Text(
@@ -118,11 +107,7 @@ class UserProfile extends StatelessWidget {
                   SizedBox(
                     height: 50,
                   ),
-<<<<<<< HEAD
                   customDivider(context, Colors.grey),
-=======
-                  customDivider(context),
->>>>>>> a5c58ce5d21b6f03b0a28ad2935adfb527e0339d
                 ],
               )
             ],
