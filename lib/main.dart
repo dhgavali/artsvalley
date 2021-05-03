@@ -6,14 +6,17 @@ import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
+import 'package:artsvalley/services/connectivityService.dart';
 import 'package:artsvalley/services/databaseService.dart';
-import 'package:artsvalley/shared/BottomNavigationBar.dart'; 
+import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+
+import 'enum/connectivityStatus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +25,6 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-    
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -43,30 +45,36 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserDataProvider()),
         ChangeNotifierProvider(create: (context) => LikedCheck()),
       ],
-
-      child: MaterialApp(
-        title: "Arts Valley",
-        theme: ThemeData(
-          primaryColor: ProConstants.primaryColor,
-          primarySwatch: Colors.teal,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          backgroundColor: Color(0xfff1f1f1),
-          textTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: 28.00,
-              fontWeight: FontWeight.bold,
-            ),
-            headline2: TextStyle(
-              fontSize: 26.00,
-              fontWeight: FontWeight.bold,
-            ),
-            bodyText1: TextStyle(
-              fontSize: 20.00,
+      child: StreamProvider<ConnectivityStatus>(
+        create: (_) => ConnectivityService().connectivityStatusController.stream, 
+        child: MaterialApp(
+          title: "Arts Valley",
+          theme: ThemeData(
+            primaryColor: ProConstants.primaryColor,
+            primarySwatch: Colors.teal,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            backgroundColor: Color(0xfff1f1f1),
+            textTheme: TextTheme(
+              headline1: TextStyle(
+                fontSize: 28.00,
+                fontWeight: FontWeight.bold,
+              ),
+              headline2: TextStyle(
+                fontSize: 26.00,
+                fontWeight: FontWeight.bold,
+              ),
+              bodyText1: TextStyle(
+                fontSize: 20.00,
+              ),
             ),
           ),
+          home: AuthenticationWrapper(),
+          debugShowCheckedModeBanner: false,
+          routes: {
+            '/home': (context) => HomePage(),
+            '/profile': (context) => Profile(),
+          },
         ),
-        home: AuthenticationWrapper(),
-        debugShowCheckedModeBanner: false,
       ),
     );
   }

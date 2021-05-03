@@ -29,20 +29,9 @@ class SearchUser extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    /* if (query.length < 3) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text('Search term must be longer than two letters.'),
-          ),
-        ],
-      );
-    } */
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("users")
-            //.where(query, isGreaterThanOrEqualTo: "useremail")
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Loading ...");
@@ -50,11 +39,11 @@ class SearchUser extends SearchDelegate<String> {
           final result = snapshot.data.docs.where((DocumentSnapshot a) =>
               a.data()['useremail'].toString().contains(query));
 
-          String _userid;
+         /*  String _userid;
           snapshot.data.docs.map((values) {
             _userid = values.data()['userId'];
             print(_userid);
-          });
+          }); */
 
           return ListView(
             children: [
@@ -78,7 +67,6 @@ class SearchUser extends SearchDelegate<String> {
                                   profileurl: a.data()['photoUrl'],
                                   useremail: a.data()['useremail'],
                                   displayName: a.data()['displayname'],
-                                  
                                 ),
                               ));
                           //close(context, a.toString());
@@ -87,30 +75,6 @@ class SearchUser extends SearchDelegate<String> {
                   .toList(),
             ],
           );
-
-          /* return ListView.builder(
-              itemCount: snapshot.data.docs.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot a = snapshot.data.docs[index];
-
-                return ListTile(
-                  title: Text(
-                    a.data()['useremail'].toString(),
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  leading: Icon(Icons.person),
-                  subtitle: Text(a.data()['username'].toString()),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserProfilePage(
-                            userid: _userid,
-                          ),
-                        ));
-                  },
-                );
-              }); */
         });
   }
 
@@ -119,7 +83,7 @@ class SearchUser extends SearchDelegate<String> {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("users")
-            .limit(5)
+           // .limit(5)
             //.where(query, isGreaterThanOrEqualTo: "useremail")
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

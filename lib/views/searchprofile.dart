@@ -63,7 +63,7 @@ class SearchProfile extends StatelessWidget {
                   SizedBox(
                     height: 50,
                   ),
-                  customDivider(context, Colors.grey ),
+                  customDivider(context, Colors.grey),
                 ],
               )
             ],

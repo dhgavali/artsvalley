@@ -236,6 +236,7 @@ Widget infoLabel(String label, double fontsize, {Color color = Colors.black}) {
       label,
       overflow: TextOverflow.visible,
       maxLines: 5,
+      
       style: TextStyle(
         fontSize: fontsize,
         color: color,
