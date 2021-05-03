@@ -10,7 +10,6 @@ class UpdateProfileImage extends StatefulWidget {
   @override
   _UpdateProfileImageState createState() => _UpdateProfileImageState();
 }
-
 class _UpdateProfileImageState extends State<UpdateProfileImage> {
   @override
   Widget build(BuildContext context) {

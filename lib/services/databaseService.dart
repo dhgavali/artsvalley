@@ -30,12 +30,6 @@ class DatabaseService with ChangeNotifier {
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
 
-  CollectionReference _favorites =
-      FirebaseFirestore.instance.collection("favorites");
-  CollectionReference _users = FirebaseFirestore.instance.collection("users");
-
-  // TODO: here we also need to create a setter for likes count
-  // Stream set likescount(value) => this._likescount;
   //initial data for stream
 
   Future pickProfileImage(BuildContext context, ImageSource source) async {

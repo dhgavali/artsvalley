@@ -1,7 +1,6 @@
 import 'package:artsvalley/components/text_field_container.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class BoxContent extends StatelessWidget {
   final String textInside;
@@ -259,7 +258,3 @@ Widget headline(BuildContext context, String title) {
     ],
   );
 }
-
-/// Select post ///
-///
-///   //for selecting image either from galary or camera

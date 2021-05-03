@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
-import 'package:artsvalley/providers/likedcheck.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/providers/usersdata.dart';
@@ -44,7 +42,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
         ChangeNotifierProvider(create: (context) => UserDataProvider()),
-        ChangeNotifierProvider(create: (context) => LikedCheck()),
       ],
       child: StreamProvider<ConnectivityStatus>(
         initialData: null,

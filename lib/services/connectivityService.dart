@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:artsvalley/enum/connectivityStatus.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:provider/provider.dart';
 
 class ConnectivityService {
 
@@ -13,8 +11,6 @@ class ConnectivityService {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       //converted this result to enums 
       var connectionStatus = _getStatusFromResult(result);
-
-
       //emiting over the stream
       connectivityStatusController.add(connectionStatus);
       

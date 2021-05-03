@@ -9,13 +9,10 @@ class PassVisibleState with ChangeNotifier {
     notifyListeners();
   }
 
-  //this is for password field
   bool get isVisible => _isVisible;
   void changeVisibility() {
     _isVisible = !_isVisible;
     notifyListeners();
-  // UsersDataProvider().fromMap()
-
   }
 
  
