@@ -1,7 +1,4 @@
-import 'dart:developer';
 
-import 'package:artsvalley/services/databaseService.dart';
-import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,11 +20,7 @@ class PostWidget extends StatefulWidget {
   final bool isLiked;
   final Map likes;
 
-// //This is the constructor for this class which initializes the values that are required to create a post template.
-// // These are named parameters so at the time of calling the constructor you will get hint what to pass to the constructor no need to remember.
-// // This constructor will be called at homepage inside a streambuilder where a values will be fetched from the datbase and then passed to this constructor.
-// //There are required some fixes in this that i have mentioned at the end of this page.
-  PostWidget(
+ PostWidget(
       {this.profileurl,
       this.username,
       this.posturl,
@@ -47,12 +40,6 @@ class _PostWidgetState extends State<PostWidget> {
   int likescount = 0;
   DocumentSnapshot likeRef;
   bool isLiked = false;
-  // bool isLiked;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   doLike() {
     String _currentUser = Provider.of<User>(context, listen: false).uid;
@@ -84,7 +71,7 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width - 50,
-      height: 450,
+    height: 450,
       margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -136,8 +123,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        //TODO: The text widget here represents the username. we need to get this from database.
-                        child: Text(widget.username ?? "username",
+                         child: Text(widget.username ?? "username",
                             style:
                                 TextStyle(fontSize: 20.0, color: Colors.white)),
                       ),
@@ -151,7 +137,7 @@ class _PostWidgetState extends State<PostWidget> {
                       child: IconButton(
                         icon: Icon(Icons.more_vert, color: Colors.white),
                         onPressed: () {
-                          //TODO: done
+                          //TODO: menu option here
                         },
                       ),
                     ),

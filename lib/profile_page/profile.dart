@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/profile_page/image_widget.dart';
-import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -122,7 +121,11 @@ class Profile extends StatelessWidget {
                       ],
                     ),
                     CountData(),
-                    customDivider(context, Colors.black87, thikness: 3.0)
+                    customDivider(
+                      context,
+                      Colors.black38,
+                      thikness: 2.0,
+                    ),
                   ],
                 ),
                 Expanded(
@@ -138,7 +141,6 @@ class Profile extends StatelessWidget {
                         }
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          log("bulder here");
                           return LinearProgressIndicator();
                         }
 
