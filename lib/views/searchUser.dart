@@ -1,7 +1,7 @@
+import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:artsvalley/views/searchprofile.dart';
 
 class SearchUser extends SearchDelegate<String> {
   @override
@@ -19,7 +19,10 @@ class SearchUser extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
       onPressed: () {
         close(context, null);
       },
@@ -29,40 +32,30 @@ class SearchUser extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("users").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("users")
+            .where('username', isEqualTo: query)
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Loading ...");
 
-          final result = snapshot.data.docs.where(
-            (DocumentSnapshot a) =>
-                a.data()['username'].toString().contains(query),
-          );
-
           return ListView(
             children: [
-              ...result
+              ...snapshot.data.docs
                   .map<ListTile>((a) => ListTile(
                         title: Text(
                           a.data()['displayname'].toString(),
                           style: TextStyle(color: Colors.black),
                         ),
-                        leading: Icon(Icons.person),
+                        leading: CircleAvatar(
+                          backgroundImage: (a.data()['photoUrl'] != null)
+                              ? NetworkImage(a.data()['photoUrl'])
+                              : AssetImage('assets/images/person.png'),
+                        ),
                         subtitle: Text(a.data()['username'].toString()),
                         onTap: () {
-                          print('ontap');
-                          print(a.data()['useremail']);
-                          print(a.data()['photoUrl']);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SearchProfile(
-                                  id: a.data()['userId'],
-                                  profileurl: a.data()['photoUrl'],
-                                  useremail: a.data()['useremail'],
-                                  displayName: a.data()['displayname'],
-                                ),
-                              ));
-                          //close(context, a.toString());
+                          query = a.data()['username'];
+                          openUserProfile(context, a.data()['userid']);
                         },
                       ))
                   .toList(),
@@ -73,9 +66,13 @@ class SearchUser extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return StreamBuilder(
-        stream:
-            FirebaseFirestore.instance.collection("users").limit(5).snapshots(),
+    return StreamBuilder<QuerySnapshot>(
+        stream: query.isEmpty
+            ? FirebaseFirestore.instance
+                .collection("users")
+                .limit(3)
+                .snapshots()
+            : FirebaseFirestore.instance.collection("users").snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Loading ...");
 
@@ -99,14 +96,25 @@ class SearchUser extends SearchDelegate<String> {
                               ? NetworkImage(a.data()['photoUrl'])
                               : AssetImage('assets/images/profile.png'),
                         ),
-                        subtitle: Text(a.data()['username'].toString()),
+                        subtitle: Text(
+                          a.data()['username'].toString(),
+                        ),
                         onTap: () {
-                          query = a.data()['username'];
+                          openUserProfile(context, a.data()['userid']);
                         },
                       ))
                   .toList(),
             ],
           );
         });
+  }
+
+  openUserProfile(BuildContext context, String userId) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => UserProfilePage(
+                  userid: userId,
+                )));
   }
 }
