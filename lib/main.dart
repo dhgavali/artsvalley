@@ -11,7 +11,6 @@ import 'package:artsvalley/services/connectivityService.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

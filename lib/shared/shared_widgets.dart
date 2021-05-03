@@ -236,13 +236,27 @@ Widget infoLabel(String label, double fontsize, {Color color = Colors.black}) {
       label,
       overflow: TextOverflow.visible,
       maxLines: 5,
-      
       style: TextStyle(
         fontSize: fontsize,
         color: color,
         fontWeight: FontWeight.w600,
       ),
     ),
+  );
+}
+
+Widget headline(BuildContext context, String title) {
+  return Column(
+    children: [
+      Text(
+        "$title",
+        style: TextStyle(
+            fontSize: ProConstants.headingsize, fontWeight: FontWeight.bold),
+      ),
+      Container(
+          width: MediaQuery.of(context).size.width,
+          child: customDivider(context, Colors.grey)),
+    ],
   );
 }
 

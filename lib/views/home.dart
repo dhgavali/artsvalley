@@ -2,6 +2,7 @@ import 'package:artsvalley/enum/connectivityStatus.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/views/networkdepend.dart';
 import 'package:artsvalley/views/searchUser.dart';
@@ -68,10 +69,17 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(
+                height: 2,
+              ),
+              headline(context, "Top Post"),
               Container(
-                height: 400,
+                height: 300,
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black54)),
                 child: Slideshow(),
               ),
+              headline(context, "Browse Arts"),
               StreamBuilder(
                 stream:
                     FirebaseFirestore.instance.collection("posts").snapshots(),
@@ -87,9 +95,9 @@ class _HomePageState extends State<HomePage> {
                       return LinearProgressIndicator();
                     }
                     return ListView.builder(
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        scrollDirection: Axis.vertical,
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (context, index) {
                           DocumentSnapshot mypost = snapshot.data.docs[index];

@@ -9,7 +9,6 @@ class Slideshow extends StatefulWidget {
 
 class _SlideshowState extends State<Slideshow> {
   int _index = 0;
- // int _dataLength = 1;
 
   @override
   void initState() {
@@ -19,12 +18,8 @@ class _SlideshowState extends State<Slideshow> {
 
   Future getSlideshowImageFromdb() async {
     var _firestore = FirebaseFirestore.instance;
-    QuerySnapshot snapshot = await _firestore.collection('posts').get();
-   /*  if (mounted) {
-      setState(() {
-        _dataLength = snapshot.docs.length;
-      });
-    } */
+    QuerySnapshot snapshot =
+        await _firestore.collection('posts').limit(5).get();
     return snapshot.docs;
   }
 
@@ -45,7 +40,6 @@ class _SlideshowState extends State<Slideshow> {
                       child: CarouselSlider.builder(
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index, _) {
-                          
                           DocumentSnapshot slideimagesnap =
                               snapshot.data[index];
                           Map getImage = slideimagesnap.data();
@@ -58,13 +52,12 @@ class _SlideshowState extends State<Slideshow> {
                           );
                         },
                         options: CarouselOptions(
-                            height: 300,
+                            height: 250,
                             aspectRatio: 16 / 9,
                             viewportFraction: 0.8,
                             initialPage: 0,
                             autoPlay: true,
                             scrollDirection: Axis.horizontal,
-                           // autoPlayInterval: Duration(seconds: 3),
                             autoPlayAnimationDuration:
                                 Duration(milliseconds: 800),
                             autoPlayCurve: Curves.fastOutSlowIn,
@@ -77,7 +70,6 @@ class _SlideshowState extends State<Slideshow> {
                       ),
                     );
             }),
-        //if(_dataLength != 0){}
       ],
     );
   }
