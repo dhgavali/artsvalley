@@ -48,7 +48,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LikedCheck()),
       ],
       child: StreamProvider<ConnectivityStatus>(
-        create: (_) => ConnectivityService().connectivityStatusController.stream, 
+        initialData: null,
+        create: (_) =>
+            ConnectivityService().connectivityStatusController.stream,
         child: MaterialApp(
           title: "Arts Valley",
           theme: ThemeData(
@@ -72,10 +74,6 @@ class MyApp extends StatelessWidget {
           ),
           home: AuthenticationWrapper(),
           debugShowCheckedModeBanner: false,
-          routes: {
-            '/home': (context) => HomePage(),
-            '/profile': (context) => Profile(),
-          },
         ),
       ),
     );
