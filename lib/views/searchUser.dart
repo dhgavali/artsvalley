@@ -1,4 +1,3 @@
-import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -30,27 +29,21 @@ class SearchUser extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection("users")
-            .snapshots(),
+        stream: FirebaseFirestore.instance.collection("users").snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Loading ...");
 
-          final result = snapshot.data.docs.where((DocumentSnapshot a) =>
-              a.data()['useremail'].toString().contains(query));
-
-         /*  String _userid;
-          snapshot.data.docs.map((values) {
-            _userid = values.data()['userId'];
-            print(_userid);
-          }); */
+          final result = snapshot.data.docs.where(
+            (DocumentSnapshot a) =>
+                a.data()['username'].toString().contains(query),
+          );
 
           return ListView(
             children: [
               ...result
                   .map<ListTile>((a) => ListTile(
                         title: Text(
-                          a.data()['useremail'].toString(),
+                          a.data()['displayname'].toString(),
                           style: TextStyle(color: Colors.black),
                         ),
                         leading: Icon(Icons.person),
@@ -81,31 +74,34 @@ class SearchUser extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection("users")
-           // .limit(5)
-            //.where(query, isGreaterThanOrEqualTo: "useremail")
-            .snapshots(),
+        stream:
+            FirebaseFirestore.instance.collection("users").limit(5).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Loading ...");
 
-          final result = snapshot.data.docs.where((DocumentSnapshot a) =>
-              a.data()['useremail'].toString().contains(query));
+          final result = snapshot.data.docs.where(
+            (DocumentSnapshot a) =>
+                a.data()['username'].toString().startsWith(query),
+          );
 
           return ListView(
             children: [
               ...result
                   .map<ListTile>((a) => ListTile(
                         title: Text(
-                          a.data()['useremail'].toString(),
+                          a.data()['displayname'].toString(),
                           style: TextStyle(
                             color: Colors.lightBlue,
                           ),
                         ),
-                        leading: Icon(Icons.person),
+                        leading: CircleAvatar(
+                          backgroundImage: (a.data()['photoUrl'] != null)
+                              ? NetworkImage(a.data()['photoUrl'])
+                              : AssetImage('assets/images/profile.png'),
+                        ),
                         subtitle: Text(a.data()['username'].toString()),
                         onTap: () {
-                          query = a.data()['useremail'];
+                          query = a.data()['username'];
                         },
                       ))
                   .toList(),
