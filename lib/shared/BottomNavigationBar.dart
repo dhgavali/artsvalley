@@ -1,6 +1,7 @@
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/views/home.dart';
+import 'package:artsvalley/views/settings.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,9 @@ class HomePageCurvedBottomNav extends StatefulWidget {
 }
 
 class _HomePageCurvedBottomNavState extends State<HomePageCurvedBottomNav> {
+  
   int selectedPage = 0;
-  var _pages = [HomePage(), null, Profile()];
+  var _pages = [HomePage(), HomePage(), Profile()];
 
   @override
   Widget build(BuildContext context) {
@@ -47,18 +49,17 @@ class _HomePageCurvedBottomNavState extends State<HomePageCurvedBottomNav> {
               color: Colors.white,
             ),
           ),
-
           Icon(Icons.person, color: Colors.white),
         ],
         onTap: (index) {
-          switch (index) {
-            case 0:
-            case 2:
-              setState(() {
-                selectedPage = index;
-              });
-              break;
-          }
+          // switch (index) {
+          //   case 0:
+          //   case 2:
+          setState(() {
+            selectedPage = index;
+          });
+          // break;
+          // }
         },
         animationDuration: Duration(
           milliseconds: 200,

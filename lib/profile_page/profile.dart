@@ -20,7 +20,7 @@ class Profile extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(user.displayName),
+        title: Text("Profile"),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
