@@ -178,13 +178,13 @@ class Profile extends StatelessWidget {
                             },
                           );
                         }
-                        return CircularProgressIndicator();
+                        return LinearProgressIndicator();
                       }),
                 ),
               ],
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return LinearProgressIndicator();
         },
       ),
     );

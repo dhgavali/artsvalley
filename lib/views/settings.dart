@@ -1,12 +1,14 @@
 import 'package:artsvalley/services/auth.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/accountspage.dart';
-
-import 'package:artsvalley/views/info/postupload.dart';
+import 'package:artsvalley/views/savedarts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class SettingsPage extends StatelessWidget {
+  
   final TextEditingController nameController = new TextEditingController();
 
   validateName(String value) {}
@@ -19,43 +21,33 @@ class SettingsPage extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AccountsPage(),
-                  ),
-                );
-              },
-              leading: Icon(Icons.person),
-              title: Text("Account"),
+            customCard(
+              context: context,
+              icon: Icons.person,
+              title: "Accounts",
+              destination: AccountsPage(),
             ),
-            Card(
-              color: Colors.red,
-              child: ListTile(
-                onTap: () {
-                  showTutorial(context);
-                },
-                leading: Icon(Icons.bookmark),
-                title: Text("Saved Arts"),
-              ),
+            customCard(
+              context: context,
+              icon: Icons.bookmark,
+              title: "Achievement",
+              destination: SavedArts(),
             ),
-            Card(
-              child: ListTile(
-                onTap: () {
-                  showTutorial(context);
-                },
-                leading: Icon(Icons.bookmark),
-                title: Text("Saved Arts"),
-              ),
+            customCard(
+              context: context,
+              icon: Icons.bookmark,
+              title: "Saved Arts",
+              destination: SavedArts(),
             ),
-            ListTile(
+            GestureDetector(
               onTap: () {
                 Provider.of<AuthMethods>(context, listen: false).signOut();
               },
-              leading: Icon(Icons.logout),
-              title: Text("Logout"),
+              child: customCard(
+                color: ProConstants.seagreen,
+                icon: Icons.logout,
+                title: "Lougout",
+              ),
             ),
           ],
         ),
@@ -104,19 +96,31 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-Widget customCard({BuildContext context, Color color, String title, IconData icon, Function onTapHandler}) {
+Widget customCard(
+    {BuildContext context,
+    Color color = const Color(0xff041F1E),
+    String title,
+    IconData icon,
+    dynamic destination}) {
   return Card(
     color: color,
     child: ListTile(
       onTap: () {
-        onTapHandler(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => destination,
+          ),
+        );
       },
-      leading: Icon(icon),
-      title: Text(title),
+      leading: Icon(
+        icon,
+        color: Colors.white,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(color: Colors.white, fontSize: 20, letterSpacing: 0.5),
+      ),
     ),
   );
-}
-
-onTapHandler(){
-  
 }

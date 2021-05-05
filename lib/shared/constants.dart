@@ -19,6 +19,14 @@ const kPrimaryLightColor = Color(0xFFF1E6FF);
 // rich black - olive : 023C40
 // mellow apricot - FFC07F
 // forest green : 57A773
+// color: Color(0xff17183B),
+    // color: Color(0xff0A2463),
+    // color: Color(0xff1D1128),
+    // color: Color(0xff0E1C36),
+    // color: Color(0xffDD1C1A),
+    // color: Color(0xffFF1654),
+    // color: Color(0xff30011E),
+    // color: Color(0xff041F1E),
 // imperial red : FF0035
 class ProConstants {
   //colors

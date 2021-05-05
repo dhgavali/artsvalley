@@ -143,16 +143,9 @@ class _CaptionPostState extends State<CaptionPost> {
                         ),
                       ),
                       color: Colors.blueGrey,
-                      //creating key value pair here
-                      //TODO: Post map here
                       onPressed: () async {
                         String _username = await _prefs.getUsername();
                         String _userProfile = await _prefs.getUserProfile();
-
-                        log("upladoing post");
-                        log("username is $_username");
-                        log("username profile url is $_userProfile");
-                        print(user.email);
                         var uid =
                             Provider.of<UploadPost>(context, listen: false)
                                 .uuid;
