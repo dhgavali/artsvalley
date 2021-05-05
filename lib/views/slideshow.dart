@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -9,6 +10,7 @@ class Slideshow extends StatefulWidget {
 
 class _SlideshowState extends State<Slideshow> {
   int _index = 0;
+  int _dataLength = 1;
 
   @override
   void initState() {
@@ -22,6 +24,13 @@ class _SlideshowState extends State<Slideshow> {
     var _firestore = FirebaseFirestore.instance;
     QuerySnapshot snapshot =
         await _firestore.collection('posts').limit(5).get();
+
+    if (mounted) {
+      setState(() {
+        _dataLength = snapshot.docs.length;
+      });
+    }
+
     return snapshot.docs;
   }
 
@@ -72,6 +81,20 @@ class _SlideshowState extends State<Slideshow> {
                       ),
                     );
             }),
+        SizedBox(
+          height: 10,
+        ),
+        if (_dataLength != 0)
+          DotsIndicator(
+            dotsCount: _dataLength,
+            position: _index.toDouble(),
+            decorator: DotsDecorator(
+                size: Size.square(10.0),
+                activeSize: Size(19.0, 9.0),
+                activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+                activeColor: Theme.of(context).primaryColor),
+          ),
       ],
     );
   }

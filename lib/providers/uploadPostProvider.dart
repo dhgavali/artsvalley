@@ -78,6 +78,16 @@ class UploadPost with ChangeNotifier {
     notifyListeners();
   }
 
+  Future deleteImageFromDb() async{
+    //final Reference ref = FirebaseStorage.instance.ref().child(uploadPostImage.path);
+    final data = FirebaseStorage.instance.refFromURL(uploadPostImageUrl);
+    try {
+      await data.delete();
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   selectPostImageType(BuildContext context) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
