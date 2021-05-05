@@ -32,7 +32,8 @@ class _CaptionPostState extends State<CaptionPost> {
                 child: Text("Continue"),
               ),
               TextButton(
-                onPressed: () {
+                onPressed: () async{
+                 await  Provider.of<UploadPost>(context,listen: false).deleteImageFromDb();
                   //TODO: delete the post from the database
                   //access using provider or pass the values to the captionpost constructor.
                   Navigator.pushAndRemoveUntil(
