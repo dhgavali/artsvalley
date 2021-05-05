@@ -52,7 +52,6 @@ class _HomePageCurvedBottomNavState extends State<HomePageCurvedBottomNav> {
         buttonBackgroundColor: Color(0xffFF3864),
         items: <Widget>[
           Icon(Icons.home, color: Colors.white),
-          Expanded(child: SizedBox()),
           Icon(Icons.person, color: Colors.white),
         ],
         onTap: (index) {
@@ -65,7 +64,7 @@ class _HomePageCurvedBottomNavState extends State<HomePageCurvedBottomNav> {
           });
         },
         animationDuration: Duration(
-          milliseconds: 350,
+          milliseconds: 300,
         ),
         animationCurve: Curves.easeInOut,
       ),

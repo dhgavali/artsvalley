@@ -6,13 +6,22 @@ import 'package:flutter/cupertino.dart';
 ///
 class LoadingProvider with ChangeNotifier {
   bool _isLoaded = false;
+  bool _islinearloading = false;
 
   get isLoaded => this._isLoaded;
+  get isIndicatorLoaded => this._islinearloading;
 
   set isLoaded(value) => this._isLoaded;
+  set isLinearLoaded(value) => this._islinearloading;
 
+  
   void loadPage(bool state) {
     _isLoaded = state;
+    notifyListeners();
+  }
+
+  void loadLinearProgress(bool state) {
+    _islinearloading = state;
     notifyListeners();
   }
 }

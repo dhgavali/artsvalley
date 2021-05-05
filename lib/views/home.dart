@@ -35,100 +35,78 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return NetworkDepend(
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        appBar: AppBar(
-          title: Text(
-            "ArtsValley",
-            style: GoogleFonts.dancingScript(
-                textStyle:
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () async {
-                await showSearch(
-                  context: context,
-                  delegate: SearchUser(),
-                );
-              },
-              icon: Icon(Icons.search),
+          backgroundColor: Theme.of(context).backgroundColor,
+          appBar: AppBar(
+            title: Text(
+              "ArtsValley",
+              style: GoogleFonts.dancingScript(
+                  textStyle:
+                      TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                right: 16,
-              ),
-            ),
-          ],
-        ),
-        drawer: Theme(
-          data:
-              Theme.of(context).copyWith(canvasColor: ProConstants.drawerColor),
-          child: MyDrawer(),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 2,
-              ),
-              headline(context, "Top Arts"),
-              Container(
-                height: 300,
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black54)),
-                child: Slideshow(),
-              ),
-              headline(context, "Browse Arts"),
-              StreamBuilder(
-                stream:
-                    FirebaseFirestore.instance.collection("posts").snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text(snapshot.error.toString()),
-                    );
-                  }
-                  print("Stream builder started");
-                  if (snapshot.hasData) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return LinearProgressIndicator();
-                    }
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot mypost = snapshot.data.docs[index];
-                          Map likescount = mypost['likes'];
-                          String currentUser =
-                              Provider.of<User>(context, listen: false).uid;
-                          bool isLiked = likescount[currentUser] == true;
-                          return PostWidget(
-                            username: mypost['username'],
-                            profileurl:
-                                (mypost['userProfile'].toString().length > 5)
-                                    ? mypost['userProfile']
-                                    : "assets/images/profile.png",
-                            posturl: mypost['postUrl'],
-                            caption: mypost['caption'],
-                            likescount: likescount.length,
-                            postId: mypost['postId'],
-                            userId: mypost['userId'],
-                            likes: mypost['likes'],
-                            isLiked: isLiked,
-                          );
-                        });
-                  }
-
-                  return LinearProgressIndicator();
+            centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await showSearch(
+                    context: context,
+                    delegate: SearchUser(),
+                  );
                 },
+                icon: Icon(Icons.search),
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                  right: 16,
+                ),
               ),
             ],
           ),
-        ),
-      ),
+          drawer: Theme(
+            data: Theme.of(context)
+                .copyWith(canvasColor: ProConstants.drawerColor),
+            child: MyDrawer(),
+          ),
+          body: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error.toString()),
+                );
+              }
+              print("Stream builder into the original");
+              if (snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return LinearProgressIndicator();
+                }
+                return ListView.builder(
+                    itemCount: snapshot.data.docs.length,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot mypost = snapshot.data.docs[index];
+                      Map likescount = mypost['likes'];
+                      String currentUser =
+                          Provider.of<User>(context, listen: false).uid;
+                      bool isLiked = likescount[currentUser] == true;
+                      return PostWidget(
+                        username: mypost['username'],
+                        profileurl:
+                            (mypost['userProfile'].toString().length > 5)
+                                ? mypost['userProfile']
+                                : "assets/images/profile.png",
+                        posturl: mypost['postUrl'],
+                        caption: mypost['caption'],
+                        likescount: likescount.length,
+                        postId: mypost['postId'],
+                        userId: mypost['userId'],
+                        likes: mypost['likes'],
+                        isLiked: isLiked,
+                      );
+                    });
+              }
+
+              return LinearProgressIndicator();
+            },
+          )),
     );
   }
 }
@@ -152,11 +130,6 @@ class MyDrawer extends StatelessWidget {
           ),
           SizedBox(
             height: 150,
-            child: Container(
-              child: Column(
-                children: [],
-              ),
-            ),
           ),
           menuItem("Home", Icons.home),
           menuItem("Profile", Icons.person),
