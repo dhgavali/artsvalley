@@ -24,14 +24,27 @@ class HomePageCurvedBottomNav extends StatefulWidget {
 }
 
 class _HomePageCurvedBottomNavState extends State<HomePageCurvedBottomNav> {
-  
   int selectedPage = 0;
-  var _pages = [HomePage(), HomePage(), Profile()];
+  var _pages = [HomePage(), Profile()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[selectedPage],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Provider.of<UploadPost>(context, listen: false)
+              .selectPostImageType(context);
+        },
+        child: Icon(
+          Icons.add_a_photo,
+          color: Colors.white,
+        ),
+        backgroundColor: Color(0xffFF3864),
+        tooltip: "Upload a post",
+        elevation: 2.0,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CurvedNavigationBar(
         height: 50,
         color: Color(0xffB20D30),
@@ -39,32 +52,22 @@ class _HomePageCurvedBottomNavState extends State<HomePageCurvedBottomNav> {
         buttonBackgroundColor: Color(0xffFF3864),
         items: <Widget>[
           Icon(Icons.home, color: Colors.white),
-          InkWell(
-            onTap: () {
-              Provider.of<UploadPost>(context, listen: false)
-                  .selectPostImageType(context);
-            },
-            child: Icon(
-              Icons.add_a_photo,
-              color: Colors.white,
-            ),
-          ),
+          Expanded(child: SizedBox()),
           Icon(Icons.person, color: Colors.white),
         ],
         onTap: (index) {
-          // switch (index) {
-          //   case 0:
-          //   case 2:
           setState(() {
-            selectedPage = index;
+            if (index == 2 || index == 1) {
+              selectedPage = 1;
+            } else {
+              selectedPage = index;
+            }
           });
-          // break;
-          // }
         },
         animationDuration: Duration(
-          milliseconds: 200,
+          milliseconds: 350,
         ),
-        animationCurve: Curves.bounceInOut,
+        animationCurve: Curves.easeInOut,
       ),
     );
   }

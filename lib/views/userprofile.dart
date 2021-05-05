@@ -18,7 +18,7 @@ class UserProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("usersProfile"),
+        title: Text("Profile"),
       ),
       body: StreamBuilder<UserProfileData>(
         stream: FetchUserData(userid: userid).userData,
@@ -55,7 +55,7 @@ class UserProfilePage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(100),
                                 ),
                                 child: CircleAvatar(
-                                  radius: 50,
+                                  radius: 40,
                                   backgroundImage: (userData.userProfile !=
                                           null)
                                       ? NetworkImage(userData.userProfile)

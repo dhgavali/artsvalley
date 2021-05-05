@@ -1,4 +1,5 @@
 import 'package:artsvalley/services/auth.dart';
+import 'package:artsvalley/views/accountspage.dart';
 
 import 'package:artsvalley/views/info/postupload.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,20 +13,42 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Settings"),
+      ),
       body: SafeArea(
         child: ListView(
           children: [
             ListTile(
               onTap: () {
-                /* Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => AccountsPage(),
                   ),
-                ); */
+                );
               },
               leading: Icon(Icons.person),
               title: Text("Account"),
+            ),
+            Card(
+              color: Colors.red,
+              child: ListTile(
+                onTap: () {
+                  showTutorial(context);
+                },
+                leading: Icon(Icons.bookmark),
+                title: Text("Saved Arts"),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  showTutorial(context);
+                },
+                leading: Icon(Icons.bookmark),
+                title: Text("Saved Arts"),
+              ),
             ),
             ListTile(
               onTap: () {
@@ -33,20 +56,6 @@ class SettingsPage extends StatelessWidget {
               },
               leading: Icon(Icons.logout),
               title: Text("Logout"),
-            ),
-            ListTile(
-              onTap: () {
-                showTutorial(context);
-              },
-              leading: Icon(Icons.info),
-              title: Text("Tutorial"),
-            ),
-            ListTile(
-              onTap: () {
-                checkTheDb("aEn7bpiTNM8GceD50SaQ");
-              },
-              leading: Icon(Icons.info),
-              title: Text("Tutorial"),
             ),
           ],
         ),
@@ -93,4 +102,21 @@ class SettingsPage extends StatelessWidget {
           );
         });
   }
+}
+
+Widget customCard({BuildContext context, Color color, String title, IconData icon, Function onTapHandler}) {
+  return Card(
+    color: color,
+    child: ListTile(
+      onTap: () {
+        onTapHandler(context);
+      },
+      leading: Icon(icon),
+      title: Text(title),
+    ),
+  );
+}
+
+onTapHandler(){
+  
 }

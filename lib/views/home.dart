@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 2,
               ),
-              headline(context, "Top Post"),
+              headline(context, "Top Arts"),
               Container(
                 height: 300,
                 decoration:

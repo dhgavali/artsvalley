@@ -25,10 +25,17 @@ class Profile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: IconButton(
-              icon: Icon(Icons.settings, size: 28),
+              icon: Icon(
+                Icons.settings,
+                size: 28,
+              ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SettingsPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsPage(),
+                  ),
+                );
               },
             ),
           ),

@@ -23,7 +23,6 @@ class UploadPost with ChangeNotifier {
     uploadPostImageVal == null
         ? print('select Image')
         : uploadPostImage = File(uploadPostImageVal.path);
-    print(uploadPostImageVal.path);
 
     uploadPostImage != null
         ? Navigator.push(
@@ -76,12 +75,10 @@ class UploadPost with ChangeNotifier {
         .putFile(uploadPostImage);
     final String downloadurl = await tasksnapshot.ref.getDownloadURL();
     uploadPostImageUrl = downloadurl;
-    print(uploadPostImageUrl);
     notifyListeners();
   }
 
   selectPostImageType(BuildContext context) {
-    print("select post called");
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -111,6 +108,7 @@ class UploadPost with ChangeNotifier {
                             onPressed: () {
                               //Picking the image from gallary passing the context.
                               pickUploadPostImage(context, ImageSource.gallery);
+                              
                             },
                           ),
                           Text(
