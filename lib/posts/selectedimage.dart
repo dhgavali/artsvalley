@@ -1,3 +1,4 @@
+import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,8 @@ import 'captionpost.dart';
 class SelectedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var _loadProvider = Provider.of<LoadingProvider>(context, listen: false);
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -17,13 +20,29 @@ class SelectedImage extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
+              Container(
+                height: 10,
+                color: Colors.red,
+                child: Consumer<LoadingProvider>(
+                  builder: (context, value, child) {
+                    return value.isIndicatorLoaded
+                        ? LinearProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                            backgroundColor: Colors.grey,
+                          )
+                        : Container(
+                            height: 10.0,
+                            color: Colors.white,
+                          );
+                  },
+                ),
+              ),
               Expanded(
                 child: Stack(
                   children: <Widget>[
                     Container(
                       height: MediaQuery.of(context).size.height * .60,
-                      // width: MediaQuery.of(context).size.width ,
-                      
                       margin: const EdgeInsets.only(
                           left: 20.0, right: 20.0, top: 20.0),
                       child: ClipRRect(
@@ -72,10 +91,14 @@ class SelectedImage extends StatelessWidget {
                         'Upload Image',
                         style: ProConstants.infoText,
                       ),
-                      onPressed: () {
-                        Provider.of<UploadPost>(context, listen: false)
+                      onPressed: () async {
+                        print("${_loadProvider.isIndicatorLoaded}");
+                        _loadProvider.loadLinearProgress(true);
+                        await Provider.of<UploadPost>(context, listen: false)
                             .uploadPostToStorage()
                             .whenComplete(() {
+                          _loadProvider.loadLinearProgress(false);
+                          print("${_loadProvider.isIndicatorLoaded}");
                           Navigator.push(
                               context,
                               CupertinoPageRoute(

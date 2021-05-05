@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,11 +26,6 @@ class MyDrawer extends StatelessWidget {
           ),
           SizedBox(
             height: 150,
-            child: Container(
-              child: Column(
-                children: [],
-              ),
-            ),
           ),
           menuItem("Home", Icons.home),
           menuItem("Profile", Icons.person),
