@@ -29,6 +29,7 @@ class ImageWidget extends StatelessWidget {
               imageurl: posturl,
               caption: caption ?? '',
               likesCount: 10,
+              postid: postId,
             ),
           ),
         );

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:artsvalley/posts/selectedimage.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -130,6 +131,18 @@ class UploadPost with ChangeNotifier {
     }
  */
     
+    
+  }
+
+
+  Future deleteFromCloudAndDb(String postid) async{
+    try {
+      FirebaseFirestore.instance.collection('posts').doc(postid).delete();
+      print("post Deleted");
+      
+    } catch (e) {
+      e.toString();
+    }
     
   }
 

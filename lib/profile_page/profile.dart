@@ -173,6 +173,7 @@ class Profile extends StatelessWidget {
                                 posturl: mypost['postUrl'],
                                 userId: mypost['userId'],
                                 caption: mypost['caption'],
+                                postId: mypost['postId'],
                                 likescount: likes.length.toString(),
                               );
                             },
