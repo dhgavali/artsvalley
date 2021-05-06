@@ -129,11 +129,12 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 150,
+            height: 100,
           ),
           menuItem("Home", Icons.home),
           menuItem("Profile", Icons.person),
           menuItem("Explore", Icons.explore),
+          menuItem("Art Store", Icons.store),
           GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -175,6 +176,7 @@ class MyDrawer extends StatelessWidget {
       leading: Icon(
         icons,
         color: ProConstants.bgcolor,
+        size: 28.0,
       ),
       title: Text(
         value,
