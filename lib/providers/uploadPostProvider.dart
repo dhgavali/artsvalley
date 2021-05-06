@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/posts/selectedimage.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -78,14 +79,58 @@ class UploadPost with ChangeNotifier {
     notifyListeners();
   }
 
+  final _storageBucket = FirebaseStorage.instanceFor(
+      bucket: 'gs://art-valley.appspot.com',
+    );
+
   Future deleteImageFromDb() async{
-    //final Reference ref = FirebaseStorage.instance.ref().child(uploadPostImage.path);
-    final data = FirebaseStorage.instance.refFromURL(uploadPostImageUrl);
+    /* final Reference ref = FirebaseStorage.instance.refFromURL(uploadPostImageUrl);
     try {
-      await data.delete();
+      log(ref.toString());
+      await ref.delete();
+      log("check is it deleted or not !!!!!!!!!");
+      return true;
     } catch (e) {
       return e.toString();
+    } */
+
+    if(uploadPostImage != null) {
+     //Reference reference =  FirebaseStorage.instance.ref(uploadPostImage.path);
+      String filePath = uploadPostImageUrl.replaceAll(new RegExp(r'https://firebasestorage.googleapis.com/v0/b/art-valley.appspot.com/o/posts%2Fdata%2Fuser%2F0%2Fcom.dhenterprises.artsvalley%2Fcache%2F'), '');
+      filePath = filePath.replaceAll(new RegExp(r'%2F'), '/');
+
+      filePath = filePath.replaceAll(new RegExp(r'(\?alt).*'), '');
+
+      Reference reference = FirebaseStorage.instance.ref();
+      reference.child(filePath).delete().then((_) => print('Successfully deleted $filePath storage item' ));
+
+     //FirebaseStorage.instance.ref().child(filepath).delete().then((_) => print("Successfully deleted $filepath storage item"));
+      //print(reference);
+      //log(uploadPostImageUrl);
+      //await reference.delete();
+
+      /* try { 
+      await reference.delete();
+      print('check wheter it is deleted or not ??!!');
+      } catch (e){
+        e.toString();
+      } */
     }
+
+/*     var photo = _storageBucket.refFromURL(uploadPostImageUrl);
+    log(photo.toString());
+    print('checkkkkk!!!!!');
+    await photo.delete(); */
+
+   /*  try {
+    var photo = FirebaseStorage.instance.ref(uploadPostImage.path).delete();
+    log(photo.toString());
+    } catch (e) {
+      debugPrint('error deleting $e');
+    }
+ */
+    
+    
   }
 
   selectPostImageType(BuildContext context) {
