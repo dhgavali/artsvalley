@@ -139,7 +139,7 @@ class EditProfile with ChangeNotifier {
                                 )
                                 .update({'photoUrl': userProfileImageUrl});
                             Navigator.pop(context);
-                            //TODO make changes according to u for photo url . (on whencomplete this will sort out).
+                            
                           });
                         },
                       ),

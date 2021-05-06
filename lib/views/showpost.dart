@@ -1,5 +1,7 @@
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
+import 'package:artsvalley/routes.dart';
+import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,17 +59,17 @@ class ShowPost extends StatelessWidget {
                                 Provider.of<UploadPost>(context, listen: false)
                                     .deleteFromCloudAndDb(this.postid)
                                     .whenComplete(() {
-                                      //TODO: use pushsnfremoveuntil here 
+                                  //TODO: use pushsnfremoveuntil here
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => Profile()));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      new SnackBar(
-                                          content: Text("Post Deleted")
-                                          //duration: Duration(seconds: 2),
-                                          
-                                          ));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(new SnackBar(
+                                    content: Text("Post Deleted"),
+                                    behavior: SnackBarBehavior.floating,
+                                    duration: Duration(seconds: 2),
+                                  ));
                                 });
                               },
                               child: Text('Continue')),

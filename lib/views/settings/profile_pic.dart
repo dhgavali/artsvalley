@@ -23,12 +23,21 @@ class ProfilePic extends StatelessWidget {
             child: SizedBox(
               height: 46,
               width: 46,
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
+              child: TextButton(
+                 style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.00),
+              side: BorderSide(color: Colors.white),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.amberAccent)
+        ),
+                /* shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
                   side: BorderSide(color: Colors.white),
                 ),
-                color: Color(0xFFF5F6F9),
+                color: Color(0xFFF5F6F9), */
                 onPressed: () {},
                 child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
               ),

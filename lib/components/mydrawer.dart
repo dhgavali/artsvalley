@@ -1,7 +1,7 @@
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
-import 'package:artsvalley/views/settings.dart';
+import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,7 @@ class MyDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (context) => SettingsPage(),
+                    builder: (context) => SettingsScreen(),
                   ),
                 );
               },

@@ -131,12 +131,10 @@ class DatabaseService with ChangeNotifier {
           int newFollowerCount;
 
           switch (actionType) {
-            case true:
-              print("true like increemnted");
+            case true:  //like increment
               newFollowerCount = snapshot.data()['likes'] + 1;
               break;
-            case false:
-              print("false like decremented");
+            case false:   //like decrement
               if (snapshot.data()['likes'] <= 0) {
                 print("cannot decrement");
                 newFollowerCount = 0;

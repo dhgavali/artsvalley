@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
@@ -7,7 +5,6 @@ import 'package:artsvalley/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MailSent extends StatelessWidget {
