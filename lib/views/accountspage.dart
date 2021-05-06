@@ -7,7 +7,7 @@ class AccountsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.security),
+        // leading: Icon(Icons.security),
         title: Text("Account"),
         elevation: 0.0,
       ),

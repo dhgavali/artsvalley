@@ -2,6 +2,8 @@ import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/views/home.dart';
+import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:artsvalley/views/loginscreens/reset/resetPassword.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/services/auth.dart';
@@ -83,9 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   widthFactor: 2.5,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                            builder: (context) => ResetPassword()),
+                          builder: (BuildContext context) => HomePage(),
+                        ),
+                        (Route<dynamic> route) => false,
                       );
                     },
                     child: Text(
@@ -141,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return CustomNavigationBar();
+                        return SignUpScreen();
                       },
                     ),
                   );

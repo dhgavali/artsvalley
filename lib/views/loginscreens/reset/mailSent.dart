@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:artsvalley/components/rounded_button.dart';
+import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MailSent extends StatelessWidget {
@@ -16,16 +18,27 @@ class MailSent extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.done),
+        title: Text("Mail Sent"),
+      ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 120.0, left: 17.0, right: 17.0),
+          padding: const EdgeInsets.only(top: 00.0, left: 17.0, right: 17.0),
           child: Column(
             children: <Widget>[
+             SizedBox(height: SizeConfig.screenHeight * 0.04),
               Text(
-                'Password reset email sent',
-                style: Theme.of(context).textTheme.headline1,
+                "Password Resent Mail Sent",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(26),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              SizedBox(height: size.height * 0.05),
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 alignment: Alignment.center,
                 child: RichText(
@@ -43,7 +56,9 @@ class MailSent extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: size.height * 0.04),
+              SizedBox(
+                height: 5,
+              ),
               RichText(
                 text: TextSpan(
                   text: "Didn't get the email? ",

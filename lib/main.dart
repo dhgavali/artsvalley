@@ -1,21 +1,22 @@
 import 'dart:async';
+import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/providers/usersdata.dart';
+import 'package:artsvalley/routes.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/connectivityService.dart';
 import 'package:artsvalley/services/databaseService.dart';
-import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'enum/connectivityStatus.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,8 +50,9 @@ class MyApp extends StatelessWidget {
             ConnectivityService().connectivityStatusController.stream,
         child: MaterialApp(
           title: "Arts Valley",
+          routes: routes,
           theme: ThemeData(
-            primaryColor: ProConstants.primaryColor,
+            primaryColor: kPrimaryColorDark,
             primarySwatch: Colors.teal,
             visualDensity: VisualDensity.adaptivePlatformDensity,
             backgroundColor: Color(0xfff1f1f1),
@@ -80,10 +82,11 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     final firebaseUser = Provider.of<User>(context);
 
     if (firebaseUser != null) {
-      return CustomNavigationBar();
+      return HomePage();
     }
     return WelcomeScreen();
   }

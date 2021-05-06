@@ -1,4 +1,5 @@
 import 'package:artsvalley/components/rounded_button.dart';
+import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/views/loginscreens/reset/mailSent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,8 +49,25 @@ class _ResetPasswordState extends State<ResetPassword> {
           child: Center(
             child: Column(
               children: <Widget>[
+                SizedBox(height: SizeConfig.screenHeight * 0.04),
+                Text(
+                  "Forgot Password",
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(28),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Please enter your email and we will send \nyou a link to return to your account",
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.1),
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: customInputField1(
                     "Email",
                     Icons.email,

@@ -1,13 +1,9 @@
-import 'package:artsvalley/enum/connectivityStatus.dart';
 import 'package:artsvalley/providers/usersdata.dart';
-import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
+import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/views/networkdepend.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings.dart';
-import 'package:artsvalley/views/slideshow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'searchUser.dart';
 
 class HomePage extends StatefulWidget {
+  static String routeName = "/forgot_password";
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -60,6 +57,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ],
+          ),
+          bottomNavigationBar: CustomBottomNavBar(
+            selectedMenu: MenuState.home,
           ),
           drawer: Theme(
             data: Theme.of(context)
@@ -146,26 +146,6 @@ class MyDrawer extends StatelessWidget {
               },
               child: menuItem("settings", Icons.settings)),
           menuItem("About us", Icons.info),
-          GestureDetector(
-              onTap: () async {
-                await Provider.of<AuthMethods>(context, listen: false)
-                    .signOut();
-                if (Provider.of<User>(context, listen: false) == null) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => WelcomeScreen(),
-                      ),
-                      (Route<dynamic> route) => false);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Failed to Logout.. try Later"),
-                    ),
-                  );
-                }
-              },
-              child: menuItem("Logout", Icons.logout)),
         ],
       ),
     );

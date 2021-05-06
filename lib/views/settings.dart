@@ -1,14 +1,13 @@
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/accountspage.dart';
+import 'package:artsvalley/views/achievements.dart';
 import 'package:artsvalley/views/savedarts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class SettingsPage extends StatelessWidget {
-  
   final TextEditingController nameController = new TextEditingController();
 
   validateName(String value) {}
@@ -23,15 +22,15 @@ class SettingsPage extends StatelessWidget {
           children: [
             customCard(
               context: context,
-              icon: Icons.person,
-              title: "Accounts",
+              icon: Icons.account_circle,
+              title: "Account",
               destination: AccountsPage(),
             ),
             customCard(
               context: context,
-              icon: Icons.bookmark,
+              icon: Icons.local_attraction_sharp,
               title: "Achievement",
-              destination: SavedArts(),
+              destination: Achievements(),
             ),
             customCard(
               context: context,
