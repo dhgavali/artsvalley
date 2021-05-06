@@ -3,7 +3,7 @@ import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/views/networkdepend.dart';
 import 'package:artsvalley/views/searchUser.dart';
-import 'package:artsvalley/views/settings.dart';
+import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -140,7 +140,7 @@ class MyDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (context) => SettingsPage(),
+                    builder: (context) => SettingsScreen(),
                   ),
                 );
               },
