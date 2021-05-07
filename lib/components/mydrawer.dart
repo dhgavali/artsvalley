@@ -60,7 +60,7 @@ class MyDrawer extends StatelessWidget {
                   );
                 }
               },
-              child: menuItem("Logout", Icons.logout)),
+              child: menuItem("Logout", Icons.logout),),
         ],
       ),
     );
