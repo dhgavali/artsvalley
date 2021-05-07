@@ -1,6 +1,6 @@
 import 'package:artsvalley/services/sharedPref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:developer';
+
 
 import 'package:flutter/cupertino.dart';
 
@@ -15,12 +15,10 @@ class UserDataProvider with ChangeNotifier {
   get userprof => this.userProfile;
 
   void intializeUserData(String userid) async {
-    log("Initialize method was called");
     QuerySnapshot data = await FirebaseFirestore.instance
         .collection("users")
         .where("userid", isEqualTo: userid)
         .get();
-    log("lets check are our getter workings");
     data.docs.map((snapshot) async {
       String _username = snapshot.data()['username'];
       String _useremail = snapshot.data()['useremail'];
@@ -34,7 +32,6 @@ class UserDataProvider with ChangeNotifier {
       await _prefs.saveUsername(_username);
       _prefs.saveDisplayName(_displayName).whenComplete(() {
         // UserProfileData().setData();
-        print("done storing data");
       });
 
       notifyListeners();

@@ -104,7 +104,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 GestureDetector(
                   onTap: () async {
                     if (_signUpFormKey.currentState.validate()) {
-                      print("Method called");
                       await context.read<AuthMethods>().signUp(
                           context: context,
                           fullname: nameController.text.trim(),
@@ -215,7 +214,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           suffixIcon: GestureDetector(
             onTap: () {
               //provider method which will change the true to false;
-              print("ontap method called");
               visibility.changeVisibility();
             },
             child: myIcon,

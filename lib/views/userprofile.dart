@@ -31,7 +31,6 @@ class UserProfilePage extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            log("Into the streambuilder new profile page");
             return CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
@@ -125,7 +124,6 @@ class UserProfilePage extends StatelessWidget {
                         }
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          log("bulder here");
                           return LinearProgressIndicator();
                         }
 

@@ -148,7 +148,6 @@ class AuthMethods {
   }
 
   Future<void> resetPassword(String email) async {
-    print("sent email");
     return _auth.sendPasswordResetEmail(email: email);
   }
 }

@@ -70,7 +70,6 @@ class UploadPost with ChangeNotifier {
 
   //uploading Image to storage
   Future uploadPostToStorage() async {
-    print("Line no . 66 upload post function");
     TaskSnapshot tasksnapshot = await FirebaseStorage.instance
         .ref()
         .child('posts/${uploadPostImage.path}/${TimeOfDay.now()}')

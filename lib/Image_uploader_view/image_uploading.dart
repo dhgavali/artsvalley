@@ -51,6 +51,7 @@ class Image_uploadState extends State<Image_upload> {
       print('Snapshot state: ${snapshot.state}'); //Paused, Running , Complete
       print(
           'Progress: ${(snapshot.bytesTransferred / snapshot.totalBytes) * 100} %');
+          
     }, onError: (e) {
       print(uploadTask.snapshot);
     });

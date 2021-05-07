@@ -76,7 +76,6 @@ class _UpdateProfileImageState extends State<UpdateProfileImage> {
                       ),
                     ),
                     onPressed: () {
-                      log("reseleting the image");
                       Provider.of<EditProfile>(context, listen: false)
                           .selectProfileImageType(context);
                     },
@@ -93,7 +92,6 @@ class _UpdateProfileImageState extends State<UpdateProfileImage> {
                       Provider.of<DatabaseService>(context, listen: false)
                           .uploadUserProfileImage(context)
                           .whenComplete(() {
-                        log("into the when complete part");
                         FirebaseFirestore.instance
                             .collection(ProConstants.usersCollection)
                             .doc(

@@ -58,7 +58,6 @@ class Profile extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            log("Into the streambuilder new profile page");
             return Column(
               children: [
                 Column(

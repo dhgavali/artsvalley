@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(snapshot.error.toString()),
                 );
               }
-              print("Stream builder into the original");
+              
               if (snapshot.hasData) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return LinearProgressIndicator();
