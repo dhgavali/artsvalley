@@ -172,8 +172,6 @@ class UserProfile extends StatelessWidget {
   final String useremail;
 
   final String id;
-
-  String _name;
   UserProfile({
     this.profileurl,
     this.useremail,

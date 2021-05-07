@@ -43,8 +43,8 @@ class Body extends StatelessWidget {
             },
           ),
           SettingMenu(
-            text: "Notifications",
-            icon: Icons.notification_important,
+            text: "Achievements",
+            icon: Icons.emoji_events,
             press: () {},
           ),
           SettingMenu(
@@ -59,7 +59,7 @@ class Body extends StatelessWidget {
           ),
           SettingMenu(
             text: "Log Out",
-            icon: Icons.help,
+            icon: Icons.logout,
             press: () async {
               await Provider.of<AuthMethods>(context, listen: false).signOut();
               if (Provider.of<User>(context, listen: false) == null) {
