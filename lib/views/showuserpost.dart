@@ -1,16 +1,15 @@
-import 'package:artsvalley/profile_page/profile.dart';
-import 'package:artsvalley/providers/uploadPostProvider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class ShowPost extends StatelessWidget {
+import 'package:flutter/material.dart';
+
+
+class ShowUserPost extends StatelessWidget {
   final String imageurl;
   final int likesCount;
   final String caption;
   final String postid;
   final List tags = ['Art', 'Potrait'];
 
-  ShowPost({Key key, this.imageurl, this.likesCount, this.caption, this.postid})
+  ShowUserPost({Key key, this.imageurl, this.likesCount, this.caption, this.postid})
       : super(key: key);
 
   @override
@@ -34,7 +33,7 @@ class ShowPost extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            MaterialButton(
+           /*  MaterialButton(
               color: Colors.grey,
               child: Text("Delete Post"),
               onPressed: () {
@@ -75,7 +74,7 @@ class ShowPost extends StatelessWidget {
                       );
                     });
               },
-            ),
+            ), */
           ],
         ),
       ),
