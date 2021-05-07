@@ -28,9 +28,11 @@ class FetchUserData {
 //
 
   Stream<UserProfileData> get userData {
-    return _users
-        .doc(userid)
-        .snapshots()
-        .map(_userDataFromSnapshots);
+    return _users.doc(userid).snapshots().map(_userDataFromSnapshots);
   }
+
+  Future<DocumentSnapshot> get userProfileUrl {
+    return _users.doc(userid).get();
+  }
+  
 }

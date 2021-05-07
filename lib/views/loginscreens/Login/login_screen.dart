@@ -1,17 +1,15 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
-import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
-import 'package:artsvalley/views/loginscreens/reset/resetPassword.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -55,103 +53,114 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-          key: _signinkey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: size.height * 0.03),
-              SvgPicture.asset(
-                "assets/icons/login.svg",
-                height: size.height * 0.35,
-              ),
-              SizedBox(height: size.height * 0.03),
-              customInputField1(
-                "Username",
-                Icons.email,
-                usernameController,
-                validateName,
-              ),
-              _passwordRoundedField(
-                "Password",
-                pwdController,
-                validatePassword,
-              ),
-              SizedBox(height: 10),
-              Container(
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  widthFactor: 2.5,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => HomePage(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _signinkey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    "!! Welcome Back !!",
+                    style: GoogleFonts.lato(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: size.height * 0.03),
+                customInputField1(
+                  "Username",
+                  Icons.email,
+                  usernameController,
+                  validateName,
+                ),
+                _passwordRoundedField(
+                  "Password",
+                  pwdController,
+                  validatePassword,
+                ),
+                SizedBox(height: 10),
+                Container(
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    widthFactor: 2.5,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => HomePage(),
+                          ),
+                          (Route<dynamic> route) => false,
+                        );
+                      },
+                      child: Text(
+                        'Forgot Password ?',
+                        style: TextStyle(
+                          color: kPrimaryColor,
                         ),
-                        (Route<dynamic> route) => false,
-                      );
-                    },
-                    child: Text(
-                      'Forgot Password ?',
-                      style: TextStyle(
-                        color: kPrimaryColor,
                       ),
                     ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  if (_signinkey.currentState.validate()) {
-                    await context.read<AuthMethods>().signIn(
-                          context: context,
-                          email: usernameController.text.trim(),
-                          password: pwdController.text.trim(),
-                        );
-                  }
-                },
-                child: RoundedButton(
-                  text: "LOGIN",
+                GestureDetector(
+                  onTap: () async {
+                    if (_signinkey.currentState.validate()) {
+                      await context.read<AuthMethods>().signIn(
+                            context: context,
+                            email: usernameController.text.trim(),
+                            password: pwdController.text.trim(),
+                          );
+                    }
+                  },
+                  child: RoundedButton(
+                    text: "LOGIN",
+                  ),
                 ),
-              ),
 
-              //google login button
-              GestureDetector(
-                onTap: () async {
-                  await context.read<AuthMethods>().signInWithGoogle();
+                //google login button
+                GestureDetector(
+                  onTap: () async {
+                    await context.read<AuthMethods>().signInWithGoogle();
 
-                  FirebaseAuth.instance.authStateChanges().listen((User user) {
-                    if (user != null) {
-                      Navigator.pushReplacement(
+                    FirebaseAuth.instance
+                        .authStateChanges()
+                        .listen((User user) {
+                      if (user != null) {
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CustomNavigationBar()));
-                    } else {
-                      return Center(
-                        child: Text("failed to login"),
-                      );
-                    }
-                  });
-                },
-                child: RoundedButton(
-                  text: "Continue with google",
+                            builder: (context) => HomePage(),
+                          ),
+                        );
+                      } else {
+                        return Center(
+                          child: Text("failed to login"),
+                        );
+                      }
+                    });
+                  },
+                  child: RoundedButton(
+                    text: "Continue with google",
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              AlreadyHaveAnAccountCheck(
-                press: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SignUpScreen();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ],
+                SizedBox(height: size.height * 0.03),
+                AlreadyHaveAnAccountCheck(
+                  press: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SignUpScreen();
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
