@@ -3,7 +3,7 @@ import 'package:artsvalley/views/showuserpost.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ImageWidget extends StatelessWidget {
+class UserImageWidget extends StatelessWidget {
   final int index;
   final String posturl;
   final String postId;
@@ -11,7 +11,7 @@ class ImageWidget extends StatelessWidget {
   final String caption;
   final String likescount;
 
-  ImageWidget(
+  UserImageWidget(
       {@required this.index,
       this.postId,
       this.posturl,
