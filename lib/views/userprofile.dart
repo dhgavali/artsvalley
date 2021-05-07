@@ -1,7 +1,7 @@
-import 'dart:developer';
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/image_widget.dart';
 import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/profile_page/userimagewidget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -144,7 +144,7 @@ class UserProfilePage extends StatelessWidget {
                               DocumentSnapshot mypost =
                                   snapshot.data.docs[index];
                               Map likes = mypost['likes'];
-                              return ImageWidget(
+                              return UserImageWidget(
                                 index: index,
                                 posturl: mypost['postUrl'],
                                 userId: mypost['userId'],

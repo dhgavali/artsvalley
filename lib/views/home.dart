@@ -1,4 +1,5 @@
 import 'package:artsvalley/providers/usersdata.dart';
+import 'package:artsvalley/search/Search.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/views/networkdepend.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'searchUser.dart';
+
 
 class HomePage extends StatefulWidget {
   static String routeName = "/forgot_password";
@@ -48,6 +49,7 @@ class _HomePageState extends State<HomePage> {
                     context: context,
                     delegate: SearchUser(),
                   );
+                  //Search();
                 },
                 icon: Icon(Icons.search),
               ),
