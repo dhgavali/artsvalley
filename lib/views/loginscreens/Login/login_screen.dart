@@ -2,6 +2,7 @@ import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:artsvalley/views/loginscreens/reset/resetPassword.dart';
@@ -126,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CustomNavigationBar()));
+                              builder: (context) => CustomBottomNavBar(selectedMenu: MenuState.home,)));
                     } else {
                       return Center(
                         child: Text("failed to login"),

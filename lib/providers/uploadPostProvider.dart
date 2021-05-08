@@ -133,7 +133,7 @@ class UploadPost with ChangeNotifier {
     
   }
 
-
+//TODO 
   Future deleteFromCloudAndDb(String postid) async{
     try {
       FirebaseFirestore.instance.collection('posts').doc(postid).delete();

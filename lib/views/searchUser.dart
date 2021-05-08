@@ -1,3 +1,4 @@
+import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
 import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +114,7 @@ class SearchUser extends SearchDelegate<String> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => UserProfilePage(
+            builder: (context) => NewUserProfilePage(
                   userid: userId,
                 )));
   }

@@ -3,6 +3,8 @@ import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/services/sharedPref.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/views/successpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +41,7 @@ class _CaptionPostState extends State<CaptionPost> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CustomNavigationBar(),
+                        builder: (context) => CustomBottomNavBar(selectedMenu: MenuState.profile,),
                       ),
                       (route) => false);
                 },

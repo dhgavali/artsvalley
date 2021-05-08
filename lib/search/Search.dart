@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
 import 'package:artsvalley/search/usermodel.dart';
-import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -218,7 +218,7 @@ class _SearchState extends State<Search> {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (_) => UserProfilePage(userid: profileId,),
+        builder: (_) => NewUserProfilePage(userid: profileId,),
       ),
     );
   }

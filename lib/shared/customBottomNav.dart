@@ -1,8 +1,8 @@
+import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
@@ -64,7 +64,9 @@ class CustomBottomNavBar extends StatelessWidget {
                     ? inActiveIconColor
                     : Colors.white,
                 onPressed: () =>
-                    Navigator.pushNamed(context, Profile.routeName),
+                    //Navigator.pushNamed(context, Profile.routeName),
+                    Navigator.pushNamed(context, ProfilePageNew.routeName),
+                     //Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePageNew()))              
               ),
             ],
           )),

@@ -1,3 +1,4 @@
+import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:flutter/material.dart';
@@ -15,5 +16,8 @@ final Map<String, WidgetBuilder> routes = {
   // ProfileScreen.routeName: (context) => ProfileScreen(),
 
   HomePage.routeName: (context) => HomePage(),
-  Profile.routeName: (context) => Profile(),
+  // Profile.routeName: (context) => Profile(),
+  
+  ProfilePageNew.routeName: (context) => ProfilePageNew(),
+
 };
