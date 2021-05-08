@@ -53,18 +53,10 @@ class AuthMethods {
               'useremail': firebaseUser.user.email,
               'displayname': firebaseUser.user.displayName,
               'photoUrl': firebaseUser.user.photoURL,
-              'userid': firebaseUser.user.uid
+              'userid': firebaseUser.user.uid,
+              'followerList': {}
             },
             SetOptions(merge: true),
-          );
-
-          //setting up empty followers database
-      
-          FirebaseFirestore.instance
-              .collection("followers")
-              .doc(user.user.uid)
-              .set(
-            {'followerList': {}},
           );
         }
       }
@@ -139,15 +131,12 @@ class AuthMethods {
         'displayname': fullname.trim(),
         'photoUrl': user.user.photoURL,
         'userid': user.user.uid,
+        'followerList': {}
       };
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.user.uid)
           .set(_userdata);
-
-      FirebaseFirestore.instance.collection("followers").doc(user.user.uid).set(
-        {'followerList': {}},
-      );
     } on FirebaseAuthException catch (e) {
       print(e.message);
       ScaffoldMessenger.of(context)

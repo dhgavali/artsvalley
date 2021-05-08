@@ -104,6 +104,7 @@ class _PostWidgetState extends State<PostWidget> {
                       MaterialPageRoute(
                         builder: (context) => NewUserProfilePage(
                           userid: widget.userId,
+                         
                         ),
                       ),
                     );
@@ -170,54 +171,54 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
                 color: Colors.black87,
               ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            doLike();
-                          },
-                          child: Icon(
-                            widget.isLiked
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            size: 40,
-                            color: Colors.redAccent,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              doLike();
+                            },
+                            child: Icon(
+                              widget.isLiked
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 40,
+                              color: Colors.redAccent,
+                            ),
                           ),
-                        ),
-                        Text(
-                          "${widget.likescount}",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
-                    Icon(
-                      Icons.share,
-                      size: 35,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    widget.caption,
-                    style: TextStyle(color: Colors.white),
-                    maxLines: 2,
-                    overflow: TextOverflow.fade,
+                          Text(
+                            "${widget.likescount}",
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
+                      Icon(
+                        Icons.share,
+                        size: 35,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
-                )
-              ],
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      widget.caption,
+                      style: TextStyle(color: Colors.white),
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
           ),
         ],
       ),

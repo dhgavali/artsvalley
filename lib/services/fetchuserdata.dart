@@ -21,6 +21,7 @@ class FetchUserData {
       email: snapshot.data()['useremail'],
       userProfile: snapshot.data()['photoUrl'],
       displayName: snapshot.data()['displayname'],
+      followerList: snapshot.data()['followerList'],
     );
   }
 
