@@ -15,6 +15,8 @@ import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:provider/provider.dart';
 import 'enum/connectivityStatus.dart';
 
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
           title: "Arts Valley",
           routes: routes,
           theme: ThemeData(
+            appBarTheme: AppBarTheme(brightness: Brightness.dark),
             primaryColor: kPrimaryColorDark,
             primarySwatch: Colors.teal,
             visualDensity: VisualDensity.adaptivePlatformDensity,

@@ -20,7 +20,8 @@ class WelcomeBody extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             Image(
-              image: AssetImage("assets/images/splash1.png"),
+              width: size.width - 120,
+              image: AssetImage("assets/images/logo.png"),
               height: size.height * 0.45,
             ),
             SizedBox(height: size.height * 0.05),

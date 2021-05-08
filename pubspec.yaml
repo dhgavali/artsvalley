@@ -31,9 +31,9 @@ dependencies:
   google_fonts: ^2.0.0
   curved_navigation_bar: ^0.3.7
   connectivity: ^3.0.3
-  carousel_slider: ^3.0.0
   dots_indicator: ^2.0.0
   get: ^4.1.4
+  flutter_statusbarcolor: ^0.2.3
 
 dev_dependencies:
   flutter_test:

@@ -4,7 +4,6 @@ import 'package:artsvalley/profile_page/image_widget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
-import 'package:artsvalley/views/postwidget.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
