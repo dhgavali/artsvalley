@@ -9,6 +9,8 @@ class UserImageWidget extends StatelessWidget {
   final String userId;
   final String caption;
   final String likescount;
+  final String profileurl;
+  final String userdisplayname;
 
   UserImageWidget(
       {@required this.index,
@@ -16,7 +18,10 @@ class UserImageWidget extends StatelessWidget {
       this.posturl,
       this.userId,
       this.caption,
-      this.likescount});
+      this.likescount,
+      this.profileurl,
+      this.userdisplayname
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +33,10 @@ class UserImageWidget extends StatelessWidget {
             builder: (context) => ShowUserPost(
               imageurl: posturl,
               caption: caption ?? '',
-              likesCount: 10,
+              likesCount: int.parse(likescount),
               postid: postId,
+              name: userdisplayname,
+              profileimage: profileurl,
             ),
           ),
         );

@@ -1,6 +1,11 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
+<<<<<<< HEAD
+import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/shared/customBottomNav.dart';
+=======
+>>>>>>> 7a73a1d8cd291ce1fb0b1dbee9c6f66a103a19bd
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
@@ -132,6 +137,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
+<<<<<<< HEAD
+                              builder: (context) => CustomBottomNavBar(selectedMenu: MenuState.home,)));
+                    } else {
+                      return Center(
+                        child: Text("failed to login"),
+                      );
+                    }
+                  });
+                },
+                child: RoundedButton(
+                  text: "Continue with google",
+=======
                             builder: (context) => HomePage(),
                           ),
                         );
@@ -145,6 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: RoundedButton(
                     text: "Continue with google",
                   ),
+>>>>>>> 7a73a1d8cd291ce1fb0b1dbee9c6f66a103a19bd
                 ),
                 SizedBox(height: size.height * 0.03),
                 AlreadyHaveAnAccountCheck(

@@ -3,6 +3,8 @@ import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
+import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +88,7 @@ class AuthMethods {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => CustomNavigationBar(),
+              builder: (context) => CustomBottomNavBar(selectedMenu: MenuState.home,),
             ),
           );
 

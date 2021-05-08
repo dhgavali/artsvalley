@@ -9,6 +9,8 @@ class ImageWidget extends StatelessWidget {
   final String userId;
   final String caption;
   final String likescount;
+  final String profileurl;
+  final String userdisplayname;
 
   ImageWidget(
       {@required this.index,
@@ -16,10 +18,14 @@ class ImageWidget extends StatelessWidget {
       this.posturl,
       this.userId,
       this.caption,
-      this.likescount});
+      this.likescount,
+      this.profileurl,
+      this.userdisplayname
+      });
 
   @override
   Widget build(BuildContext context) {
+ 
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -28,8 +34,10 @@ class ImageWidget extends StatelessWidget {
             builder: (context) => ShowPost(
               imageurl: posturl,
               caption: caption ?? '',
-              likesCount: 10,
+              likesCount: int.parse(likescount),
               postid: postId,
+              profileimage: profileurl,
+              name: userdisplayname,
             ),
           ),
         );
@@ -38,7 +46,15 @@ class ImageWidget extends StatelessWidget {
       child: Container(
         height: 150,
         child: Card(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Colors.black26, width: 1),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10)
+            ),
+          ),
+          
           child: FadeInImage(
+           
             image: (posturl.isNotEmpty)
                 ? NetworkImage(this.posturl)
                 : AssetImage("assets/images/painter.png"),

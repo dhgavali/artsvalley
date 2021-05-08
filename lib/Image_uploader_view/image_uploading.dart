@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -109,7 +111,7 @@ class Image_uploadState extends State<Image_upload> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => CustomNavigationBar()));
+                        MaterialPageRoute(builder: (context) => CustomBottomNavBar(selectedMenu: MenuState.profile,)));
                   },
                   child: Text(
                     'Back',

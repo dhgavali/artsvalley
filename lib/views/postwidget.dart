@@ -1,3 +1,4 @@
+import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
 import 'package:artsvalley/views/userprofile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -101,7 +102,7 @@ class _PostWidgetState extends State<PostWidget> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UserProfilePage(
+                        builder: (context) => NewUserProfilePage(
                           userid: widget.userId,
                         ),
                       ),
