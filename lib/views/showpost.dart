@@ -59,7 +59,7 @@ class ShowPost extends StatelessWidget {
                     //image
                     Container(
                       width: MediaQuery.of(context).size.width - 20,
-                      height: 500,
+                      height: MediaQuery.of(context).size.height * 0.52,
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 0.5,
