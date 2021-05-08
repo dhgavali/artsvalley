@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 // import 'package:artsvalley/models/userdata_model.dart';
 // import 'package:artsvalley/profile_page/edit_Profile.dart';
 // import 'package:artsvalley/profile_page/image_widget.dart';
@@ -15,7 +13,6 @@
 // import 'package:google_fonts/google_fonts.dart';
 // import 'package:provider/provider.dart';
 
->>>>>>> a63f57a46e5ace50ac039305d1786580b19f87e2
 // import 'package:artsvalley/models/userdata_model.dart';
 // import 'package:artsvalley/profile_page/edit_Profile.dart';
 // import 'package:artsvalley/profile_page/image_widget.dart';
