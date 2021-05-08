@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePageNew extends StatelessWidget {
   static final String routeName = "/new_profile_page";
@@ -179,8 +180,10 @@ class ProfilePageNew extends StatelessWidget {
                                 color: Colors.teal[900],
                               ),
                               child: GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   print('contacting..');
+                                  await _sendMail(
+                                      userData.email, userData.displayName);
                                 },
                                 child: Text("Contact",
                                     style: GoogleFonts.gotu(
@@ -208,16 +211,6 @@ class ProfilePageNew extends StatelessWidget {
                               ),
                             ),
                           ),
-                         /*  SizedBox(width: 275,),
-                          Container(
-                            child: IconButton(
-                              //alignment:,
-                              icon: Icon(Icons.list),
-                              onPressed: (){
-                                listview();
-                              },
-                            ),
-                          ), */
                         ],
                       ),
                       Container(
@@ -318,3 +311,12 @@ Widget dataColumn(String title, String subtitle) {
   );
 }
 
+_sendMail(String email, String username) async {
+  // Android and iOS
+  String uri = 'mailto:$email?subject=Greetings&body=Hello $username';
+  if (await canLaunch(uri)) {
+    await launch(uri);
+  } else {
+    throw 'Could not launch $uri';
+  }
+}
