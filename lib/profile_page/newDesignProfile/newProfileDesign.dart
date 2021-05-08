@@ -18,6 +18,7 @@ class ProfilePageNew extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context, listen: false);
 
+    ValueNotifier<int> totalarts = ValueNotifier(0);
     return Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
@@ -96,7 +97,7 @@ class ProfilePageNew extends StatelessWidget {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            "${userData.username}",
+                            "@ ${userData.username}",
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                 fontSize: 15,
@@ -118,7 +119,13 @@ class ProfilePageNew extends StatelessWidget {
                             SizedBox(
                               width: 20,
                             ),
-                            dataColumn('5', 'Arts'),
+                            ValueListenableBuilder<int>(
+                              valueListenable: totalarts,
+                              builder: (context, value, child) {
+                                return dataColumn('$value', 'Arts');
+                              },
+                            ),
+                            // dataColumn('$totalarts', 'Arts'),
                             SizedBox(
                               width: 50,
                               height: 40,
@@ -136,61 +143,8 @@ class ProfilePageNew extends StatelessWidget {
                                 thickness: 0.5,
                               ),
                             ),
-                            dataColumn('100', 'Following'),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              width: 120,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                color: Colors.teal[900],
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Follwed ....");
-                                },
-                                child: Text("Follow",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                print('contacting..');
-                                await _sendMail(
-                                    userData.email, userData.displayName);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 120,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 8),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25)),
-                                  color: Colors.red[800],
-                                ),
-                                child: Text("Contact",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-                            ),
+                            dataColumn(
+                                "${userData.followerList.length}", 'Followers'),
                           ],
                         ),
                       ),
@@ -242,6 +196,7 @@ class ProfilePageNew extends StatelessWidget {
                                   }
 
                                   if (snapshot.hasData) {
+                                    // totalarts = snapshot.data.docs.length;
                                     return GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
@@ -305,14 +260,4 @@ Widget dataColumn(String title, String subtitle) {
       ),
     ],
   );
-}
-
-_sendMail(String email, String username) async {
-  // Android and iOS
-  String uri = 'mailto:$email?subject=Greetings&body=Hello $username';
-  if (await canLaunch(uri)) {
-    await launch(uri);
-  } else {
-    throw 'Could not launch $uri';
-  }
 }
