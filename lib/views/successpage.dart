@@ -1,7 +1,6 @@
 import 'package:artsvalley/components/rounded_button.dart';
-import 'package:artsvalley/shared/BottomNavigationBar.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,7 +50,7 @@ class SuccessPage extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       CupertinoPageRoute(
-                        builder: (builder) => CustomBottomNavBar(selectedMenu: MenuState.profile,),
+                        builder: (builder) => ProfilePageNew(),
                       ),
                     );
                   },

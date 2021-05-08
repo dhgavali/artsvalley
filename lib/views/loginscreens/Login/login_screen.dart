@@ -71,6 +71,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
+                Container(
+                  width: size.width * 0.80,
+                  child: Image(
+                    image: AssetImage('assets/images/splash1.png'),
+                  ),
+                ),
                 customInputField1(
                   "Username",
                   Icons.email,

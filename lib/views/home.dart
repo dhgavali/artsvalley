@@ -10,6 +10,7 @@ import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
+            brightness: Brightness.dark,
             title: Text(
               "ArtsValley",
               style: GoogleFonts.dancingScript(
@@ -134,7 +136,16 @@ class MyDrawer extends StatelessWidget {
           ),
           menuItem("Home", Icons.home),
           menuItem("Profile", Icons.person),
-          menuItem("Explore", Icons.explore),
+          GestureDetector(
+              // onTap: () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       // builder: (context) => //(),
+              //     ),
+              //   );
+              // },
+              child: menuItem("Explore", Icons.explore)),
           menuItem("Art Store", Icons.store),
           GestureDetector(
               onTap: () {

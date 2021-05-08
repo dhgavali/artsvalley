@@ -14,7 +14,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePageNew extends StatelessWidget {
   static final String routeName = "/new_profile_page";
-
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context, listen: false);
@@ -169,6 +168,7 @@ class ProfilePageNew extends StatelessWidget {
                                     )),
                               ),
                             ),
+<<<<<<< HEAD
                             Container(
                               alignment: Alignment.center,
                               width: 120,
@@ -192,6 +192,24 @@ class ProfilePageNew extends StatelessWidget {
                                   launch(_emailLaunchUri.toString()); */
                                   print('contacting..');
                                 },
+=======
+                            GestureDetector(
+                              onTap: () async {
+                                print('contacting..');
+                                await _sendMail(
+                                    userData.email, userData.displayName);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 120,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 8),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25)),
+                                  color: Colors.red[800],
+                                ),
+>>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
                                 child: Text("Contact",
                                     style: GoogleFonts.gotu(
                                       textStyle: TextStyle(
@@ -231,12 +249,9 @@ class ProfilePageNew extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       SizedBox(
                         height: 20,
                       ),
-
-                      //Posts
                       Container(
                         margin: EdgeInsets.only(left: 10, right: 10),
                         child: Column(
@@ -317,3 +332,16 @@ Widget dataColumn(String title, String subtitle) {
     ],
   );
 }
+<<<<<<< HEAD
+=======
+
+_sendMail(String email, String username) async {
+  // Android and iOS
+  String uri = 'mailto:$email?subject=Greetings&body=Hello $username';
+  if (await canLaunch(uri)) {
+    await launch(uri);
+  } else {
+    throw 'Could not launch $uri';
+  }
+}
+>>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3

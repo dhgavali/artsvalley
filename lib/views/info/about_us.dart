@@ -1,4 +1,3 @@
-import 'package:artsvalley/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,29 +12,24 @@ class AboutUsPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           UserCardWidget(
-            photoUrl: "assets/team/dh.png",
+            photoUrl: "assets/team/dhs.jpg",
             name: "Dhananjay Gavali",
             caption: "Team Leader",
           ),
           UserCardWidget(
-            photoUrl: "assets/team/dark2.png",
+            photoUrl: "assets/team/abhi.png",
             name: "Abhishek Tavhare",
             caption: "Backend Developer",
           ),
           UserCardWidget(
-            photoUrl: "assets/team/dark2.png",
+            photoUrl: "assets/team/up.png",
             name: "Upendra Taral",
             caption: "UI Developer",
           ),
           UserCardWidget(
-            photoUrl: "assets/team/dark2.png",
+            photoUrl: "assets/team/r1.png",
             name: "Rohan Yadav",
             caption: "UI Designer",
-          ),
-          UserCardWidget(
-            photoUrl: "assets/team/dark2.png",
-            name: "Dhananjay Gavali",
-            caption: "Team Leader",
           ),
         ],
       ),
@@ -80,18 +74,13 @@ class UserCardWidget extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(10),
-            width: 170,
-            height: 170,
+            width: 200,
+            height: 200,
             child: CircleAvatar(
               backgroundImage: AssetImage("$photoUrl"),
               backgroundColor: Colors.transparent,
             ),
             decoration: BoxDecoration(
-              gradient: gradient ??
-                  LinearGradient(colors: [
-                    Color(0xFF7FC6A4),
-                    Color(0xFF2978A0),
-                  ]),
               shape: BoxShape.circle,
               boxShadow: <BoxShadow>[
                 BoxShadow(

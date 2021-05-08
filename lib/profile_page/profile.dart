@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import 'package:artsvalley/models/userdata_model.dart';
 // import 'package:artsvalley/profile_page/edit_Profile.dart';
 // import 'package:artsvalley/profile_page/image_widget.dart';
@@ -13,6 +14,8 @@
 // import 'package:google_fonts/google_fonts.dart';
 // import 'package:provider/provider.dart';
 
+=======
+>>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
 // import 'package:artsvalley/models/userdata_model.dart';
 // import 'package:artsvalley/profile_page/edit_Profile.dart';
 // import 'package:artsvalley/profile_page/image_widget.dart';

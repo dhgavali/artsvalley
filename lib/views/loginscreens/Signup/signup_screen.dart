@@ -77,8 +77,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SvgPicture.asset(
-                  "assets/icons/signup.svg",
+                Image.asset(
+                  "assets/images/flame.png",
                   height: size.height * 0.35,
                 ),
                 customInputField1(
@@ -87,20 +87,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   nameController,
                   validateName,
                 ),
-
                 customInputField1(
                   "Your Email",
                   Icons.email,
                   emailController,
                   validateName,
                 ),
-
                 _passwordRoundedField(
                     "Password", passwordController, validatePassword),
                 _passwordRoundedField(
                     "Confirm Password", confirmController, validatePassword),
-
-                //TODO: here we have to add sign up method on gesturedetector
                 GestureDetector(
                   onTap: () async {
                     if (_signUpFormKey.currentState.validate()) {
@@ -145,7 +141,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 OrDivider(),
-                //TODO: google authentication for sign up goes here
                 GestureDetector(
                   onTap: () {
                     var signup = context.read<AuthMethods>();
@@ -213,7 +208,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           suffixIcon: GestureDetector(
             onTap: () {
-              //provider method which will change the true to false;
               visibility.changeVisibility();
             },
             child: myIcon,

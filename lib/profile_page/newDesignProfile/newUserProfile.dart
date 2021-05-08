@@ -119,6 +119,10 @@ class NewUserProfilePage extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   print("Follwed ....");
+<<<<<<< HEAD
+=======
+                                  
+>>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
 
                                 },
                                 child: Text("Follow",
@@ -152,7 +156,6 @@ class NewUserProfilePage extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       SizedBox(
                         height: 30,
                       ),
@@ -171,7 +174,6 @@ class NewUserProfilePage extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       Container(
                         margin: EdgeInsets.only(left: 10, right: 10),
                         child: SizedBox(
@@ -183,11 +185,9 @@ class NewUserProfilePage extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       SizedBox(
                         height: 20,
                       ),
-
                       Container(
                         margin: EdgeInsets.only(left: 10, right: 10),
                         child: Column(
