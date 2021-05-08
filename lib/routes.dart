@@ -18,14 +18,8 @@ final Map<String, WidgetBuilder> routes = {
   // ProfileScreen.routeName: (context) => ProfileScreen(),
 
   HomePage.routeName: (context) => HomePage(),
-<<<<<<< HEAD
-  Profile.routeName: (context) => Profile(),
-  AboutUsPage.routeName: (context) => AboutUsPage(),
-};
-=======
   // Profile.routeName: (context) => Profile(),
   
   ProfilePageNew.routeName: (context) => ProfilePageNew(),
 
 };
->>>>>>> baf659b58553562e6c890eacdc9674a54267acf6

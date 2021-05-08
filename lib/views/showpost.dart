@@ -53,24 +53,6 @@ class ShowPost extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-<<<<<<< HEAD
-                          TextButton(
-                            onPressed: () {
-                              Provider.of<UploadPost>(context, listen: false)
-                                  .deleteFromCloudAndDb(this.postid)
-                                  .whenComplete(() {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Profile(),
-                                    ),
-                                    (route) => false);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  new SnackBar(
-                                    content: Text("Post Deleted"),
-                                    behavior: SnackBarBehavior.floating,
-                                    duration: Duration(seconds: 2),
-=======
                         ),
                       ),
                     ),
@@ -118,7 +100,6 @@ class ShowPost extends StatelessWidget {
                                     textStyle: TextStyle(
                                       fontSize: 25,
                                     ),
->>>>>>> baf659b58553562e6c890eacdc9674a54267acf6
                                   ),
                                 ),
                               ),

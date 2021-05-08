@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import 'package:artsvalley/models/userdata_model.dart';
-import 'package:artsvalley/profile_page/profile.dart';
-import 'package:artsvalley/profile_page/userimagewidget.dart';
-import 'package:artsvalley/services/fetchuserdata.dart';
-import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-=======
 // import 'package:artsvalley/models/userdata_model.dart';
 // import 'package:artsvalley/profile_page/image_widget.dart';
 // import 'package:artsvalley/profile_page/userimagewidget.dart';
@@ -20,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
->>>>>>> baf659b58553562e6c890eacdc9674a54267acf6
 
 
 // class UserProfilePage extends StatelessWidget {

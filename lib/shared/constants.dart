@@ -12,11 +12,8 @@ const kceladonBlue = Color(0xFF2978A0);
 const kmellowApricot = Color(0xFFFFC07F);
 const kforestGreen = Color(0xFF57A773);
 const kLightOrange = Color(0xFFFF7643);
-<<<<<<< HEAD
 
-=======
 const kseagreen = Color(0xff09814a);
->>>>>>> 7a73a1d8cd291ce1fb0b1dbee9c6f66a103a19bd
 // const kPrimaryColor = Color(0xFFFF7643);
 
 //ENUM

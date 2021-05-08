@@ -1,12 +1,8 @@
 import 'dart:async';
 
-<<<<<<< HEAD:lib/services/Search.dart
 import 'package:artsvalley/models/usermodel.dart';
-import 'package:artsvalley/views/userprofile.dart';
-=======
 import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
-import 'package:artsvalley/search/usermodel.dart';
->>>>>>> baf659b58553562e6c890eacdc9674a54267acf6:lib/search/Search.dart
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

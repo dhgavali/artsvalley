@@ -40,14 +40,8 @@ class _CaptionPostState extends State<CaptionPost> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-<<<<<<< HEAD
-                          builder: (context) => CustomBottomNavBar(
-                                selectedMenu: MenuState.home,
-                              )),
-=======
                         builder: (context) => CustomBottomNavBar(selectedMenu: MenuState.profile,),
                       ),
->>>>>>> baf659b58553562e6c890eacdc9674a54267acf6
                       (route) => false);
                 },
                 child: Text("Exit"),
