@@ -1,4 +1,5 @@
 import 'package:artsvalley/components/rounded_button.dart';
+import 'package:artsvalley/shared/default_button.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -30,10 +31,8 @@ class AccountsPage extends StatelessWidget {
                 "Sector 4, 321 - A, Krishna Kunj Apartment, Satara, 415503",
             icon: Icons.location_on,
           ),
-          RoundedButton(
+          DefaultButton(
             text: "Update",
-            width: 120,
-            hpadding: 20,
           ),
         ],
       ),

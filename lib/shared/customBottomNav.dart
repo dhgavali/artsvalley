@@ -16,16 +16,9 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color inActiveIconColor = Colors.yellow;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: Color(0xff041F1E),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, -15),
-            blurRadius: 20,
-            color: Color(0xFFDADADA).withOpacity(0.15),
-          ),
-        ],
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
@@ -52,7 +45,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Icon(
-                    Icons.add_outlined,
+                    Icons.add_rounded,
                     color: kPrimaryColor,
                     size: 28,
                   ),

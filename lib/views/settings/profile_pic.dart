@@ -1,5 +1,9 @@
+import 'package:artsvalley/services/fetchuserdata.dart';
+import 'package:artsvalley/shared/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
@@ -10,36 +14,54 @@ class ProfilePic extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 115,
-      width: 115,
+      width: 125,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
+          FutureBuilder(
+            future: FetchUserData(
+                    userid: Provider.of<User>(context, listen: false).uid)
+                .userProfileUrl,
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting ||
+                  snapshot.connectionState == ConnectionState.none) {
+                return CircularProgressIndicator();
+              }
+              if (snapshot.hasError) {
+                return Icon(Icons.error_outline_outlined);
+              }
+              return CircleAvatar(
+                backgroundImage: (snapshot.data['photoUrl'] != null)
+                    ? NetworkImage("${snapshot.data['photoUrl']}")
+                    : AssetImage("assets/images/Profile Image.png"),
+              );
+            },
           ),
           Positioned(
-            right: -16,
+            right: 0,
             bottom: 0,
             child: SizedBox(
-              height: 46,
-              width: 46,
+              height: 40,
+              width: 40,
               child: TextButton(
-                 style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.00),
-              side: BorderSide(color: Colors.white),
-            ),
-          ),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.amberAccent)
-        ),
-                /* shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  side: BorderSide(color: Colors.white),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.00),
+                      side: BorderSide(color: keggshell),
+                    ),
+                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    keggshell,
+                  ),
                 ),
-                color: Color(0xFFF5F6F9), */
-                onPressed: () {},
-                child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
+                onPressed: () {
+                  //TODO: Update Profile Photo
+                },
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.black,
+                ),
               ),
             ),
           )
