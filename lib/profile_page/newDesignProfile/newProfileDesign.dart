@@ -66,9 +66,7 @@ class ProfilePageNew extends StatelessWidget {
                             padding: EdgeInsets.only(top: 20),
                             child: GestureDetector(
                               onTap: () {
-                                Provider.of<EditProfile>(context, listen: false)
-                                    .selectProfileImageType(context,
-                                        imageurl: userData.userProfile);
+                               //TODO : here we can display profile full size if we want to.
                               },
                               child: Container(
                                 alignment: Alignment.center,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +18,7 @@ class EditProfile with ChangeNotifier {
   String get getUserProfileImageUrl => userProfileImageUrl;
 
   Future pickProfileImage(BuildContext context, ImageSource source) async {
+    print("Pick Method was called");
     final pickedUserProfileImage = await picker.getImage(source: source);
     pickedUserProfileImage == null
         ? print('Please select image')
@@ -128,17 +130,23 @@ class EditProfile with ChangeNotifier {
                           ),
                         ),
                         onPressed: () {
+                          log("onpressed of upload image");
                           Provider.of<DatabaseService>(context, listen: false)
                               .uploadUserProfileImage(context)
                               .whenComplete(() {
+                            log("upload completed");
+                            log("${Provider.of<EditProfile>(context)
+                                  .getUserProfileImageUrl}");
                             FirebaseFirestore.instance
                                 .collection(ProConstants.usersCollection)
                                 .doc(
                                   Provider.of<User>(context, listen: false).uid,
                                 )
-                                .update({'photoUrl': userProfileImageUrl});
+                                .update({
+                              'photoUrl': Provider.of<EditProfile>(context)
+                                  .getUserProfileImageUrl
+                            });
                             Navigator.pop(context);
-                            
                           });
                         },
                       ),
@@ -162,11 +170,11 @@ class EditProfile with ChangeNotifier {
             child: ListView(
               children: [
                 ListTile(
-                  onTap: () {
-                    showImage(context, imageurl);
-                  },
-                  leading: Icon(Icons.photo),
-                  title: Text("View Photo"),
+                  title: Text(
+                    "Update Profile Photo",
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -190,24 +198,24 @@ class EditProfile with ChangeNotifier {
         });
   }
 
-  showImage(BuildContext context, String imageUrl) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            child: FadeInImage(
-              width: 250,
-              height: 250,
-              image: NetworkImage(imageUrl) ?? CircularProgressIndicator(),
-              placeholder: AssetImage("assets/images/spinner.gif"),
-            ),
-          );
-        });
-  }
+  // showImage(BuildContext context, String imageUrl) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return Container(
+  //           width: 200,
+  //           height: 200,
+  //           decoration: BoxDecoration(
+  //             color: Colors.white,
+  //           ),
+  //           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+  //           child: FadeInImage(
+  //             width: 250,
+  //             height: 250,
+  //             image: NetworkImage(imageUrl) ?? CircularProgressIndicator(),
+  //             placeholder: AssetImage("assets/images/spinner.gif"),
+  //           ),
+  //         );
+  //       });
+  // }
 }

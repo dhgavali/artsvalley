@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePic extends StatelessWidget {
-  const ProfilePic({
-    Key key,
-  }) : super(key: key);
+  final Function onEditClick;
+  const ProfilePic({Key key, this.onEditClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +54,7 @@ class ProfilePic extends StatelessWidget {
                     keggshell,
                   ),
                 ),
-                onPressed: () {
-                  //TODO: Update Profile Photo
-                },
+                onPressed: onEditClick,
                 child: Icon(
                   Icons.edit,
                   color: Colors.black,

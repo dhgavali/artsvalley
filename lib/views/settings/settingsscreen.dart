@@ -1,5 +1,6 @@
+import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/services/auth.dart';
-import 'package:artsvalley/views/accountspage.dart';
+import 'package:artsvalley/views/settings/accountspage.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/views/settings/settings_menu.dart';
 import 'package:artsvalley/views/settings/profile_pic.dart';
@@ -28,7 +29,14 @@ class Body extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          ProfilePic(),
+          ProfilePic(
+            onEditClick: () {
+              Provider.of<EditProfile>(context, listen: false)
+                  .selectProfileImageType(
+                context,
+              );
+            },
+          ),
           SizedBox(height: 20),
           SettingMenu(
             text: "My Account",
@@ -55,9 +63,7 @@ class Body extends StatelessWidget {
           SettingMenu(
             text: "Help Center",
             icon: Icons.help,
-            press: () {
-              
-            },
+            press: () {},
           ),
           SettingMenu(
             text: "Log Out",

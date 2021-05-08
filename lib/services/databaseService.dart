@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/profile_page/updateProfilePhoto.dart';
 
@@ -75,8 +76,9 @@ class DatabaseService with ChangeNotifier {
 //for profile picture
   //user Profile image upload task
   Future uploadUserProfileImage(BuildContext context) async {
+    log("into the upload user post line 79 database services");
     Reference imgReference = FirebaseStorage.instance.ref().child(
-        'UserProfileImage/${Provider.of<EditProfile>(context, listen: false).userProfileImage.path}/${TimeOfDay.now()}');
+        'UserProfileImage/${Provider.of<EditProfile>(context).userProfileImage.path}/${TimeOfDay.now()}');
 
     imageUploadTask = imgReference.putFile(
         Provider.of<EditProfile>(context, listen: false).getUserProfileImage);
@@ -84,10 +86,10 @@ class DatabaseService with ChangeNotifier {
       print("Image Uploaded");
     });
     imgReference.getDownloadURL().then((url) {
-      Provider.of<EditProfile>(context, listen: false).userProfileImageUrl =
-          url.toString();
+      Provider.of<EditProfile>(context).userProfileImageUrl = url.toString();
+      log("uploaded");
       print(
-          "User Profile image url = ${Provider.of<EditProfile>(context, listen: false).getUserProfileImageUrl}");
+          "User Profile image url = ${Provider.of<EditProfile>(context).getUserProfileImageUrl}");
       notifyListeners();
     });
   }
@@ -126,10 +128,10 @@ class DatabaseService with ChangeNotifier {
           int newFollowerCount;
 
           switch (actionType) {
-            case true:  //like increment
+            case true: //like increment
               newFollowerCount = snapshot.data()['likes'] + 1;
               break;
-            case false:   //like decrement
+            case false: //like decrement
               if (snapshot.data()['likes'] <= 0) {
                 print("cannot decrement");
                 newFollowerCount = 0;
@@ -148,5 +150,4 @@ class DatabaseService with ChangeNotifier {
         .catchError(
             (error) => print("Failed to update user followers: $error"));
   }
-
 }
