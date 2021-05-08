@@ -1,4 +1,3 @@
-import 'package:artsvalley/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,11 +30,6 @@ class AboutUsPage extends StatelessWidget {
             photoUrl: "assets/team/dark2.png",
             name: "Rohan Yadav",
             caption: "UI Designer",
-          ),
-          UserCardWidget(
-            photoUrl: "assets/team/dark2.png",
-            name: "Dhananjay Gavali",
-            caption: "Team Leader",
           ),
         ],
       ),
@@ -88,10 +82,7 @@ class UserCardWidget extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               gradient: gradient ??
-                  LinearGradient(colors: [
-                    Color(0xFF7FC6A4),
-                    Color(0xFF2978A0),
-                  ]),
+                  LinearGradient(colors: [Colors.yellowAccent, Colors.yellow]),
               shape: BoxShape.circle,
               boxShadow: <BoxShadow>[
                 BoxShadow(

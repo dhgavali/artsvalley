@@ -12,10 +12,6 @@ const kceladonBlue = Color(0xFF2978A0);
 const kmellowApricot = Color(0xFFFFC07F);
 const kforestGreen = Color(0xFF57A773);
 const kLightOrange = Color(0xFFFF7643);
-<<<<<<< HEAD
-
-=======
->>>>>>> a63f57a46e5ace50ac039305d1786580b19f87e2
 const kseagreen = Color(0xff09814a);
 // const kPrimaryColor = Color(0xFFFF7643);
 
