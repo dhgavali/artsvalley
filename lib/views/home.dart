@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/services/networkdepend.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
@@ -28,6 +31,8 @@ class _HomePageState extends State<HomePage> {
     UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +75,8 @@ class _HomePageState extends State<HomePage> {
             child: MyDrawer(),
           ),
           body: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+            stream:
+                FirebaseFirestore.instance.collection("posts").snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Center(
@@ -82,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return LinearProgressIndicator();
                 }
-                
+
                 return ListView.builder(
                     itemCount: snapshot.data.docs.length,
                     itemBuilder: (context, index) {
@@ -182,13 +188,4 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
-}
-
-moveToPage(BuildContext context, Widget pageName) {
-  Navigator.push(
-    context,
-    CupertinoPageRoute(
-      builder: (context) => pageName,
-    ),
-  );
 }

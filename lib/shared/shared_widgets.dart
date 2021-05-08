@@ -258,3 +258,12 @@ Widget headline(BuildContext context, String title) {
     ],
   );
 }
+
+moveToPage(BuildContext context, Widget pageName) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => pageName,
+    ),
+  );
+}

@@ -29,7 +29,7 @@ class SettingMenu extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: kPrimaryColorDark,
+                color: kPrimaryColor,
                 size: 24,
               ),
               SizedBox(width: 20),

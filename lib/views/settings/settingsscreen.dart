@@ -1,9 +1,14 @@
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/services/auth.dart';
-import 'package:artsvalley/views/settings/accountspage.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/settings/myaccount.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/views/settings/settings_menu.dart';
 import 'package:artsvalley/views/settings/profile_pic.dart';
+import 'package:artsvalley/views/settings/mysettings.dart';
+import 'package:artsvalley/views/settings/help_page.dart';
+import 'package:artsvalley/views/settings/achievements.dart';
+import 'package:artsvalley/views/settings/savedarts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,28 +47,45 @@ class Body extends StatelessWidget {
             text: "My Account",
             icon: Icons.person_rounded,
             press: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AccountsPage(),
-                ),
-              ),
+              moveToPage(context, AccountsPage()),
             },
           ),
           SettingMenu(
             text: "Achievements",
             icon: Icons.emoji_events,
-            press: () {},
+            press: () {
+              moveToPage(
+                context,
+                Achievements(),
+              );
+            },
+          ),
+          SettingMenu(
+            text: "Saved Arts",
+            icon: Icons.bookmark,
+            press: () {
+              moveToPage(
+                context,
+                SavedArts(),
+              );
+            },
           ),
           SettingMenu(
             text: "Account Settings",
             icon: Icons.settings,
-            press: () {},
+            press: () {
+              moveToPage(
+                context,
+                MySettingsPage(),
+              );
+            },
           ),
           SettingMenu(
             text: "Help Center",
             icon: Icons.help,
-            press: () {},
+            press: () {
+              moveToPage(context, HelpPage());
+            },
           ),
           SettingMenu(
             text: "Log Out",
