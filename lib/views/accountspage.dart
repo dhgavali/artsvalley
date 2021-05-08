@@ -1,4 +1,3 @@
-import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/shared/default_button.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';

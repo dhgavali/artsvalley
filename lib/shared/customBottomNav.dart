@@ -1,7 +1,9 @@
 import 'package:artsvalley/profile_page/profile.dart';
+import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
@@ -37,6 +39,10 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, HomePage.routeName),
               ),
               GestureDetector(
+                onTap: () {
+                  Provider.of<UploadPost>(context, listen: false)
+                      .selectPostImageType(context);
+                },
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(

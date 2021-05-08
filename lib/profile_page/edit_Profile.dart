@@ -128,7 +128,6 @@ class EditProfile with ChangeNotifier {
                           ),
                         ),
                         onPressed: () {
-                          //TODO: changed userdataprovider here
                           Provider.of<DatabaseService>(context, listen: false)
                               .uploadUserProfileImage(context)
                               .whenComplete(() {

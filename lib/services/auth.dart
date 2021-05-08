@@ -77,7 +77,6 @@ class AuthMethods {
     try {
       UserCredential _user = await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password.trim());
-      final _username = email.replaceAll(RegExp(r'@(\w*)\.(\w*)'), "").trim();
       SharedPrefsHelper _sharedpref = SharedPrefsHelper();
       _sharedpref.saveUserEmail(_user.user.email);
       _sharedpref.saveUserId(_user.user.uid);

@@ -48,14 +48,16 @@ class Body extends StatelessWidget {
             press: () {},
           ),
           SettingMenu(
-            text: "Settings",
+            text: "Account Settings",
             icon: Icons.settings,
             press: () {},
           ),
           SettingMenu(
             text: "Help Center",
             icon: Icons.help,
-            press: () {},
+            press: () {
+              
+            },
           ),
           SettingMenu(
             text: "Log Out",

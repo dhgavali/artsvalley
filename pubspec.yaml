@@ -35,7 +35,6 @@ dependencies:
   dots_indicator: ^2.0.0
   get: ^4.1.4
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,3 +54,4 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/fonts/
+    - assets/team/

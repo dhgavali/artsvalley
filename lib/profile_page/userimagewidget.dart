@@ -1,4 +1,3 @@
-import 'package:artsvalley/views/showpost.dart';
 import 'package:artsvalley/views/showuserpost.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

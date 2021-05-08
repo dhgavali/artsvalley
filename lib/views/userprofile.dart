@@ -1,5 +1,4 @@
 import 'package:artsvalley/models/userdata_model.dart';
-import 'package:artsvalley/profile_page/image_widget.dart';
 import 'package:artsvalley/profile_page/profile.dart';
 import 'package:artsvalley/profile_page/userimagewidget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';

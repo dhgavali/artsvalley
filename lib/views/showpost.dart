@@ -57,11 +57,12 @@ class ShowPost extends StatelessWidget {
                               Provider.of<UploadPost>(context, listen: false)
                                   .deleteFromCloudAndDb(this.postid)
                                   .whenComplete(() {
-                                //TODO: use pushsnfremoveuntil here
-                                Navigator.pushReplacement(
+                                Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Profile()));
+                                      builder: (context) => Profile(),
+                                    ),
+                                    (route) => false);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   new SnackBar(
                                     content: Text("Post Deleted"),

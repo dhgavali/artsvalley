@@ -1,8 +1,8 @@
 import 'package:artsvalley/providers/usersdata.dart';
-import 'package:artsvalley/search/Search.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
-import 'package:artsvalley/views/networkdepend.dart';
+import 'package:artsvalley/services/networkdepend.dart';
+import 'package:artsvalley/views/info/about_us.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,9 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-
 class HomePage extends StatefulWidget {
-  static String routeName = "/forgot_password";
+  static String routeName = "/home_page";
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -76,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(snapshot.error.toString()),
                 );
               }
-              
+
               if (snapshot.hasData) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return LinearProgressIndicator();
@@ -139,15 +138,17 @@ class MyDrawer extends StatelessWidget {
           menuItem("Art Store", Icons.store),
           GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => SettingsScreen(),
-                  ),
-                );
+                moveToPage(context, SettingsScreen());
               },
               child: menuItem("settings", Icons.settings)),
-          menuItem("About us", Icons.info),
+          GestureDetector(
+              onTap: () {
+                moveToPage(
+                  context,
+                  AboutUsPage(),
+                );
+              },
+              child: menuItem("About us", Icons.info)),
         ],
       ),
     );
@@ -169,4 +170,13 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
+}
+
+moveToPage(BuildContext context, Widget pageName) {
+  Navigator.push(
+    context,
+    CupertinoPageRoute(
+      builder: (context) => pageName,
+    ),
+  );
 }

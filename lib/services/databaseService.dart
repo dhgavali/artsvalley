@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/updateProfilePhoto.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -108,8 +105,6 @@ class DatabaseService with ChangeNotifier {
   //for accessing data fro, firestore
 
   notifyListeners();
-
-//TODO: For udpating the likes
 //
 //
 // Create a reference to the document the transaction will use
