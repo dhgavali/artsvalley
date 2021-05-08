@@ -57,6 +57,15 @@ class AuthMethods {
             },
             SetOptions(merge: true),
           );
+
+          //setting up empty followers database
+      
+          FirebaseFirestore.instance
+              .collection("followers")
+              .doc(user.user.uid)
+              .set(
+            {'followerList': {}},
+          );
         }
       }
       _sharedpref.saveUserEmail(firebaseUser.user.email);
@@ -80,7 +89,8 @@ class AuthMethods {
       SharedPrefsHelper _sharedpref = SharedPrefsHelper();
       _sharedpref.saveUserEmail(_user.user.email);
       _sharedpref.saveUserId(_user.user.uid);
-       UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
+      UserDataProvider()
+          .intializeUserData(FirebaseAuth.instance.currentUser.uid);
       FirebaseAuth.instance.authStateChanges().listen((User user) {
         if (user != null) {
           Navigator.pushReplacement(
@@ -134,6 +144,10 @@ class AuthMethods {
           .collection('users')
           .doc(user.user.uid)
           .set(_userdata);
+
+      FirebaseFirestore.instance.collection("followers").doc(user.user.uid).set(
+        {'followerList': {}},
+      );
     } on FirebaseAuthException catch (e) {
       print(e.message);
       ScaffoldMessenger.of(context)

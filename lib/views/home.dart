@@ -136,7 +136,16 @@ class MyDrawer extends StatelessWidget {
           ),
           menuItem("Home", Icons.home),
           menuItem("Profile", Icons.person),
-          menuItem("Explore", Icons.explore),
+          GestureDetector(
+              // onTap: () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       // builder: (context) => //(),
+              //     ),
+              //   );
+              // },
+              child: menuItem("Explore", Icons.explore)),
           menuItem("Art Store", Icons.store),
           GestureDetector(
               onTap: () {

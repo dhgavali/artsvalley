@@ -1,7 +1,6 @@
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/userimagewidget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
-import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -120,6 +119,8 @@ class NewUserProfilePage extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   print("Follwed ....");
+                                  
+
                                 },
                                 child: Text("Follow",
                                     style: GoogleFonts.gotu(
@@ -152,7 +153,6 @@ class NewUserProfilePage extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       SizedBox(
                         height: 30,
                       ),
@@ -171,7 +171,6 @@ class NewUserProfilePage extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       Container(
                         margin: EdgeInsets.only(left: 10, right: 10),
                         child: SizedBox(
@@ -183,11 +182,9 @@ class NewUserProfilePage extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       SizedBox(
                         height: 20,
                       ),
-
                       Container(
                         margin: EdgeInsets.only(left: 10, right: 10),
                         child: Column(
