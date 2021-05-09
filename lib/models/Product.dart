@@ -1,103 +1,65 @@
 import 'package:flutter/material.dart';
 
 class Product {
-  final int id;
   final String title, description;
-  final List<String> images;
-  final List<Color> colors;
-  final double rating, price;
-  final bool isFavourite, isPopular;
-
+  final int price, id;
+  final Color color;
+  Image image;
   Product({
-    @required this.id,
-    @required this.images,
-    @required this.colors,
-    this.rating = 0.0,
-    this.isFavourite = false,
-    this.isPopular = false,
-    @required this.title,
-    @required this.price,
-    @required this.description,
+    this.id,
+    this.image,
+    this.title,
+    this.price,
+    this.description,
+    this.color,
   });
 }
 
-// Our demo Products
-
-List<Product> demoProducts = [
+List<Product> products = [
   Product(
-    id: 1,
-    images: [
-      "assets/images/ps4_console_white_1.png",
-      "assets/images/ps4_console_white_2.png",
-      "assets/images/ps4_console_white_3.png",
-      "assets/images/ps4_console_white_4.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Wireless Controller for PS4™",
-    price: 64.99,
-    description: description,
-    rating: 4.8,
-    isFavourite: true,
-    isPopular: true,
-  ),
+      id: 1,
+      title: "Office Code",
+      price: 234,
+      description: dummyText,
+      image: Image.network('https://images.unsplash.com/photo-1617693322135-13831d116f79?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fHBvdHRlcnklMjBzdHVkaW98ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
+      color: Color(0xFF3D82AE)),
   Product(
-    id: 2,
-    images: [
-      "assets/images/Image Popular Product 2.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Nike Sport White - Man Pant",
-    price: 50.5,
-    description: description,
-    rating: 4.1,
-    isPopular: true,
-  ),
+      id: 2,
+      title: "Vase",
+      price: 234,
+      description: dummyText,
+      image: Image.network('https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dmFzZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
+      color: Color(0xFFD3A984)),
   Product(
-    id: 3,
-    images: [
-      "assets/images/glap.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Gloves XC Omega - Polygon",
-    price: 36.55,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
+      id: 3,
+      title: "vase",
+      price: 234,
+      description: dummyText,
+      image: Image.network('https://images.unsplash.com/photo-1553511667-567b93c369d4?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8dmFzZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
+      color: Color(0xFF989493)),
   Product(
-    id: 4,
-    images: [
-      "assets/images/wireless headset.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Logitech Head",
-    price: 20.20,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
+      id: 4,
+      title: "Vase",
+      price: 234,
+      description: dummyText,
+      image: Image.network('https://images.unsplash.com/photo-1586802978403-6406fb3ddfff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHZhc2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
+      color: Color(0xFFE6B398)),
+  Product(
+      id: 5,
+      title: "Vase",
+      price: 234,
+      description: dummyText,
+      image: Image.network('https://images.unsplash.com/photo-1602059179382-8552d62353cf?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHZhc2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
+      color: Color(0xFFFB7883)),
+  Product(
+    id: 6,
+    title: "Vase",
+    price: 234,
+    description: dummyText,
+    image: Image.network('https://images.unsplash.com/photo-1588874133473-d6d9c9dd4f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fHZhc2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
+    color: Color(0xFFAEAEAE),
   ),
 ];
 
-const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+String dummyText =
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.";

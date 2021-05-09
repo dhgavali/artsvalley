@@ -8,6 +8,7 @@ import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
+import 'package:artsvalley/views/store/product_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,8 +32,6 @@ class _HomePageState extends State<HomePage> {
     UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +74,7 @@ class _HomePageState extends State<HomePage> {
             child: MyDrawer(),
           ),
           body: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection("posts").snapshots(),
+            stream: FirebaseFirestore.instance.collection("posts").snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Center(
@@ -153,7 +151,14 @@ class MyDrawer extends StatelessWidget {
               //   );
               // },
               child: menuItem("Explore", Icons.explore)),
-          menuItem("Art Store", Icons.store),
+          GestureDetector(
+              onTap: () {
+                moveToPage(
+                  context,
+                  ProductPage(),
+                );
+              },
+              child: menuItem("Art Store", Icons.store)),
           GestureDetector(
               onTap: () {
                 moveToPage(context, SettingsScreen());
