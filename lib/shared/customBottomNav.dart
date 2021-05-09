@@ -32,7 +32,8 @@ class CustomBottomNavBar extends StatelessWidget {
             color: MenuState.home == selectedMenu
                 ? inActiveIconColor
                 : Colors.white,
-            onPressed: () => Navigator.pushNamed(context, HomePage.routeName),
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, HomePage.routeName),
           ),
           GestureDetector(
             onTap: () {
@@ -59,7 +60,8 @@ class CustomBottomNavBar extends StatelessWidget {
                   : Colors.white,
               onPressed: () {
                 //Navigator.pushNamed(context, Profile.routeName),
-                Navigator.pushNamed(context, ProfilePageNew.routeName);
+                Navigator.pushReplacementNamed(
+                    context, ProfilePageNew.routeName);
               }
               //Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePageNew()))
               ),

@@ -1,14 +1,51 @@
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/userimagewidget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
-import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class NewUserProfilePage extends StatelessWidget {
+class NewUserProfilePage extends StatefulWidget {
   final String userid;
   NewUserProfilePage({this.userid});
+
+  @override
+  _NewUserProfilePageState createState() => _NewUserProfilePageState();
+}
+
+class _NewUserProfilePageState extends State<NewUserProfilePage> {
+  bool isFollowed = false;
+  int followerCount = 0;
+
+  doFollow(Map followerList) {
+    String _currentUser = Provider.of<User>(context, listen: false).uid;
+    bool _isFollowed = followerList[_currentUser] == true;
+    if (_isFollowed) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(widget.userid)
+          .update({'followerList.$_currentUser': FieldValue.delete()});
+      setState(() {
+        followerCount -= 1;
+        isFollowed = false;
+        // widget.followerList[_currentUser] = false;
+      });
+    } else {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(widget.userid)
+          .update({'followerList.$_currentUser': true});
+      setState(() {
+        followerCount += 1;
+        isFollowed = true;
+        // widget.followerList[_currentUser] = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +55,7 @@ class NewUserProfilePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<UserProfileData>(
-        stream: FetchUserData(userid: userid).userData,
+        stream: FetchUserData(userid: widget.userid).userData,
         builder: (context, snapshot) {
           UserProfileData userData = snapshot.data;
           if (snapshot.hasError) {
@@ -95,7 +132,8 @@ class NewUserProfilePage extends StatelessWidget {
                                 thickness: 0.5,
                               ),
                             ),
-                            dataColumn('100', 'Following'),
+                            dataColumn(
+                                '${userData.followerList.length}', 'Followers'),
                           ],
                         ),
                       ),
@@ -106,6 +144,7 @@ class NewUserProfilePage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+<<<<<<< HEAD
                             Container(
                               alignment: Alignment.center,
                               width: 120,
@@ -126,21 +165,34 @@ class NewUserProfilePage extends StatelessWidget {
                                           fontSize: 15, color: Colors.white),
                                     )),
                               ),
+=======
+                            GestureDetector(
+                              onTap: () {
+                                doFollow(userData.followerList);
+                              },
+                              child: (userData.followerList[Provider.of<User>(
+                                              context,
+                                              listen: false)
+                                          .uid] ==
+                                      null)
+                                  ? followButton()
+                                  : unFollowButton(),
+>>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
                             ),
-                            Container(
-                              alignment: Alignment.center,
-                              width: 120,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                color: Colors.teal[900],
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  print('contacting..');
-                                },
+                            GestureDetector(
+                              onTap: () {
+                                _sendMail(userData.email, userData.displayName);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 120,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 8),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25)),
+                                  color: Colors.pink[700],
+                                ),
                                 child: Text("Contact",
                                     style: GoogleFonts.gotu(
                                       textStyle: TextStyle(
@@ -190,7 +242,7 @@ class NewUserProfilePage extends StatelessWidget {
                             StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection("posts")
-                                    .where("userId", isEqualTo: userid)
+                                    .where("userId", isEqualTo: widget.userid)
                                     .snapshots(),
                                 builder: (context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -239,74 +291,51 @@ class NewUserProfilePage extends StatelessWidget {
       ),
     );
   }
-}
 
-class UserProfile extends StatelessWidget {
-  final String profileurl;
-  final String useremail;
-
-  final String id;
-  UserProfile({
-    this.profileurl,
-    this.useremail,
-    this.id,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    String _name;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Profile",
-        ),
-        centerTitle: true,
+  followButton() {
+    return Container(
+      alignment: Alignment.center,
+      width: 120,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(25)),
+        color: kPrimaryColor,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: Column(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(10),
-                // child: _profilePhoto(context, id),
-                child: CircleAvatar(
-                  radius: 60,
-                  // backgroundImage: NetworkImage("_profileurl") ??
-                  backgroundImage: (profileurl != null)
-                      ? NetworkImage(profileurl)
-                      : AssetImage('assets/images/profile.png'),
-                  backgroundColor: Colors.white38,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Column(
-                children: [
-                  Text(
-                    (_name != null) ? _name.toString() : "Welcome To Profile",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    useremail,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  customDivider(context, Colors.grey),
-                ],
-              )
-            ],
-          ),
+      child: Text(
+        "Follow",
+        style: GoogleFonts.gotu(
+          textStyle: TextStyle(fontSize: 15, color: Colors.white),
         ),
       ),
     );
+  }
+
+  unFollowButton() {
+    return Container(
+      alignment: Alignment.center,
+      width: 120,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(25)),
+        color: Colors.yellow[500],
+      ),
+      child: Text(
+        "Unfollow",
+        style: GoogleFonts.gotu(
+          textStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+
+_sendMail(String email, String username) async {
+  // Android and iOS
+  String uri = 'mailto:$email?subject=Greetings&body=Hello $username';
+  if (await canLaunch(uri)) {
+    await launch(uri);
+  } else {
+    throw 'Could not launch $uri';
   }
 }
 

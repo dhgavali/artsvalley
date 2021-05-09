@@ -18,6 +18,7 @@ class ProfilePageNew extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context, listen: false);
 
+    ValueNotifier<int> totalarts = ValueNotifier(0);
     return Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
@@ -65,9 +66,7 @@ class ProfilePageNew extends StatelessWidget {
                             padding: EdgeInsets.only(top: 20),
                             child: GestureDetector(
                               onTap: () {
-                                Provider.of<EditProfile>(context, listen: false)
-                                    .selectProfileImageType(context,
-                                        imageurl: userData.userProfile);
+                               //TODO : here we can display profile full size if we want to.
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -96,7 +95,7 @@ class ProfilePageNew extends StatelessWidget {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            "${userData.username}",
+                            "@ ${userData.username}",
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                 fontSize: 15,
@@ -118,7 +117,13 @@ class ProfilePageNew extends StatelessWidget {
                             SizedBox(
                               width: 20,
                             ),
-                            dataColumn('5', 'Arts'),
+                            ValueListenableBuilder<int>(
+                              valueListenable: totalarts,
+                              builder: (context, value, child) {
+                                return dataColumn('$value', 'Arts');
+                              },
+                            ),
+                            // dataColumn('$totalarts', 'Arts'),
                             SizedBox(
                               width: 50,
                               height: 40,
@@ -136,6 +141,7 @@ class ProfilePageNew extends StatelessWidget {
                                 thickness: 0.5,
                               ),
                             ),
+<<<<<<< HEAD
                             dataColumn('100', 'Following'),
                           ],
                         ),
@@ -191,6 +197,10 @@ class ProfilePageNew extends StatelessWidget {
                                     )),
                               ),
                             ),
+=======
+                            dataColumn(
+                                "${userData.followerList.length}", 'Followers'),
+>>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
                           ],
                         ),
                       ),
@@ -242,6 +252,7 @@ class ProfilePageNew extends StatelessWidget {
                                   }
 
                                   if (snapshot.hasData) {
+                                    // totalarts = snapshot.data.docs.length;
                                     return GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
@@ -306,6 +317,7 @@ Widget dataColumn(String title, String subtitle) {
     ],
   );
 }
+<<<<<<< HEAD
 
 _sendMail(String email, String username) async {
   // Android and iOS
@@ -316,3 +328,5 @@ _sendMail(String email, String username) async {
     throw 'Could not launch $uri';
   }
 }
+=======
+>>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
