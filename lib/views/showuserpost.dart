@@ -56,11 +56,7 @@ class ShowUserPost extends StatelessWidget {
                     //image
                     Container(
                       width: MediaQuery.of(context).size.width - 20,
-<<<<<<< HEAD
-                      height: MediaQuery.of(context).size.height * 0.52,
-=======
                       height: MediaQuery.of(context).size.height * 0.70,
->>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 0.5,
@@ -77,17 +73,11 @@ class ShowUserPost extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-<<<<<<< HEAD
-                          border: Border.symmetric(
-                              vertical: BorderSide(
-                                  width: 0.5, color: Colors.black26))),
-=======
                         border: Border.symmetric(
                           vertical:
                               BorderSide(width: 0.5, color: Colors.black26),
                         ),
                       ),
->>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
                       child: Column(
                         children: [
                           ButtonBar(

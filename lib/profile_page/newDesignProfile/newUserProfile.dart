@@ -119,11 +119,6 @@ class NewUserProfilePage extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   print("Follwed ....");
-<<<<<<< HEAD
-=======
-                                  
->>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
-
                                 },
                                 child: Text("Follow",
                                     style: GoogleFonts.gotu(

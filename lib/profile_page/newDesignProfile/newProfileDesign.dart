@@ -168,31 +168,6 @@ class ProfilePageNew extends StatelessWidget {
                                     )),
                               ),
                             ),
-<<<<<<< HEAD
-                            Container(
-                              alignment: Alignment.center,
-                              width: 120,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                color: Colors.teal[900],
-                              ),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  /* final Uri _emailLaunchUri = Uri(
-                                      scheme: 'mailto',
-                                      path: 'smith@example.com',
-                                      queryParameters: {
-                                        'subject':
-                                            'Example Subject & Symbols are allowed!'
-                                      });
-
-                                  launch(_emailLaunchUri.toString()); */
-                                  print('contacting..');
-                                },
-=======
                             GestureDetector(
                               onTap: () async {
                                 print('contacting..');
@@ -209,7 +184,6 @@ class ProfilePageNew extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(25)),
                                   color: Colors.red[800],
                                 ),
->>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
                                 child: Text("Contact",
                                     style: GoogleFonts.gotu(
                                       textStyle: TextStyle(
@@ -332,8 +306,6 @@ Widget dataColumn(String title, String subtitle) {
     ],
   );
 }
-<<<<<<< HEAD
-=======
 
 _sendMail(String email, String username) async {
   // Android and iOS
@@ -344,4 +316,3 @@ _sendMail(String email, String username) async {
     throw 'Could not launch $uri';
   }
 }
->>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3

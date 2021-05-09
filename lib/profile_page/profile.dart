@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-// import 'package:artsvalley/models/userdata_model.dart';
-// import 'package:artsvalley/profile_page/edit_Profile.dart';
-// import 'package:artsvalley/profile_page/image_widget.dart';
-// import 'package:artsvalley/services/fetchuserdata.dart';
-// import 'package:artsvalley/shared/constants.dart';
-// import 'package:artsvalley/shared/customBottomNav.dart';
-// import 'package:artsvalley/shared/shared_widgets.dart';
-// import 'package:artsvalley/views/settings/settingsscreen.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:provider/provider.dart';
-
-=======
->>>>>>> 8dfaa1dbaed6daf27aeceb58065e77111a90e6b3
 // import 'package:artsvalley/models/userdata_model.dart';
 // import 'package:artsvalley/profile_page/edit_Profile.dart';
 // import 'package:artsvalley/profile_page/image_widget.dart';
