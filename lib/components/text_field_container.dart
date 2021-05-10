@@ -3,10 +3,9 @@ import 'package:artsvalley/shared/constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final Widget child;
-  const TextFieldContainer({
-    Key key,
-    this.child,
-  }) : super(key: key);
+  final Color bgcolor;
+  const TextFieldContainer({Key key, this.child, this.bgcolor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class TextFieldContainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        color: kPrimaryLightColor,
+        color: bgcolor ?? kPrimaryLightColor,
         borderRadius: BorderRadius.circular(29),
       ),
       child: child,

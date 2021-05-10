@@ -23,7 +23,6 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    //  print(widget.product.color);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -33,7 +32,9 @@ class _ProductPageState extends State<ProductPage> {
               Icons.arrow_back,
               color: Colors.black,
             ),
-            onPressed: () {}),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         actions: [
           IconButton(
               icon: Icon(

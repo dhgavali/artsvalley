@@ -1,24 +1,22 @@
 import 'package:artsvalley/models/userdata_model.dart';
-import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/profile_page/image_widget.dart';
+import 'package:artsvalley/providers/artcount.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePageNew extends StatelessWidget {
   static final String routeName = "/new_profile_page";
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context, listen: false);
-
-    ValueNotifier<int> totalarts = ValueNotifier(0);
     return Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
@@ -66,8 +64,8 @@ class ProfilePageNew extends StatelessWidget {
                             padding: EdgeInsets.only(top: 20),
                             child: GestureDetector(
                               onTap: () {
-                               //TODO : here we can display profile full size if we want to.
-                              },
+                                //TODO : here we can display profile full size if we want to.
+                                },
                               child: Container(
                                 alignment: Alignment.center,
                                 child: CircleAvatar(
@@ -109,7 +107,6 @@ class ProfilePageNew extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        //padding: EdgeInsets.only(left: 30, right: 30),
                         margin: EdgeInsets.only(left: 40, right: 40),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -117,13 +114,15 @@ class ProfilePageNew extends StatelessWidget {
                             SizedBox(
                               width: 20,
                             ),
-                            ValueListenableBuilder<int>(
-                              valueListenable: totalarts,
+                            Consumer<ArtsCountProvider>(
                               builder: (context, value, child) {
-                                return dataColumn('$value', 'Arts');
+                                if (value.artscount == null) {
+                                  return dataColumn('0', "Total Arts");
+                                }
+                                return dataColumn(
+                                    value.artscount.toString(), "Total Arts");
                               },
                             ),
-                            // dataColumn('$totalarts', 'Arts'),
                             SizedBox(
                               width: 50,
                               height: 40,
@@ -141,66 +140,8 @@ class ProfilePageNew extends StatelessWidget {
                                 thickness: 0.5,
                               ),
                             ),
-<<<<<<< HEAD
-                            dataColumn('100', 'Following'),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              width: 120,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                color: Colors.teal[900],
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Follwed ....");
-                                },
-                                child: Text("Follow",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                print('contacting..');
-                                await _sendMail(
-                                    userData.email, userData.displayName);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 120,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 8),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25)),
-                                  color: Colors.red[800],
-                                ),
-                                child: Text("Contact",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-                            ),
-=======
                             dataColumn(
                                 "${userData.followerList.length}", 'Followers'),
->>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
                           ],
                         ),
                       ),
@@ -248,11 +189,15 @@ class ProfilePageNew extends StatelessWidget {
                                 builder: (context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
                                   if (snapshot.hasError) {
-                                    return Center(child: Text("error occured"));
+                                    return Center(
+                                      child: Text("error occured"),
+                                    );
                                   }
 
                                   if (snapshot.hasData) {
-                                    // totalarts = snapshot.data.docs.length;
+                                    Provider.of<ArtsCountProvider>(context,
+                                            listen: false)
+                                        .setArtCount(snapshot.data.docs.length);
                                     return GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
@@ -317,16 +262,3 @@ Widget dataColumn(String title, String subtitle) {
     ],
   );
 }
-<<<<<<< HEAD
-
-_sendMail(String email, String username) async {
-  // Android and iOS
-  String uri = 'mailto:$email?subject=Greetings&body=Hello $username';
-  if (await canLaunch(uri)) {
-    await launch(uri);
-  } else {
-    throw 'Could not launch $uri';
-  }
-}
-=======
->>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836

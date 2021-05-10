@@ -1,5 +1,6 @@
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/userimagewidget.dart';
+import 'package:artsvalley/providers/artcount.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +19,7 @@ class NewUserProfilePage extends StatefulWidget {
 }
 
 class _NewUserProfilePageState extends State<NewUserProfilePage> {
+  String artcount;
   bool isFollowed = false;
   int followerCount = 0;
 
@@ -114,7 +116,16 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                             SizedBox(
                               width: 20,
                             ),
-                            dataColumn('5', 'Arts'),
+                            Consumer<ArtsCountProvider>(
+                              builder: (context, value, child) {
+                                if (value.artscount == null) {
+                                  return dataColumn('0', "Total Arts");
+                                }
+                                return dataColumn(
+                                    value.artscount.toString(), "Total Arts");
+                              },
+                            ),
+                            // dataColumn("$artcount", "Total Arts"),
                             SizedBox(
                               width: 50,
                               height: 40,
@@ -144,28 +155,6 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-<<<<<<< HEAD
-                            Container(
-                              alignment: Alignment.center,
-                              width: 120,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                color: Colors.teal[900],
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Follwed ....");
-                                },
-                                child: Text("Follow",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-=======
                             GestureDetector(
                               onTap: () {
                                 doFollow(userData.followerList);
@@ -177,7 +166,6 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                       null)
                                   ? followButton()
                                   : unFollowButton(),
->>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
                             ),
                             GestureDetector(
                               onTap: () {
@@ -193,11 +181,13 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                       BorderRadius.all(Radius.circular(25)),
                                   color: Colors.pink[700],
                                 ),
-                                child: Text("Contact",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
+                                child: Text(
+                                  "Contact",
+                                  style: GoogleFonts.gotu(
+                                    textStyle: TextStyle(
+                                        fontSize: 15, color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -251,6 +241,13 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                   } //parat avaj gela
 
                                   if (snapshot.hasData) {
+                                    // Provider.of<ArtsCountProvider>(context,
+                                    //         listen: false)
+                                    //     .setArtCount(snapshot.data.docs.length);
+
+                                    // ArtsCountProvider()
+                                    //     .setArtCount(snapshot.data.docs.length);
+
                                     return GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
@@ -263,14 +260,23 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                         DocumentSnapshot mypost =
                                             snapshot.data.docs[index];
                                         Map likes = mypost['likes'];
+                                        String currentUser = Provider.of<User>(
+                                                context,
+                                                listen: false)
+                                            .uid;
+                                        bool isLiked =
+                                            likes[currentUser] == true;
                                         return UserImageWidget(
                                           index: index,
+                                          postId: mypost['postId'],
                                           posturl: mypost['postUrl'],
                                           userId: mypost['userId'],
                                           likescount: likes.length.toString(),
                                           caption: mypost['caption'],
                                           profileurl: mypost['userProfile'],
                                           userdisplayname: mypost['username'],
+                                          likes: likes,
+                                          isLiked: isLiked,
                                         );
                                       },
                                     );

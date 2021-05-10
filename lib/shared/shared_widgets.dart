@@ -37,9 +37,12 @@ Widget customInputField1(
   String hintText,
   IconData customIcon,
   TextEditingController mycontroller,
-  FormFieldValidator<String> validator,
-) {
+  FormFieldValidator<String> validator, {
+  Color bgcolor,
+  double width,
+}) {
   return TextFieldContainer(
+    bgcolor: bgcolor,
     child: TextFormField(
       controller: mycontroller,
       cursorColor: kPrimaryColor,
@@ -59,7 +62,10 @@ Widget customInputField1(
 
 Widget customInputField(String hintText, IconData customIcon,
     TextEditingController mycontroller, FormFieldValidator<String> validator,
-    [bool obsecureText = false]) {
+    // [bool obsecureText = false,]
+    {Color bgcolor,
+    double width,
+    bool obsecureText = false}) {
   Icon myIcon = Icon(customIcon, color: Colors.grey);
   String hint = hintText;
   return Container(
@@ -171,12 +177,13 @@ Widget createAccountLabel(String label, String action) {
         Text(
           action,
           style: TextStyle(
-              color: Colors.deepOrange,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              decorationStyle: TextDecorationStyle.solid,
-              decoration: TextDecoration.underline,
-              decorationThickness: 2.0),
+            color: Colors.deepOrange,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            decorationStyle: TextDecorationStyle.solid,
+            decoration: TextDecoration.underline,
+            decorationThickness: 2.0,
+          ),
         ),
       ],
     ),

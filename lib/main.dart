@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
+import 'package:artsvalley/providers/artcount.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
@@ -19,10 +20,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'enum/connectivityStatus.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(
     MyApp(),
   );
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthMethods(FirebaseAuth.instance),
         ),
         StreamProvider(
-          initialData: null,
+          initialData: null, 
           create: (context) =>
               Provider.of<AuthMethods>(context, listen: false).authStateChanges,
         ),
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
         ChangeNotifierProvider(create: (context) => UserDataProvider()),
+        ChangeNotifierProvider(create: (context) => ArtsCountProvider()),
       ],
       child: StreamProvider<ConnectivityStatus>(
         initialData: null,
@@ -56,13 +58,15 @@ class MyApp extends StatelessWidget {
           title: "Arts Valley",
           routes: routes,
           theme: ThemeData(
-            appBarTheme: AppBarTheme(brightness: Brightness.dark),
+            appBarTheme: AppBarTheme(
+              brightness: Brightness.dark,
+            ),
             primaryColor: kPrimaryColorDark,
             primarySwatch: Colors.teal,
             visualDensity: VisualDensity.adaptivePlatformDensity,
             backgroundColor: Color(0xfff1f1f1),
             accentColor: Colors.white,
-          textTheme: TextTheme(
+            textTheme: TextTheme(
               headline1: TextStyle(
                 fontSize: 28.00,
                 fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
-import 'package:artsvalley/views/userprofile.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/report_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class _PostWidgetState extends State<PostWidget> {
   int likescount = 0;
   // DocumentSnapshot likeRef;
   bool isLiked = false;
-
+  final GlobalKey<PopupMenuItemState> _popupKey =
+      GlobalKey<PopupMenuItemState>();
   doLike() {
     String _currentUser = Provider.of<User>(context, listen: false).uid;
     bool _isliked = widget.likes[_currentUser] == true;
@@ -104,7 +106,6 @@ class _PostWidgetState extends State<PostWidget> {
                       MaterialPageRoute(
                         builder: (context) => NewUserProfilePage(
                           userid: widget.userId,
-                         
                         ),
                       ),
                     );
@@ -135,12 +136,43 @@ class _PostWidgetState extends State<PostWidget> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: IconButton(
-                        icon: Icon(Icons.more_vert, color: Colors.white),
-                        onPressed: () {
-                          //TODO: menu option here
-                        },
-                      ),
+                      // child: IconButton(
+                      //   icon: Icon(Icons.more_vert, color: Colors.white),
+                      //   onPressed: () {
+                      //     //TODO: menu option here
+
+                      //   },
+
+                      // ),
+                      child: PopupMenuButton(
+                          color: Colors.white,
+                          iconSize: 30,
+                          key: _popupKey,
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: Colors.white,
+                          ),
+                          // onCanceled: () {},
+                          onSelected: (value) {
+                            if (value == 0) {
+                              // print(value);
+                              Navigator.push(
+                                context,
+                                moveToPage(
+                                  context,
+                                  ReportPage(),
+                                ),
+                              );
+                            }
+                          },
+                          itemBuilder: (context) {
+                            return [
+                              PopupMenuItem<int>(
+                                child: Text("Report"),
+                                value: 0,
+                              ),
+                            ];
+                          }),
                     ),
                   ],
                 ),
@@ -200,10 +232,13 @@ class _PostWidgetState extends State<PostWidget> {
                           )
                         ],
                       ),
-                      Icon(
-                        Icons.share,
-                        size: 35,
-                        color: Colors.white,
+                      InkWell(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.bookmark_outlined,
+                          size: 35,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
