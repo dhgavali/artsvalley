@@ -31,8 +31,8 @@ dependencies:
   google_fonts: ^2.0.0
   curved_navigation_bar: ^0.3.7
   connectivity: ^3.0.3
-  get: ^4.1.4
   url_launcher: ^6.0.3
+  animated_text_kit: ^4.2.1
 
 dev_dependencies:
   flutter_test:

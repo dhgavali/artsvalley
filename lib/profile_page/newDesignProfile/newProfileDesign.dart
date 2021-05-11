@@ -61,20 +61,14 @@ class ProfilePageNew extends StatelessWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(top: 20),
-                            child: GestureDetector(
-                              onTap: () {
-                                //TODO : here we can display profile full size if we want to.
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: CircleAvatar(
-                                  radius: 65,
-                                  backgroundImage: (userData.userProfile !=
-                                          null)
-                                      ? NetworkImage(userData.userProfile)
-                                      : AssetImage('assets/images/profile.png'),
-                                  backgroundColor: Colors.white38,
-                                ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: CircleAvatar(
+                                radius: 65,
+                                backgroundImage: (userData.userProfile != null)
+                                    ? NetworkImage(userData.userProfile)
+                                    : AssetImage('assets/images/profile.png'),
+                                backgroundColor: Colors.white38,
                               ),
                             ),
                           ),

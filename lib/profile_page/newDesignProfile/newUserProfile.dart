@@ -1,6 +1,5 @@
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/userimagewidget.dart';
-import 'package:artsvalley/providers/artcount.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
