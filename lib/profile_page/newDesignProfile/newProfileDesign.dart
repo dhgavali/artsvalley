@@ -1,6 +1,5 @@
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/image_widget.dart';
-import 'package:artsvalley/providers/artcount.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
@@ -65,7 +64,7 @@ class ProfilePageNew extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 //TODO : here we can display profile full size if we want to.
-                                },
+                              },
                               child: Container(
                                 alignment: Alignment.center,
                                 child: CircleAvatar(
@@ -114,15 +113,7 @@ class ProfilePageNew extends StatelessWidget {
                             SizedBox(
                               width: 20,
                             ),
-                            Consumer<ArtsCountProvider>(
-                              builder: (context, value, child) {
-                                if (value.artscount == null) {
-                                  return dataColumn('0', "Total Arts");
-                                }
-                                return dataColumn(
-                                    value.artscount.toString(), "Total Arts");
-                              },
-                            ),
+                            dataColumn("0", "Total Arts"),
                             SizedBox(
                               width: 50,
                               height: 40,
@@ -195,9 +186,6 @@ class ProfilePageNew extends StatelessWidget {
                                   }
 
                                   if (snapshot.hasData) {
-                                    Provider.of<ArtsCountProvider>(context,
-                                            listen: false)
-                                        .setArtCount(snapshot.data.docs.length);
                                     return GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(

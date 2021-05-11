@@ -136,14 +136,7 @@ class _PostWidgetState extends State<PostWidget> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      // child: IconButton(
-                      //   icon: Icon(Icons.more_vert, color: Colors.white),
-                      //   onPressed: () {
-                      //     //TODO: menu option here
-
-                      //   },
-
-                      // ),
+                   
                       child: PopupMenuButton(
                           color: Colors.white,
                           iconSize: 30,

@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:artsvalley/shared/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:artsvalley/services/databaseService.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:artsvalley/profile_page/selectedProfile.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,16 +15,19 @@ class EditProfile with ChangeNotifier {
   String userProfileImageUrl;
   String get getUserProfileImageUrl => userProfileImageUrl;
 
+  set profileImageUrl(value) => this.userProfileImageUrl;
+
   Future pickProfileImage(BuildContext context, ImageSource source) async {
-    print("Pick Method was called");
-    final pickedUserProfileImage = await picker.getImage(source: source);
+    log("Pick Method was called");
+    final pickedUserProfileImage =
+        await picker.getImage(source: source, maxHeight: 500, maxWidth: 500);
     pickedUserProfileImage == null
         ? print('Please select image')
         : userProfileImage = File(pickedUserProfileImage.path);
-    print(userProfileImage.path);
+    // print(userProfileImage.path);
 
     userProfileImage != null
-        ? showProfile(context)
+        ? moveToPage(context, ShowProfilePhoto())
         : print('Image Upload Eroor');
     notifyListeners();
   }
@@ -55,108 +56,10 @@ class EditProfile with ChangeNotifier {
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
     );
-    this.userProfileImage = _croppedImage;
-    notifyListeners();
-  }
-
-  showProfile(BuildContext context) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            height: MediaQuery.of(context).size.height * 2.5,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: Colors.grey[850],
-                borderRadius: BorderRadius.circular(12)),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 150),
-                  child: Divider(
-                    thickness: 4.0,
-                    color: Colors.white10,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 350),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          cropImage(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CircleAvatar(
-                  radius: MediaQuery.of(context).size.width * 0.3,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: FileImage(userProfileImage),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      MaterialButton(
-                        child: Text(
-                          'Reselect',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                          ),
-                        ),
-                        onPressed: () {
-                          selectProfileImageType(context);
-                        },
-                      ),
-                      MaterialButton(
-                        child: Text(
-                          'Upload Image',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onPressed: () {
-                          log("onpressed of upload image");
-                          Provider.of<DatabaseService>(context, listen: false)
-                              .uploadUserProfileImage(context)
-                              .whenComplete(() {
-                            log("upload completed");
-                            log("${Provider.of<EditProfile>(context)
-                                  .getUserProfileImageUrl}");
-                            FirebaseFirestore.instance
-                                .collection(ProConstants.usersCollection)
-                                .doc(
-                                  Provider.of<User>(context, listen: false).uid,
-                                )
-                                .update({
-                              'photoUrl': Provider.of<EditProfile>(context)
-                                  .getUserProfileImageUrl
-                            });
-                            Navigator.pop(context);
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
+    if (_croppedImage != null) {
+      userProfileImage = _croppedImage;
+      notifyListeners();
+    }
   }
 
   selectProfileImageType(BuildContext context, {String imageurl}) {

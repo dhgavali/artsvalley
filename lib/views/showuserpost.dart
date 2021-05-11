@@ -32,7 +32,6 @@ class _ShowUserPostState extends State<ShowUserPost> {
   final List tags = ['Art', 'Potrait'];
 
   int likescount = 0;
-  // DocumentSnapshot likeRef;
   bool isLiked = false;
 
   doLike() {

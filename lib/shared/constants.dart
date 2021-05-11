@@ -113,6 +113,7 @@ const defaultDuration = Duration(milliseconds: 250);
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 final RegExp contactNumberValidator = RegExp(r"^[0-9]{10}");
+final RegExp stringvalueValidator = RegExp(r"^[a-zA-z]");
 const String kEmailNullError = "Please Enter your email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter your password";

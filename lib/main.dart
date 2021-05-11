@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/providers/artcount.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/pass_visibility.dart';
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthMethods(FirebaseAuth.instance),
         ),
         StreamProvider(
-          initialData: null, 
+          initialData: null,
           create: (context) =>
               Provider.of<AuthMethods>(context, listen: false).authStateChanges,
         ),
@@ -48,7 +47,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
         ChangeNotifierProvider(create: (context) => UserDataProvider()),
-        ChangeNotifierProvider(create: (context) => ArtsCountProvider()),
       ],
       child: StreamProvider<ConnectivityStatus>(
         initialData: null,

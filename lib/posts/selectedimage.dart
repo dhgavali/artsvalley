@@ -92,13 +92,12 @@ class SelectedImage extends StatelessWidget {
                         style: ProConstants.infoText,
                       ),
                       onPressed: () async {
-                        print("${_loadProvider.isIndicatorLoaded}");
+                 
                         _loadProvider.loadLinearProgress(true);
                         await Provider.of<UploadPost>(context, listen: false)
                             .uploadPostToStorage()
                             .whenComplete(() {
                           _loadProvider.loadLinearProgress(false);
-                          print("${_loadProvider.isIndicatorLoaded}");
                           Navigator.push(
                               context,
                               CupertinoPageRoute(

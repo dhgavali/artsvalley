@@ -116,15 +116,7 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                             SizedBox(
                               width: 20,
                             ),
-                            Consumer<ArtsCountProvider>(
-                              builder: (context, value, child) {
-                                if (value.artscount == null) {
-                                  return dataColumn('0', "Total Arts");
-                                }
-                                return dataColumn(
-                                    value.artscount.toString(), "Total Arts");
-                              },
-                            ),
+                            dataColumn("0", "arts"),
                             // dataColumn("$artcount", "Total Arts"),
                             SizedBox(
                               width: 50,
@@ -241,13 +233,6 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                   } //parat avaj gela
 
                                   if (snapshot.hasData) {
-                                    // Provider.of<ArtsCountProvider>(context,
-                                    //         listen: false)
-                                    //     .setArtCount(snapshot.data.docs.length);
-
-                                    // ArtsCountProvider()
-                                    //     .setArtCount(snapshot.data.docs.length);
-
                                     return GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(

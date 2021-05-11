@@ -1,8 +1,15 @@
+import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ReportPage extends StatefulWidget {
+  final String postId;
+  ReportPage({this.postId});
+
   @override
   _ReportPageState createState() => _ReportPageState();
 }
@@ -10,6 +17,9 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   bool _value = false;
   TextEditingController _commentController = new TextEditingController();
+  // TextEditingController _reportType = new TextEditingController();
+  String reportType1;
+  String reportType2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +53,12 @@ class _ReportPageState extends State<ReportPage> {
                   setState(() {
                     this._value = value;
                   });
+
+                  if (value) {
+                    reportType1 = "Is not an Art";
+                  } else {
+                    reportType1 = "";
+                  }
                 },
                 title: Text("Is not an Art"),
                 checkColor: Color(0xffff00ff),
@@ -57,6 +73,11 @@ class _ReportPageState extends State<ReportPage> {
                   setState(() {
                     this._value = value;
                   });
+                  if (value) {
+                    reportType2 = ", violates the copyrights";
+                  } else {
+                    reportType2 = "";
+                  }
                 },
                 key: GlobalKey(),
                 title: Text("It violates the copyrights"),
@@ -83,8 +104,22 @@ class _ReportPageState extends State<ReportPage> {
               GestureDetector(
                 onTap: () {
                   // TODO: Add record to reports database
-                  print(_commentController.text);
-                  // print()
+                  // print(_commentController.text);
+                  Provider.of<DatabaseService>(context, listen: false)
+                      .addReportToDb(
+                    postId: widget.postId,
+                    uid: Provider.of<User>(context, listen: false).uid,
+                    reportType1: reportType1,
+                    reportType2: reportType2,
+                  )
+                      .then((value) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
+                  });
                 },
                 child: Container(
                   width: 180,
