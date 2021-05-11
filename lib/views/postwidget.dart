@@ -153,7 +153,7 @@ class _PostWidgetState extends State<PostWidget> {
                                 context,
                                 moveToPage(
                                   context,
-                                  ReportPage(),
+                                  ReportPage(postId: widget.postId,),
                                 ),
                               );
                             }

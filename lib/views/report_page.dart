@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+//TODO: changing the both checkboxes at the same time
+//post id is null
+//comment is also null
 class ReportPage extends StatefulWidget {
   final String postId;
   ReportPage({this.postId});
@@ -15,7 +18,8 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  bool _value = false;
+  bool _value1 = false;
+  bool _value2 = false;
   TextEditingController _commentController = new TextEditingController();
   // TextEditingController _reportType = new TextEditingController();
   String reportType1;
@@ -48,10 +52,10 @@ class _ReportPageState extends State<ReportPage> {
               ),
               SizedBox(height: 10),
               CheckboxListTile(
-                value: _value,
+                value: _value1,
                 onChanged: (value) {
                   setState(() {
-                    this._value = value;
+                    this._value1 = value;
                   });
 
                   if (value) {
@@ -68,13 +72,13 @@ class _ReportPageState extends State<ReportPage> {
                 height: 25,
               ),
               CheckboxListTile(
-                value: _value,
+                value: _value2,
                 onChanged: (value) {
                   setState(() {
-                    this._value = value;
+                    this._value2 = value;
                   });
                   if (value) {
-                    reportType2 = ", violates the copyrights";
+                    reportType2 = "violates the copyrights";
                   } else {
                     reportType2 = "";
                   }
@@ -111,6 +115,7 @@ class _ReportPageState extends State<ReportPage> {
                     uid: Provider.of<User>(context, listen: false).uid,
                     reportType1: reportType1,
                     reportType2: reportType2,
+                    comment: _commentController.text.trim(),
                   )
                       .then((value) {
                     Navigator.pushReplacement(

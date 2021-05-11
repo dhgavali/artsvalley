@@ -43,8 +43,8 @@ class _AccountsPageState extends State<AccountsPage> {
     }
   }
 
-  bool showMobileField = true;
-  bool showAddressField = true;
+  bool showMobileField = false;
+  bool showAddressField = false;
   bool showPinCodeField = false;
 
   @override
