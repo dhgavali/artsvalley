@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -65,7 +63,6 @@ class _HomePageState extends State<HomePage> {
                 Color(0xFFFFEA61),
                 Color(0xFFFFB7C3),
                 Color(0xFF2BFF88),
-                Color(0xFFF5FBEF),
               ],
             ),
             centerTitle: true,
