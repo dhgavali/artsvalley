@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
@@ -8,6 +9,8 @@ import 'package:artsvalley/views/info/about_us.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:artsvalley/views/store/product_page.dart';
+import 'package:artsvalley/views/tutorials/tutorial_home.dart';
+import 'package:artsvalley/views/tutorials/tutorial_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,8 +91,7 @@ class _HomePageState extends State<HomePage> {
             selectedMenu: MenuState.home,
           ),
           drawer: Theme(
-            data: Theme.of(context)
-                .copyWith(canvasColor: ProConstants.drawerColor),
+            data: Theme.of(context).copyWith(canvasColor: kerichblack),
             child: MyDrawer(),
           ),
           body: StreamBuilder(
@@ -152,14 +154,21 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(
               Icons.close,
               size: 32.0,
-              color: Colors.black,
+              color: kteagreen,
             ),
           ),
           SizedBox(
             height: 100,
           ),
           menuItem("Home", Icons.home),
-          menuItem("Profile", Icons.person),
+          GestureDetector(
+              onTap: () {
+                moveToPage(
+                  context,
+                  ProfilePageNew(),
+                );
+              },
+              child: menuItem("Profile", Icons.person)),
           GestureDetector(
               // onTap: () {
               //   Navigator.push(
@@ -171,13 +180,23 @@ class MyDrawer extends StatelessWidget {
               // },
               child: menuItem("Explore", Icons.explore)),
           GestureDetector(
-              onTap: () {
-                moveToPage(
-                  context,
-                  ProductPage(),
-                );
-              },
-              child: menuItem("Art Store", Icons.store)),
+            onTap: () {
+              moveToPage(
+                context,
+                ProductPage(),
+              );
+            },
+            child: menuItem("Art Store", Icons.store),
+          ),
+          GestureDetector(
+            onTap: () {
+              moveToPage(context, TutorialHomePage());
+            },
+            child: menuItem(
+              "Tutorials",
+              Icons.menu_book_outlined,
+            ),
+          ),
           GestureDetector(
               onTap: () {
                 moveToPage(context, SettingsScreen());
@@ -197,17 +216,23 @@ class MyDrawer extends StatelessWidget {
   }
 
   Widget menuItem(String value, IconData icons) {
-    return ListTile(
-      leading: Icon(
-        icons,
-        color: ProConstants.bgcolor,
-        size: 28.0,
-      ),
-      title: Text(
-        value,
-        style: TextStyle(
-          fontSize: 20,
-          color: ProConstants.bgcolor,
+    return Card(
+      color: kerichblack,
+      child: ListTile(
+        leading: Icon(
+          icons,
+          color: kteagreen,
+          size: 28.0,
+        ),
+        contentPadding: const EdgeInsets.only(left: 20.0),
+        title: Text(
+          value,
+          style: TextStyle(
+            fontSize: 20,
+            // color: Colors.white,
+            color: keggshell,
+            letterSpacing: 0.5,
+          ),
         ),
       ),
     );

@@ -14,9 +14,9 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color inActiveIconColor = Colors.yellow;
+    final Color inActiveIconColor = Colors.red.shade900;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: kPrimaryColorDark,
       ),
@@ -24,10 +24,13 @@ class CustomBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+              size: 28,
+            ),
             color: MenuState.home == selectedMenu
                 ? inActiveIconColor
-                : Colors.white,
+                : Colors.black,
             onPressed: () =>
                 Navigator.pushReplacementNamed(context, HomePage.routeName),
           ),
@@ -39,28 +42,29 @@ class CustomBottomNavBar extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Color(0xfff1f1f1),
+                // color: Color(0xfff1f1f1),
+                color: kerichblack,
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Icon(
                 Icons.add_rounded,
-                color: kPrimaryColor,
+                color: Colors.white,
                 size: 28,
               ),
             ),
           ),
           IconButton(
-              icon: Icon(Icons.person_rounded),
+              icon: Icon(
+                Icons.person_rounded,
+                size: 28,
+              ),
               color: MenuState.profile == selectedMenu
                   ? inActiveIconColor
-                  : Colors.white,
+                  : Colors.black,
               onPressed: () {
-                //Navigator.pushNamed(context, Profile.routeName),
                 Navigator.pushReplacementNamed(
                     context, ProfilePageNew.routeName);
-              }
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePageNew()))
-              ),
+              }),
         ],
       ),
     );

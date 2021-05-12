@@ -1,6 +1,9 @@
 import 'package:artsvalley/models/product.dart';
+import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/store/detailsScreen.dart';
 import 'package:artsvalley/views/store/item_card.dart';
+import 'package:artsvalley/views/store/shopform.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,7 +28,7 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        title: Text("Arts Store"),
         elevation: 0,
         leading: IconButton(
             icon: Icon(
@@ -144,6 +147,28 @@ class _ProductPageState extends State<ProductPage> {
           ),
         ],
       ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          moveToPage(context, ShopForm());
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+          decoration: BoxDecoration(
+            color: kPrimaryColor,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Text(
+            "Become Merchant",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

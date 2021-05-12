@@ -5,16 +5,24 @@
 import 'package:flutter/material.dart';
 
 class TutorialsListPage extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.red,
+      appBar: AppBar(
+        title: Text("Tutorial List"),
+      ),
       body: ListView.builder(
         //snasphot.data.length
-        itemCount: 0,
+        itemCount: 3,
 
         itemBuilder: (context, index) {
-          return Container();
+          return Card(
+            child: ListTile(
+              title: Text("Elephant"),
+              subtitle: Text("Learn how to draw elephant in 6 Steps"),
+            ),
+          );
         },
       ),
     );

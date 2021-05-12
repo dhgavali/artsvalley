@@ -23,13 +23,15 @@ class SettingMenu extends StatelessWidget {
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: keggshell,
+            // color: keggshell,
+            // color: kdarkpurple
+            color: kteagreen2,
           ),
           child: Row(
-            children: [
+            children: [ 
               Icon(
                 icon,
-                color: kPrimaryColor,
+                color: kdarkpurple,
                 size: 24,
               ),
               SizedBox(width: 20),
@@ -37,9 +39,9 @@ class SettingMenu extends StatelessWidget {
                 child: Text(
                   text,
                   style: TextStyle(
-                      fontSize: 20,
-                      // color: Colors.white,
-                      fontWeight: FontWeight.w600),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               Icon(Icons.arrow_forward_ios),

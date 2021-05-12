@@ -82,6 +82,7 @@ class _PostWidgetState extends State<PostWidget> {
             BoxShadow(
               offset: Offset(5, 5),
               color: Color(0xff303030),
+              // color: kpostBorderColor,
               blurRadius: 10,
             ),
           ],
@@ -136,7 +137,6 @@ class _PostWidgetState extends State<PostWidget> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                   
                       child: PopupMenuButton(
                           color: Colors.white,
                           iconSize: 30,
@@ -153,7 +153,9 @@ class _PostWidgetState extends State<PostWidget> {
                                 context,
                                 moveToPage(
                                   context,
-                                  ReportPage(postId: widget.postId,),
+                                  ReportPage(
+                                    postId: widget.postId,
+                                  ),
                                 ),
                               );
                             }

@@ -1,6 +1,7 @@
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/notifications.dart';
 import 'package:artsvalley/views/settings/myaccount.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/views/settings/settings_menu.dart';
@@ -85,6 +86,13 @@ class Body extends StatelessWidget {
             icon: Icons.help,
             press: () {
               moveToPage(context, HelpPage());
+            },
+          ),
+          SettingMenu(
+            text: "Notifications",
+            icon: Icons.notifications,
+            press: () {
+              moveToPage(context, NotificationsPage());
             },
           ),
           SettingMenu(
