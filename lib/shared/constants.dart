@@ -4,16 +4,31 @@ import 'package:flutter/material.dart';
 const kPrimaryColor = Color(0xFF6F35A5);
 // const kSecondaryColor = Color(0xff041F1E);
 // const kPrimaryColorDark = Color(0xff041F1E);
-const kPrimaryColorDark = Color(0xff2E1760);
+const kpurpledark = Color(0xff2E1760);
+// const kPrimaryColorDark = Color(0xffFF1053);
+// const kPrimaryColorDark = Color(0xff2D232E);
+// const kPrimaryColorDark = Color(0xff570000);
+const kPrimaryColorDark = Color(0xffFCD581);
 const kPrimaryLightColor = Color(0xFFFFECDF);
+// const kpostBorderColor = Color(0xff303030);
+const kpostBorderColor = Color(0xff370031);
 const ketonBlue = Color(0xFF7FC6A4);
+
 const klightPink = Color(0xFFF39C6B);
+
 const keggshell = Color(0xFFF8F4E3);
 const kceladonBlue = Color(0xFF2978A0);
 const kmellowApricot = Color(0xFFFFC07F);
 const kforestGreen = Color(0xFF57A773);
 const kLightOrange = Color(0xFFFF7643);
 const kseagreen = Color(0xff09814a);
+const kdarkpurple = Color(0xff370031);
+const knewcolor = Color(0xffFF495C);
+const kteagreen = Color(0xffD9F2B4);
+const kteagreen2 = Color(0xffD3FAC7);
+const magicmeant = Color(0xffB4EBCA);
+const krichblack = Color(0xff023C40);
+const kerichblack = Color(0xff171614);
 // const kPrimaryColor = Color(0xFFFF7643);
 
 //ENUM
@@ -34,7 +49,7 @@ enum MenuState { home, favourite, message, profile }
 //magic meant : B4EBCA
 //cherry pink :FFB7C3
 //celesto: BCF4F5
-//citrine : E8D33F  
+//citrine : E8D33F
 //ivory: F5FBEF
 
 //spanish violet :46237A
@@ -155,3 +170,4 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: BorderSide(color: kTextColor),
   );
 }
+

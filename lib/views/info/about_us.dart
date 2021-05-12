@@ -1,3 +1,4 @@
+import 'package:artsvalley/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -55,7 +56,8 @@ class UserCardWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.8,
       height: MediaQuery.of(context).size.height * 0.40,
       decoration: BoxDecoration(
-        color: Colors.white,
+        // color: Colors.white,
+        color: kteagreen2,
         borderRadius: BorderRadius.circular(10),
         boxShadow: <BoxShadow>[
           BoxShadow(

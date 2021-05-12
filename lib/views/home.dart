@@ -88,8 +88,7 @@ class _HomePageState extends State<HomePage> {
             selectedMenu: MenuState.home,
           ),
           drawer: Theme(
-            data: Theme.of(context)
-                .copyWith(canvasColor: ProConstants.drawerColor),
+            data: Theme.of(context).copyWith(canvasColor: kteagreen2),
             child: MyDrawer(),
           ),
           body: StreamBuilder(
@@ -152,7 +151,7 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(
               Icons.close,
               size: 32.0,
-              color: Colors.black,
+              color: kdarkpurple,
             ),
           ),
           SizedBox(
@@ -197,17 +196,22 @@ class MyDrawer extends StatelessWidget {
   }
 
   Widget menuItem(String value, IconData icons) {
-    return ListTile(
-      leading: Icon(
-        icons,
-        color: ProConstants.bgcolor,
-        size: 28.0,
-      ),
-      title: Text(
-        value,
-        style: TextStyle(
-          fontSize: 20,
-          color: ProConstants.bgcolor,
+    return Card(
+      color: kteagreen2,
+      child: ListTile(
+        leading: Icon(
+          icons,
+          color: kdarkpurple,
+          size: 28.0,
+        ),
+        contentPadding: const EdgeInsets.only(left: 20.0),
+        title: Text(
+          value,
+          style: TextStyle(
+            fontSize: 20,
+            color: ProConstants.bgcolor,
+            letterSpacing: 0.5,
+          ),
         ),
       ),
     );
