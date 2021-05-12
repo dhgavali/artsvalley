@@ -31,10 +31,6 @@ dependencies:
   google_fonts: ^2.0.0
   curved_navigation_bar: ^0.3.7
   connectivity: ^3.0.3
-<<<<<<< HEAD
-  get: ^4.1.4
-=======
->>>>>>> 5b262484ac4be742bd5fd3315bc791374ebf6780
   url_launcher: ^6.0.3
   animated_text_kit: ^4.2.1
 
