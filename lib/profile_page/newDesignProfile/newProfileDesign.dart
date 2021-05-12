@@ -1,5 +1,4 @@
 import 'package:artsvalley/models/userdata_model.dart';
-import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/profile_page/image_widget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -7,18 +6,16 @@ import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePageNew extends StatelessWidget {
   static final String routeName = "/new_profile_page";
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context, listen: false);
-
-    ValueNotifier<int> totalarts = ValueNotifier(0);
     return Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
@@ -64,20 +61,14 @@ class ProfilePageNew extends StatelessWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(top: 20),
-                            child: GestureDetector(
-                              onTap: () {
-                               //TODO : here we can display profile full size if we want to.
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: CircleAvatar(
-                                  radius: 65,
-                                  backgroundImage: (userData.userProfile !=
-                                          null)
-                                      ? NetworkImage(userData.userProfile)
-                                      : AssetImage('assets/images/profile.png'),
-                                  backgroundColor: Colors.white38,
-                                ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: CircleAvatar(
+                                radius: 65,
+                                backgroundImage: (userData.userProfile != null)
+                                    ? NetworkImage(userData.userProfile)
+                                    : AssetImage('assets/images/profile.png'),
+                                backgroundColor: Colors.white38,
                               ),
                             ),
                           ),
@@ -109,7 +100,6 @@ class ProfilePageNew extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        //padding: EdgeInsets.only(left: 30, right: 30),
                         margin: EdgeInsets.only(left: 40, right: 40),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -117,13 +107,7 @@ class ProfilePageNew extends StatelessWidget {
                             SizedBox(
                               width: 20,
                             ),
-                            ValueListenableBuilder<int>(
-                              valueListenable: totalarts,
-                              builder: (context, value, child) {
-                                return dataColumn('$value', 'Arts');
-                              },
-                            ),
-                            // dataColumn('$totalarts', 'Arts'),
+                            dataColumn("0", "Total Arts"),
                             SizedBox(
                               width: 50,
                               height: 40,
@@ -190,11 +174,12 @@ class ProfilePageNew extends StatelessWidget {
                                 builder: (context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
                                   if (snapshot.hasError) {
-                                    return Center(child: Text("error occured"));
+                                    return Center(
+                                      child: Text("error occured"),
+                                    );
                                   }
 
                                   if (snapshot.hasData) {
-                                    // totalarts = snapshot.data.docs.length;
                                     return GridView.builder(
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(

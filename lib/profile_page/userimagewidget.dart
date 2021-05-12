@@ -11,7 +11,8 @@ class UserImageWidget extends StatelessWidget {
   final String likescount;
   final String profileurl;
   final String userdisplayname;
-
+  final Map likes;
+  final bool isLiked;
   UserImageWidget(
       {@required this.index,
       this.postId,
@@ -20,8 +21,9 @@ class UserImageWidget extends StatelessWidget {
       this.caption,
       this.likescount,
       this.profileurl,
-      this.userdisplayname
-      });
+      this.userdisplayname,
+      this.likes,
+      this.isLiked});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +39,11 @@ class UserImageWidget extends StatelessWidget {
               postid: postId,
               name: userdisplayname,
               profileimage: profileurl,
+              isLiked: isLiked,
             ),
           ),
         );
       },
-      
       child: Container(
         height: 150,
         child: Card(
@@ -51,7 +53,6 @@ class UserImageWidget extends StatelessWidget {
                 : AssetImage("assets/images/painter.png"),
             placeholder: AssetImage("assets/images/painter.png"),
           ),
-          
         ),
       ),
     );

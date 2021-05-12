@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color(0xFF6F35A5);
 // const kSecondaryColor = Color(0xff041F1E);
-const kPrimaryColorDark = Color(0xff041F1E);
+// const kPrimaryColorDark = Color(0xff041F1E);
+const kPrimaryColorDark = Color(0xff2E1760);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const ketonBlue = Color(0xFF7FC6A4);
 const klightPink = Color(0xFFF39C6B);
@@ -22,7 +23,23 @@ const kseagreen = Color(0xff09814a);
 enum MenuState { home, favourite, message, profile }
 
 // somecolors:
-//
+//dark purple - maroon: 3E1929
+// dark purple : 370031
+//ruby: 832232
+
+//light colors
+//spring green : 04724D
+//tea green: D9F2B4
+//tea green 2 : D3FAC7
+//magic meant : B4EBCA
+//cherry pink :FFB7C3
+//celesto: BCF4F5
+//citrine : E8D33F  
+//ivory: F5FBEF
+
+//spanish violet :46237A
+//medium aquamarine : 3DDC97
+//sizzling red: FF495C
 // purple : 261447
 // light pink : F39C6B
 // crimson red : B20D30  - current
@@ -35,6 +52,7 @@ enum MenuState { home, favourite, message, profile }
 // middle blue green : 84DCCF
 // dark purple : 1F1A38
 // rich black - olive : 023C40
+//eierie black : 171614
 // mellow apricot - FFC07F
 // forest green : 57A773
 // color: Color(0xff17183B),
@@ -112,6 +130,8 @@ const defaultDuration = Duration(milliseconds: 250);
 // Form Error
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp contactNumberValidator = RegExp(r"^[0-9]{10}");
+final RegExp stringvalueValidator = RegExp(r"^[a-zA-z]");
 const String kEmailNullError = "Please Enter your email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter your password";
@@ -121,13 +141,13 @@ const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
 
-final otpInputDecoration = InputDecoration(
-  contentPadding:
-      EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
-  border: outlineInputBorder(),
-  focusedBorder: outlineInputBorder(),
-  enabledBorder: outlineInputBorder(),
-);
+// final otpInputDecoration = InputDecoration(
+//   contentPadding:
+//       EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
+//   border: outlineInputBorder(),
+//   focusedBorder: outlineInputBorder(),
+//   enabledBorder: outlineInputBorder(),
+// );
 
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(

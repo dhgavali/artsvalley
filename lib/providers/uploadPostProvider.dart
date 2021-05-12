@@ -78,9 +78,9 @@ class UploadPost with ChangeNotifier {
     notifyListeners();
   }
 
-  final _storageBucket = FirebaseStorage.instanceFor(
-      bucket: 'gs://art-valley.appspot.com',
-    );
+  // final _storageBucket = FirebaseStorage.instanceFor(
+  //     bucket: 'gs://art-valley.appspot.com',
+  //   );
 
   Future deleteImageFromDb() async{
     /* final Reference ref = FirebaseStorage.instance.refFromURL(uploadPostImageUrl);

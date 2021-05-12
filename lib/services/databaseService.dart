@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:artsvalley/profile_page/selectedProfile.dart';
 import 'package:artsvalley/profile_page/updateProfilePhoto.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,9 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 import 'package:artsvalley/profile_page/edit_Profile.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseService with ChangeNotifier {
   UploadTask imageUploadTask;
@@ -27,6 +28,8 @@ class DatabaseService with ChangeNotifier {
 
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
+  CollectionReference _reports =
+      FirebaseFirestore.instance.collection("reports");
 
   //initial data for stream
 
@@ -41,7 +44,7 @@ class DatabaseService with ChangeNotifier {
         ? Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => UpdateProfileImage(),
+              builder: (context) => ShowProfilePhoto(),
             ))
         : print('Image Upload Eroor');
     notifyListeners();
@@ -75,23 +78,38 @@ class DatabaseService with ChangeNotifier {
 
 //for profile picture
   //user Profile image upload task
-  Future uploadUserProfileImage(BuildContext context) async {
-    log("into the upload user post line 79 database services");
-    Reference imgReference = FirebaseStorage.instance.ref().child(
-        'UserProfileImage/${Provider.of<EditProfile>(context).userProfileImage.path}/${TimeOfDay.now()}');
+  Future<String> uploadUserProfileImage(File imageFile) async {
+    log("into the uploaidng");
+    log("file $imageFile.path.toString()");
+    TaskSnapshot tasksnapshot = await FirebaseStorage.instance
+        .ref()
+        .child('UserProfileImage/${imageFile.path}/${TimeOfDay.now()}')
+        .putFile(imageFile);
 
-    imageUploadTask = imgReference.putFile(
-        Provider.of<EditProfile>(context, listen: false).getUserProfileImage);
-    await imageUploadTask.whenComplete(() {
-      print("Image Uploaded");
-    });
-    imgReference.getDownloadURL().then((url) {
-      Provider.of<EditProfile>(context).userProfileImageUrl = url.toString();
-      log("uploaded");
-      print(
-          "User Profile image url = ${Provider.of<EditProfile>(context).getUserProfileImageUrl}");
-      notifyListeners();
-    });
+    log("tasksnapshot");
+    // log(tasksnapshot.toString());
+
+    final String downloadurl = await tasksnapshot.ref.getDownloadURL();
+    // EditProfile().profileImageUrl = downloadurl;
+    notifyListeners();
+    log(downloadurl);
+    return downloadurl;
+    // log(EditProfile().getUserProfileImageUrl);
+    // Reference imgReference = FirebaseStorage.instance.ref().child(
+    //     'UserProfileImage/${EditProfile().userProfileImage.path}/${TimeOfDay.now()}');
+
+    // imageUploadTask = imgReference.putFile(EditProfile().getUserProfileImage);
+    // await imageUploadTask.whenComplete(() {
+    //   print("Image Uploaded");
+    // });
+    // imgReference.getDownloadURL().then((url) {
+    //   EditProfile().userProfileImageUrl = url.toString();
+    //   path = url;
+    //   log("uploaded");
+    //   notifyListeners();
+    // });
+    // log("path is $path");
+    // return path = downloadurl;
   }
 
 //creating post collection into firestore
@@ -149,5 +167,23 @@ class DatabaseService with ChangeNotifier {
         .then((value) => print("Follower count updated to $value"))
         .catchError(
             (error) => print("Failed to update user followers: $error"));
+  }
+
+  Future<void> addReportToDb(
+      {String postId,
+      String uid,
+      String comment,
+      String reportType1,
+      String reportType2}) async {
+    String newuid = Uuid().v1();
+    String docId = newuid + uid;
+
+    await _reports.doc(docId).set({
+      'uid': uid,
+      'postId': postId,
+      'reportType1': reportType1 ?? FieldValue.delete(),
+      'reportType2': reportType2 ?? FieldValue.delete(),
+      'comment': comment,
+    }, SetOptions(merge: true));
   }
 }

@@ -27,7 +27,7 @@ class WelcomeBody extends StatelessWidget {
             SizedBox(height: size.height * 0.05),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
@@ -42,7 +42,7 @@ class WelcomeBody extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {

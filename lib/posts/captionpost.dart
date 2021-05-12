@@ -1,7 +1,6 @@
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/services/sharedPref.dart';
-import 'package:artsvalley/shared/BottomNavigationBar.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/successpage.dart';

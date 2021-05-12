@@ -7,15 +7,17 @@ class DefaultButton extends StatelessWidget {
     Key key,
     this.text,
     this.press,
+    this.width,
   }) : super(key: key);
   final String text;
   final Function press;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: getProportionateScreenHeight(56),
+      width: width ?? double.infinity,
+      height: getProportionateScreenHeight(50),
       child: TextButton(
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

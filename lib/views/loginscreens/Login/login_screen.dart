@@ -150,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: RoundedButton(
                     text: "Continue with google",
+                    color: kseagreen,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -164,6 +165,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   },
+                ),
+                SizedBox(
+                  height: 75,
                 ),
               ],
             ),

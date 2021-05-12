@@ -18,6 +18,7 @@ class NewUserProfilePage extends StatefulWidget {
 }
 
 class _NewUserProfilePageState extends State<NewUserProfilePage> {
+  String artcount;
   bool isFollowed = false;
   int followerCount = 0;
 
@@ -114,7 +115,8 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                             SizedBox(
                               width: 20,
                             ),
-                            dataColumn('5', 'Arts'),
+                            dataColumn("0", "arts"),
+                            // dataColumn("$artcount", "Total Arts"),
                             SizedBox(
                               width: 50,
                               height: 40,
@@ -170,11 +172,13 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                       BorderRadius.all(Radius.circular(25)),
                                   color: Colors.pink[700],
                                 ),
-                                child: Text("Contact",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
+                                child: Text(
+                                  "Contact",
+                                  style: GoogleFonts.gotu(
+                                    textStyle: TextStyle(
+                                        fontSize: 15, color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -240,14 +244,23 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                         DocumentSnapshot mypost =
                                             snapshot.data.docs[index];
                                         Map likes = mypost['likes'];
+                                        String currentUser = Provider.of<User>(
+                                                context,
+                                                listen: false)
+                                            .uid;
+                                        bool isLiked =
+                                            likes[currentUser] == true;
                                         return UserImageWidget(
                                           index: index,
+                                          postId: mypost['postId'],
                                           posturl: mypost['postUrl'],
                                           userId: mypost['userId'],
                                           likescount: likes.length.toString(),
                                           caption: mypost['caption'],
                                           profileurl: mypost['userProfile'],
                                           userdisplayname: mypost['username'],
+                                          likes: likes,
+                                          isLiked: isLiked,
                                         );
                                       },
                                     );

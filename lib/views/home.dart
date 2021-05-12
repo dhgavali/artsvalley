@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
@@ -8,6 +7,7 @@ import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
+import 'package:artsvalley/views/store/product_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,8 +32,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return NetworkDepend(
@@ -41,11 +39,31 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
             brightness: Brightness.dark,
-            title: Text(
-              "ArtsValley",
-              style: GoogleFonts.dancingScript(
-                  textStyle:
-                      TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            // title: Text(
+            //   "ArtsValley",
+            //   style: GoogleFonts.dancingScript(
+            //       textStyle:
+            //           TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            // ),
+            title: ColorizeAnimatedTextKit(
+              speed: Duration(milliseconds: 1000),
+              totalRepeatCount: 1,
+              repeatForever: false,
+              text: ["ArtsValley"],
+              textStyle: GoogleFonts.dancingScript(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+              colors: [
+                Color(0xff85FFBD),
+                Color(0xFF3DDC97),
+                Color(0xFFF39C6B),
+                Color(0xFFFF495C),
+                Color(0xFFE8D33F),
+                Color(0xFFFFEA61),
+                Color(0xFFFFB7C3),
+                Color(0xFF2BFF88),
+              ],
             ),
             centerTitle: true,
             actions: [
@@ -75,8 +93,7 @@ class _HomePageState extends State<HomePage> {
             child: MyDrawer(),
           ),
           body: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection("posts").snapshots(),
+            stream: FirebaseFirestore.instance.collection("posts").snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Center(
@@ -153,7 +170,14 @@ class MyDrawer extends StatelessWidget {
               //   );
               // },
               child: menuItem("Explore", Icons.explore)),
-          menuItem("Art Store", Icons.store),
+          GestureDetector(
+              onTap: () {
+                moveToPage(
+                  context,
+                  ProductPage(),
+                );
+              },
+              child: menuItem("Art Store", Icons.store)),
           GestureDetector(
               onTap: () {
                 moveToPage(context, SettingsScreen());
