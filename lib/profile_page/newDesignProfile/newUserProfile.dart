@@ -144,28 +144,6 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-<<<<<<< HEAD
-                            Container(
-                              alignment: Alignment.center,
-                              width: 120,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                color: Colors.teal[900],
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Follwed ....");
-                                },
-                                child: Text("Follow",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-=======
                             GestureDetector(
                               onTap: () {
                                 doFollow(userData.followerList);
@@ -177,7 +155,6 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                       null)
                                   ? followButton()
                                   : unFollowButton(),
->>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
                             ),
                             GestureDetector(
                               onTap: () {

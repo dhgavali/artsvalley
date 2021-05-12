@@ -141,66 +141,8 @@ class ProfilePageNew extends StatelessWidget {
                                 thickness: 0.5,
                               ),
                             ),
-<<<<<<< HEAD
-                            dataColumn('100', 'Following'),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              width: 120,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                color: Colors.teal[900],
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Follwed ....");
-                                },
-                                child: Text("Follow",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                print('contacting..');
-                                await _sendMail(
-                                    userData.email, userData.displayName);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 120,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 8),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25)),
-                                  color: Colors.red[800],
-                                ),
-                                child: Text("Contact",
-                                    style: GoogleFonts.gotu(
-                                      textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    )),
-                              ),
-                            ),
-=======
                             dataColumn(
                                 "${userData.followerList.length}", 'Followers'),
->>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
                           ],
                         ),
                       ),
@@ -317,16 +259,3 @@ Widget dataColumn(String title, String subtitle) {
     ],
   );
 }
-<<<<<<< HEAD
-
-_sendMail(String email, String username) async {
-  // Android and iOS
-  String uri = 'mailto:$email?subject=Greetings&body=Hello $username';
-  if (await canLaunch(uri)) {
-    await launch(uri);
-  } else {
-    throw 'Could not launch $uri';
-  }
-}
-=======
->>>>>>> c2a61630c78a17a5c19ca134d71ae3e1b0609836
