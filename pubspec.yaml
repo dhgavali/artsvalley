@@ -29,10 +29,10 @@ dependencies:
   image_cropper: ^1.4.0
   flutter_svg: ^0.21.0-nullsafety.0
   google_fonts: ^2.0.0
-  curved_navigation_bar: ^0.3.7
   connectivity: ^3.0.3
   url_launcher: ^6.0.3
   animated_text_kit: ^4.2.1
+  group_button: ^2.1.2 
 
 dev_dependencies:
   flutter_test:

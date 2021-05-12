@@ -14,9 +14,9 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color inActiveIconColor = kdarkpurple;
+    final Color inActiveIconColor = Colors.red.shade900;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: kPrimaryColorDark,
       ),
@@ -24,7 +24,10 @@ class CustomBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+              size: 28,
+            ),
             color: MenuState.home == selectedMenu
                 ? inActiveIconColor
                 : Colors.black,
@@ -51,17 +54,17 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
           ),
           IconButton(
-              icon: Icon(Icons.person_rounded),
+              icon: Icon(
+                Icons.person_rounded,
+                size: 28,
+              ),
               color: MenuState.profile == selectedMenu
                   ? inActiveIconColor
                   : Colors.black,
               onPressed: () {
-                //Navigator.pushNamed(context, Profile.routeName),
                 Navigator.pushReplacementNamed(
                     context, ProfilePageNew.routeName);
-              }
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePageNew()))
-              ),
+              }),
         ],
       ),
     );
