@@ -30,6 +30,10 @@ dependencies:
   flutter_svg: ^0.21.0-nullsafety.0
   google_fonts: ^2.0.0
   connectivity: ^3.0.3
+<<<<<<< HEAD
+  get: ^4.1.4
+=======
+>>>>>>> 5b262484ac4be742bd5fd3315bc791374ebf6780
   url_launcher: ^6.0.3
   animated_text_kit: ^4.2.1
   group_button: ^2.1.2 
