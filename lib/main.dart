@@ -59,6 +59,8 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               brightness: Brightness.dark,
               backgroundColor: kPrimaryColorDark,
+              
+              titleTextStyle: TextStyle(color: Colors.black),
             ),
             primaryColor: kPrimaryColor,
             primarySwatch: Colors.purple,
