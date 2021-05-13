@@ -1,11 +1,15 @@
 import 'package:artsvalley/models/product.dart';
+import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/store/already_registered.dart';
 import 'package:artsvalley/views/store/detailsScreen.dart';
 import 'package:artsvalley/views/store/item_card.dart';
 import 'package:artsvalley/views/store/shopform.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 const kTextColor = Color(0xFF535353);
 const kTextLightColor = Color(0xFFACACAC);
@@ -148,8 +152,14 @@ class _ProductPageState extends State<ProductPage> {
         ],
       ),
       floatingActionButton: GestureDetector(
-        onTap: () {
-          moveToPage(context, ShopForm());
+        onTap: () async {
+          bool _isFilledAlready =
+              await Provider.of<DatabaseService>(context, listen: false)
+                  .fetchMerchantDetails(
+                      Provider.of<User>(context, listen: false).uid);
+          _isFilledAlready
+              ? moveToPage(context, ArleadyRegistered())
+              : moveToPage(context, ShopForm());
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),

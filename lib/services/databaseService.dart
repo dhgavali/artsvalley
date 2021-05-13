@@ -2,16 +2,12 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/profile_page/selectedProfile.dart';
-import 'package:artsvalley/profile_page/updateProfilePhoto.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService with ChangeNotifier {
@@ -30,6 +26,8 @@ class DatabaseService with ChangeNotifier {
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
   CollectionReference _reports =
       FirebaseFirestore.instance.collection("reports");
+  CollectionReference _merchants =
+      FirebaseFirestore.instance.collection("merchants");
 
   //initial data for stream
 
@@ -185,5 +183,23 @@ class DatabaseService with ChangeNotifier {
       'reportType2': reportType2 ?? FieldValue.delete(),
       'comment': comment,
     }, SetOptions(merge: true));
+  }
+
+  Future<void> addMerchantDetails(Map merchantData) async {
+    await _merchants.doc(merchantData['userid']).set(
+          merchantData,
+          SetOptions(merge: true),
+        );
+  }
+
+  Future<bool> fetchMerchantDetails(String uid) async {
+    QuerySnapshot _data =
+        await _merchants.where("userid", isEqualTo: uid).get();
+    int result = _data.docs.length;
+    if (result > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

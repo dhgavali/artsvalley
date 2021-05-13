@@ -2,8 +2,8 @@
 //Tutorials are like how to draw simple sketches
 //for kids and beginner artits.
 
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 class TutorialsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
