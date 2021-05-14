@@ -144,6 +144,18 @@ class UploadPost with ChangeNotifier {
     
   }
 
+   Future deleteAcheivementFromCloudAndDb(String uid) async{
+    try {
+      FirebaseFirestore.instance.collection('acheivements').doc(uid).delete();
+      print("Acheivement Deleted");
+      
+    } catch (e) {
+      e.toString();
+    }
+    
+  }
+
+
   selectPostImageType(BuildContext context) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,

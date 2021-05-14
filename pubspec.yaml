@@ -54,3 +54,8 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/team/
+    - assets/tutorials/elephant/ 
+    - assets/tutorials/butterfly/
+    - assets/tutorials/mickeyMouse/
+    - assets/tutorials/home/
+    - assets/tutorials/car/
