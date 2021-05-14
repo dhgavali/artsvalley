@@ -3,27 +3,12 @@ import 'package:artsvalley/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NoftifyUser extends StatefulWidget {
-  @override
-  _NoftifyUserState createState() => _NoftifyUserState();
-}
-
-class _NoftifyUserState extends State<NoftifyUser> {
+class ArleadyRegistered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Registration Status',
-          style: GoogleFonts.poppins(
-            textStyle: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
+        title: Text("Already Registered"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,11 +16,20 @@ class _NoftifyUserState extends State<NoftifyUser> {
           Container(
             padding: const EdgeInsets.all(20),
             child: Text(
-              "Registration Completed",
+              "You have already applied ",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: kPrimaryColor,
+              ),
+            ),
+          ),
+          Container(
+            child: Text(
+              "You application is under review !",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -49,7 +43,7 @@ class _NoftifyUserState extends State<NoftifyUser> {
             child: Container(
               margin: EdgeInsets.only(bottom: 60),
               child: Text(
-                "Registration Completed , Thank you For showing interest in our community we'll notify you soon. stay connected .",
+                "Thank you For showing interest in our community we'll notify you soon. stay connected .",
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                     height: 1.5,
@@ -74,5 +68,3 @@ class _NoftifyUserState extends State<NoftifyUser> {
     );
   }
 }
-
-//Registration Completed , Thank you For showing interest in our community we'll notify you soon. stay connected .

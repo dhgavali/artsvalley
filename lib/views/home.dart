@@ -8,6 +8,7 @@ import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
+import 'package:artsvalley/views/store/notifyingpage.dart';
 import 'package:artsvalley/views/store/product_page.dart';
 import 'package:artsvalley/views/tutorials/tutorial_home.dart';
 import 'package:artsvalley/views/tutorials/tutorial_list.dart';
@@ -170,15 +171,11 @@ class MyDrawer extends StatelessWidget {
               },
               child: menuItem("Profile", Icons.person)),
           GestureDetector(
-              // onTap: () {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       // builder: (context) => //(),
-              //     ),
-              //   );
-              // },
-              child: menuItem("Explore", Icons.explore)),
+            onTap: () {
+              moveToPage(context, NoftifyUser());
+            },
+            child: menuItem("Explore", Icons.explore),
+          ),
           GestureDetector(
             onTap: () {
               moveToPage(

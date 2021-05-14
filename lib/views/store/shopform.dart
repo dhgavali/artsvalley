@@ -1,6 +1,9 @@
 import 'package:artsvalley/helper/validators.dart';
+import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/views/settings/myaccount.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'notifyingpage.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +26,22 @@ class _ShopFormState extends State<ShopForm> {
   TextEditingController _stateController = TextEditingController();
   TextEditingController _pincodeController = TextEditingController();
   // TextEditingController _ = TextEditingController();
-
+  List<String> _productsList = <String>[
+    "Arts",
+    "Sketches",
+    "Pottery",
+    "DIY",
+    "Portrait Paintings",
+    "Other"
+  ];
+  // Map<String, bool> _selectedproducts = {};
+  List<String> _selectedProducts = [];
   final GlobalKey<FormState> _merchantFormKey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         title: Text(
           'Shop open Form',
@@ -61,10 +75,8 @@ class _ShopFormState extends State<ShopForm> {
                   height: 25,
                 ),
                 headingtext("Personal Information"),
-                SizedBox(
-                  height: 20,
-                ),
                 Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   alignment: Alignment.centerLeft,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,10 +99,8 @@ class _ShopFormState extends State<ShopForm> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
                 Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   child: _formField(
                     label: "Phone Number",
                     prefix: Text("+91 "),
@@ -100,47 +110,42 @@ class _ShopFormState extends State<ShopForm> {
                     validator: CustomFormValidators().validateName,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
                 Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     child: _formField(
-                  label: "Email",
-                  controller: _emailController,
-                  validator: CustomFormValidators().emailValidator,
-                )),
-                SizedBox(
-                  height: 20,
+                      label: "Email",
+                      controller: _emailController,
+                      validator: CustomFormValidators().emailValidator,
+                    )),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: _formField(
+                    label: "Name of Firm / Organization / Company",
+                    controller: _firmnameController,
+                  ),
                 ),
                 Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Products',
                       style: GoogleFonts.poppins(
                           textStyle: TextStyle(fontSize: 18)),
                     )),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  child: _formField(
-                    label: "Name of Firm / Organization / Company",
-                    controller: _firmnameController,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
                 GroupButton(
-                  buttons: <String>[
-                    "Arts",
-                    "Sketches",
-                    "Pottery",
-                    "DIY",
-                    "Portrait Paintings",
-                  ],
-                  onSelected: (index, isSelected) =>
-                      print("checked: ${isSelected.toString()}"),
+                  buttons: _productsList,
+                  spacing: 10,
+                  isRadio: false,
+                  onSelected: (index, isSelected) {
+                    print("checked: ${isSelected.toString()}");
+                    if (isSelected) {
+                      // _selectedproducts.addEntries(newEntries)
+                      _selectedProducts.add(_productsList[index]);
+                    } else {
+                      _selectedProducts.remove(_productsList[index]);
+                    }
+                    // print(_selectedProducts);
+                  },
                 ),
                 SizedBox(height: 20),
                 headingtext("Address Information"),
@@ -206,19 +211,29 @@ class _ShopFormState extends State<ShopForm> {
                     //FormSubmit here
 
                     if (_merchantFormKey.currentState.validate()) {
-                      Map<String, dynamic> data = {
-                        'First name' : _fnameController.text.trim(),
-                        'Last name' : _lnameController.text.trim(),
-                        'phone number' : _phoneController.text.trim(),
-                        'email' : _emailController.text.toLowerCase().trim(),
-                        'company name' : _firmnameController.text.trim() ?? '',
-                        'products' : [],
-                        'address' : _addressController.text.trim(),
-                        'city' : _cityController.text.trim(),
-                        'state' : _stateController.text.trim(),
-                        'pincode' : _pincodeController.text.trim(),
+                      Map<String, dynamic> merchantdata = {
+                        'First name': _fnameController.text.trim(),
+                        'Last name': _lnameController.text.trim(),
+                        'phone number': _phoneController.text.trim(),
+                        'email': _emailController.text.toLowerCase().trim(),
+                        'company name': _firmnameController.text.trim() ?? '',
+                        'products': _selectedProducts,
+                        'address': _addressController.text.trim(),
+                        'city': _cityController.text.trim(),
+                        'state': _stateController.text.trim(),
+                        'pincode': _pincodeController.text.trim(),
+                        'userid': Provider.of<User>(context, listen: false).uid,
                       };
+
+                      Provider.of<DatabaseService>(context, listen: false)
+                          .addMerchantDetails(merchantdata);
                     }
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NoftifyUser(),
+                      ),
+                    );
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

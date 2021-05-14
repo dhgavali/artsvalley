@@ -82,17 +82,17 @@ class Body extends StatelessWidget {
             },
           ),
           SettingMenu(
-            text: "Help Center",
-            icon: Icons.help,
-            press: () {
-              moveToPage(context, HelpPage());
-            },
-          ),
-          SettingMenu(
             text: "Notifications",
             icon: Icons.notifications,
             press: () {
               moveToPage(context, NotificationsPage());
+            },
+          ),
+          SettingMenu(
+            text: "Help Center",
+            icon: Icons.help,
+            press: () {
+              moveToPage(context, HelpPage());
             },
           ),
           SettingMenu(

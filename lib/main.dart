@@ -57,11 +57,10 @@ class MyApp extends StatelessWidget {
           routes: routes,
           theme: ThemeData(
             appBarTheme: AppBarTheme(
-              brightness: Brightness.dark,
               backgroundColor: kPrimaryColorDark,
-              
-              titleTextStyle: TextStyle(color: Colors.black),
+              brightness: Brightness.dark,
             ),
+            primaryColorDark: kPrimaryColorDark,
             primaryColor: kPrimaryColor,
             primarySwatch: Colors.purple,
             visualDensity: VisualDensity.adaptivePlatformDensity,

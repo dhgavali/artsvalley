@@ -18,7 +18,7 @@ class ProfilePageNew extends StatelessWidget {
     var user = Provider.of<User>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Profile'),
+          title: Text('Profile', style: TextStyle(color: Colors.black)),
           centerTitle: true,
           actions: [
             Padding(
