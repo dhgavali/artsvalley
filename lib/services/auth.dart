@@ -60,6 +60,7 @@ class AuthMethods {
           );
         }
       }
+
       _sharedpref.saveUserEmail(firebaseUser.user.email);
       _sharedpref.saveUserId(firebaseUser.user.uid);
       return firebaseUser;

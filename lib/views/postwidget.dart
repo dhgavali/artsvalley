@@ -1,3 +1,4 @@
+import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/report_page.dart';
@@ -102,14 +103,19 @@ class _PostWidgetState extends State<PostWidget> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewUserProfilePage(
-                          userid: widget.userId,
+                    if (Provider.of<User>(context, listen: false).uid ==
+                        widget.userId) {
+                      moveToPage(context, ProfilePageNew());
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewUserProfilePage(
+                            userid: widget.userId,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   },
                   child: Row(
                     children: [

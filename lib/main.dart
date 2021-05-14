@@ -59,12 +59,22 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               backgroundColor: kPrimaryColorDark,
               brightness: Brightness.dark,
+              iconTheme: IconThemeData(
+                color: Colors.black,
+              ),
+              toolbarTextStyle: TextStyle(color: Colors.black),
+              titleTextStyle: TextStyle(color: Colors.black),
             ),
             primaryColorDark: kPrimaryColorDark,
             primaryColor: kPrimaryColor,
+
+            // colorScheme: ColorScheme(primary: primary, primaryVariant: primaryVariant, secondary: secondary, secondaryVariant: secondaryVariant, surface: surface, background: background, error: error, onPrimary: onPrimary, onSecondary: onSecondary, onSurface: onSurface, onBackground: onBackground, onError: onError, brightness: brightness),
             primarySwatch: Colors.purple,
             visualDensity: VisualDensity.adaptivePlatformDensity,
             backgroundColor: Color(0xfff1f1f1),
+            primaryTextTheme: TextTheme(
+              headline6: TextStyle(color: Colors.black),
+            ),
             textTheme: TextTheme(
               headline1: TextStyle(
                 fontSize: 28.00,

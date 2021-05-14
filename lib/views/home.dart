@@ -187,6 +187,18 @@ class MyDrawer extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              moveToPage(
+                context,
+                ProductPage(),
+              );
+            },
+            child: menuItem(
+              "Get Potrait ",
+              Icons.photo,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
               moveToPage(context, TutorialHomePage());
             },
             child: menuItem(

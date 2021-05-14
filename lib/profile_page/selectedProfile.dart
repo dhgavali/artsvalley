@@ -1,7 +1,7 @@
 //this class will dispaly a profile photo selected
-import 'dart:developer';
 
 import 'package:artsvalley/profile_page/edit_Profile.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -102,17 +102,30 @@ class ShowProfilePhoto extends StatelessWidget {
                           .uploadUserProfileImage(
                               Provider.of<EditProfile>(context, listen: false)
                                   .getUserProfileImage);
-                      log("in onrepssed");
-                      log(_value);
 
+                      String _uid =
+                          Provider.of<User>(context, listen: false).uid;
                       await FirebaseFirestore.instance
-                          .collection(ProConstants.usersCollection)
+                          .collection("users")
                           .doc(
-                            Provider.of<User>(context, listen: false).uid,
+                            _uid,
                           )
                           .update({'photoUrl': _value});
+                      // Stream<QuerySnapshot> _postfetched = FirebaseFirestore
+                      //     .instance
+                      //     .collection(ProConstants.postsCollection)
+                      //     .where("userid", isEqualTo: _uid)
+                      //     .snapshots();
+
+                      // _postfetched.forEach((element) {
+                      //   element.docs.setAll(index, iterable)
+                      // });
                       _loadProvider.loadLinearProgress(false);
-                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfilePageNew()),
+                          (route) => false);
                     },
                   ),
                 ],
