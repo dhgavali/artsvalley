@@ -25,7 +25,7 @@ class DefaultButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.00),
             ),
           ),
-          backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
+          backgroundColor: MaterialStateProperty.all<Color>(kcrimson),
         ),
         onPressed: press,
         child: Text(

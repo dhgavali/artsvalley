@@ -3,7 +3,7 @@ import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
-import 'package:artsvalley/providers/pass_visibility.dart';
+import 'package:artsvalley/providers/visibilityprovider.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/routes.dart';
 import 'package:artsvalley/services/auth.dart';
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               Provider.of<AuthMethods>(context, listen: false).authStateChanges,
         ),
-        ChangeNotifierProvider(create: (context) => PassVisibleState()),
+        ChangeNotifierProvider(create: (context) => VisibilityProvider()),
         ChangeNotifierProvider(create: (context) => LoadingProvider()),
         ChangeNotifierProvider(create: (context) => DatabaseService()),
         ChangeNotifierProvider(create: (context) => UploadPost()),

@@ -3,7 +3,7 @@ import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
-import 'package:artsvalley/providers/pass_visibility.dart';
+import 'package:artsvalley/providers/visibilityprovider.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _passwordRoundedField(String title, TextEditingController mycontroller,
       FormFieldValidator<String> validator) {
 // provider
-    var visibility = context.watch<PassVisibleState>();
+    var visibility = context.watch<VisibilityProvider>();
     Icon myIcon = visibility.isVisible
         ? Icon(
             Icons.visibility,

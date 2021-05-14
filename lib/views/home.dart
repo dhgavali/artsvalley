@@ -11,7 +11,6 @@ import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:artsvalley/views/store/notifyingpage.dart';
 import 'package:artsvalley/views/store/product_page.dart';
 import 'package:artsvalley/views/tutorials/tutorial_home.dart';
-import 'package:artsvalley/views/tutorials/tutorial_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';

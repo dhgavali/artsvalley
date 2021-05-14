@@ -24,11 +24,13 @@ class DatabaseService with ChangeNotifier {
 
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
-  CollectionReference _artists = FirebaseFirestore.instance.collection("artistswork");
+  CollectionReference _users = FirebaseFirestore.instance.collection("users");
   CollectionReference _reports =
       FirebaseFirestore.instance.collection("reports");
   CollectionReference _merchants =
       FirebaseFirestore.instance.collection("merchants");
+  CollectionReference _artists =
+      FirebaseFirestore.instance.collection("artistswork");
 
   //initial data for stream
 
@@ -168,6 +170,45 @@ class DatabaseService with ChangeNotifier {
             (error) => print("Failed to update user followers: $error"));
   }
 
+  //Method to udpate the user data from the settigns
+  Future<void> updateUserData(
+      {String uid, String mobileNumber, String address, String gender}) async {
+    await _users.doc(uid).update({
+      'mobileNumber': mobileNumber ?? '',
+      'address': address ?? '',
+      'gender': gender ?? '',
+    });
+  }
+
+  //method to update user email
+  Future<void> updateUserEmail({String uid, String email}) async {
+    await _users.doc(uid).update({
+      'useremail': email,
+    });
+  }
+
+  //method to update user mobile number
+  Future<void> updateUserMobileNumber({String uid, String mobileNumber}) async {
+    await _users.doc(uid).update({
+      'mobileNumber': mobileNumber,
+    });
+  }
+
+  //method to update user address
+  Future<void> updateUserAddress({String uid, String address}) async {
+    await _users.doc(uid).update({
+      'address': address,
+    });
+  }
+
+//method to update the gender
+  Future<void> updateUserGender({String uid, String gender}) async {
+    await _users.doc(uid).update({
+      'gender': gender,
+    });
+  }
+
+//method to add reports to the database
   Future<void> addReportToDb(
       {String postId,
       String uid,
@@ -205,7 +246,7 @@ class DatabaseService with ChangeNotifier {
   }
 
 //TODO
-   Future<void> addArtDetails(Map artists) async {
+  Future<void> addArtDetails(Map artists) async {
     await _artists.doc(artists['userid']).set(
           artists,
           SetOptions(merge: true),

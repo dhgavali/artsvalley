@@ -54,9 +54,8 @@ class UserCardWidget extends StatelessWidget {
         vertical: 20,
       ),
       width: MediaQuery.of(context).size.width * 0.8,
-      height: MediaQuery.of(context).size.height * 0.40,
+      height: 325,
       decoration: BoxDecoration(
-        // color: Colors.white,
         color: kteagreen2,
         borderRadius: BorderRadius.circular(10),
         boxShadow: <BoxShadow>[

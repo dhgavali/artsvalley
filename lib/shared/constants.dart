@@ -6,6 +6,7 @@ const kPrimaryColor = Color(0xFF6F35A5);
 // const kPrimaryColorDark = Color(0xff041F1E);
 const kpurpledark = Color(0xff2E1760);
 // const kPrimaryColorDark = Color(0xffFF1053);
+const kcrimson = Color(0xffFF1053);
 // const kPrimaryColorDark = Color(0xff2D232E);
 // const kPrimaryColorDark = Color(0xff570000);
 const kPrimaryColorDark = Color(0xffFCD581);
@@ -170,4 +171,3 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: BorderSide(color: kTextColor),
   );
 }
-

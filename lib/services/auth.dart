@@ -54,7 +54,10 @@ class AuthMethods {
               'displayname': firebaseUser.user.displayName,
               'photoUrl': firebaseUser.user.photoURL,
               'userid': firebaseUser.user.uid,
-              'followerList': {}
+              'followerList': {},
+              'address': '',
+              'gender': '',
+              'mobileNumber': '',
             },
             SetOptions(merge: true),
           );
@@ -132,7 +135,10 @@ class AuthMethods {
         'displayname': fullname.trim(),
         'photoUrl': user.user.photoURL,
         'userid': user.user.uid,
-        'followerList': {}
+        'followerList': {},
+        'address': '',
+        'gender': '',
+        'mobileNumber': '',
       };
       FirebaseFirestore.instance
           .collection('users')
