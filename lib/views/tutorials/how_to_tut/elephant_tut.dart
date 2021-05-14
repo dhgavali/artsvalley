@@ -1,11 +1,18 @@
+import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class ElephantTutorial extends StatelessWidget {
+class ElephantTutorial extends StatefulWidget {
+  @override
+  _ElephantTutorialState createState() => _ElephantTutorialState();
+}
+
+class _ElephantTutorialState extends State<ElephantTutorial> {
   int level = 1;
+  bool val = false;
 
   @override
   Widget build(BuildContext context) {
@@ -270,6 +277,39 @@ class ElephantTutorial extends StatelessWidget {
                 size.width * 0.75,
               ),
 
+              SizedBox(height: 20,),
+
+              Container(
+                child: CheckboxListTile(
+                  title: steps('Mark As Complete', FontWeight.w500, 18,
+                      TextAlign.justify),
+                  value: val,
+                  onChanged: (bool newValue) async {
+                    if (newValue) {
+                      await FirebaseFirestore.instance
+                          .collection('acheivements')
+                          .doc(user.uid)
+                          .set({
+                        'userId': user.uid,
+                        'level': level,
+                      });
+                      setState(() {
+                        val = newValue;
+                        print("checked");
+                      });
+                    } else {
+                      Provider.of<UploadPost>(context, listen: false)
+                          .deleteAcheivementFromCloudAndDb(user.uid);
+                      // print("unchecked");
+                      setState(() {
+                        val = newValue;
+                      });
+                    }
+                  },
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+              ),
+
               SizedBox(
                 height: 10,
               ),
@@ -282,21 +322,7 @@ class ElephantTutorial extends StatelessWidget {
                 height: 20,
               ),
 
-              Container(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                    onPressed: () async {
-                      // await FirebaseFirestore.instance
-                      //     .collection('acheivements')
-                      //     .doc(user.uid)
-                      //     .set({
-                      //   'userId': user.uid,
-                      //   'level': level,
-                      // });
-                      print('added');
-                    },
-                    child: Text('See Your acheivement here')),
-              ),
+              
             ],
           ),
         ),

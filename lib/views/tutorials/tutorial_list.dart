@@ -1,7 +1,7 @@
 //TODO: here we will display listview of tutorials
 //Tutorials are like how to draw simple sketches
 //for kids and beginner artits.
-<<<<<<< HEAD
+
 import 'package:artsvalley/views/tutorials/how_to_tut/butterfly.dart';
 import 'package:artsvalley/views/tutorials/how_to_tut/car.dart';
 import 'package:artsvalley/views/tutorials/how_to_tut/elephant_tut.dart';
@@ -9,11 +9,6 @@ import 'package:artsvalley/views/tutorials/how_to_tut/home_tut.dart';
 import 'package:artsvalley/views/tutorials/how_to_tut/mickeymouse.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-=======
-
->>>>>>> dab1be689a8d6fe5c984448c4c4b96aeda963032
-
-import 'package:flutter/material.dart';
 class TutorialsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
