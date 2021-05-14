@@ -44,6 +44,16 @@ class _PostWidgetState extends State<PostWidget> {
   bool isLiked = false;
   final GlobalKey<PopupMenuItemState> _popupKey =
       GlobalKey<PopupMenuItemState>();
+  bool isSaved = false;
+  doSave(bool value, String postId) {
+    DocumentReference  _ref = FirebaseFirestore.instance.collection("favorites").doc(Provider.of<User>(context, listen: false).uid);
+    if (value) {
+      // _ref.set(data)
+    } else {
+      // _ref.update('savedArts.$postId' : FieldValue.delete());   
+    }
+  }
+
   doLike() {
     String _currentUser = Provider.of<User>(context, listen: false).uid;
     bool _isliked = widget.likes[_currentUser] == true;
@@ -233,14 +243,22 @@ class _PostWidgetState extends State<PostWidget> {
                           )
                         ],
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.bookmark_outlined,
-                          size: 35,
-                          color: Colors.white,
-                        ),
-                      ),
+                      StreamBuilder(builder: (context, snapshot) {
+                        return InkWell(
+                          onTap: () {
+                            if (true) {
+//if true : then delete
+                            } else {
+                              //else: add
+                            }
+                          },
+                          child: Icon(
+                            Icons.bookmark_outlined,
+                            size: 35,
+                            color: Colors.white,
+                          ),
+                        );
+                      })
                     ],
                   ),
                   Container(
