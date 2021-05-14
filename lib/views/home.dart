@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
-import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/services/networkdepend.dart';
@@ -31,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
+    // UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
     super.initState();
   }
 

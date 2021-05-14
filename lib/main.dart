@@ -4,7 +4,6 @@ import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/visibilityprovider.dart';
-import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/routes.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/connectivityService.dart';
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DatabaseService()),
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
-        ChangeNotifierProvider(create: (context) => UserDataProvider()),
+        // ChangeNotifierProvider(create: (context) => UserDataProvider()),
       ],
       child: StreamProvider<ConnectivityStatus>(
         initialData: null,

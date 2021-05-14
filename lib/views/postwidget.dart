@@ -46,11 +46,13 @@ class _PostWidgetState extends State<PostWidget> {
       GlobalKey<PopupMenuItemState>();
   bool isSaved = false;
   doSave(bool value, String postId) {
-    DocumentReference  _ref = FirebaseFirestore.instance.collection("favorites").doc(Provider.of<User>(context, listen: false).uid);
+    DocumentReference _ref = FirebaseFirestore.instance
+        .collection("favorites")
+        .doc(Provider.of<User>(context, listen: false).uid);
     if (value) {
       // _ref.set(data)
     } else {
-      // _ref.update('savedArts.$postId' : FieldValue.delete());   
+      // _ref.update('savedArts.$postId' : FieldValue.delete());
     }
   }
 
@@ -83,6 +85,9 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     double postHeight = (widget.caption.isEmpty) ? 425.0 : 450.0;
+    if (widget.caption.length > 80) {
+      postHeight += 15;
+    }
     return Container(
       width: MediaQuery.of(context).size.width - 50,
       height: postHeight,
@@ -266,7 +271,7 @@ class _PostWidgetState extends State<PostWidget> {
                     child: Text(
                       widget.caption,
                       style: TextStyle(color: Colors.white),
-                      maxLines: 2,
+                      maxLines: 3,
                       overflow: TextOverflow.fade,
                     ),
                   )

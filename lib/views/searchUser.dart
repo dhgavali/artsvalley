@@ -1,9 +1,8 @@
 import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
-//TODO: change the model here to userDataModel
+
 class SearchUser extends SearchDelegate<String> {
   @override
   List<Widget> buildActions(BuildContext context) {

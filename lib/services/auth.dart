@@ -85,9 +85,7 @@ class AuthMethods {
       SharedPrefsHelper _sharedpref = SharedPrefsHelper();
       _sharedpref.saveUserEmail(_user.user.email);
       _sharedpref.saveUserId(_user.user.uid);
-      UserDataProvider()
-          .intializeUserData(FirebaseAuth.instance.currentUser.uid);
-      FirebaseAuth.instance.authStateChanges().listen((User user) {
+     FirebaseAuth.instance.authStateChanges().listen((User user) {
         if (user != null) {
           Navigator.pushReplacement(
             context,
