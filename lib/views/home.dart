@@ -4,8 +4,10 @@ import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/services/networkdepend.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
+import 'package:artsvalley/views/potrait/form.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
+import 'package:artsvalley/views/slideshow.dart';
 import 'package:artsvalley/views/store/notifyingpage.dart';
 import 'package:artsvalley/views/store/product_page.dart';
 import 'package:artsvalley/views/tutorials/tutorial_home.dart';
@@ -158,7 +160,8 @@ class MyDrawer extends StatelessWidget {
               child: menuItem("Profile", Icons.person)),
           GestureDetector(
             onTap: () {
-              moveToPage(context, NoftifyUser());
+              // moveToPage(context, Slideshow());
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SlideShow()));
             },
             child: menuItem("Explore", Icons.explore),
           ),
@@ -175,7 +178,8 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               moveToPage(
                 context,
-                ProductPage(),
+                //ProductPage(),
+                FormToGetPortait(),
               );
             },
             child: menuItem(

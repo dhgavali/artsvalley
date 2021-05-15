@@ -23,6 +23,9 @@ class DatabaseService with ChangeNotifier {
   String userProfileImageUrl;
   String get getUserProfileImageUrl => userProfileImageUrl;
 
+  //constants for portrait
+
+
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
   CollectionReference _users = FirebaseFirestore.instance.collection("users");
@@ -30,7 +33,7 @@ class DatabaseService with ChangeNotifier {
       FirebaseFirestore.instance.collection("reports");
   CollectionReference _merchants =
       FirebaseFirestore.instance.collection("merchants");
-  CollectionReference _artists =
+  CollectionReference _portraits =
       FirebaseFirestore.instance.collection("artistswork");
 
   CollectionReference _deleteUser =
@@ -53,6 +56,7 @@ class DatabaseService with ChangeNotifier {
         : print('Image Upload Eroor');
     notifyListeners();
   }
+ 
 
   //crop profile image
   Future<void> cropImage(BuildContext context) async {
@@ -249,9 +253,9 @@ class DatabaseService with ChangeNotifier {
   }
 
 //TODO
-  Future<void> addArtDetails(Map artists) async {
-    await _artists.doc(artists['userid']).set(
-          artists,
+  Future<void> addPortraitDetails(Map portraits) async {
+    await _portraits.doc(portraits['userid']).set(
+          portraits,
           SetOptions(merge: true),
         );
   }
