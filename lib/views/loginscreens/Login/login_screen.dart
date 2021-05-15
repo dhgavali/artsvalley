@@ -60,16 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    "!! Welcome Back !!",
-                    style: GoogleFonts.lato(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
                 SizedBox(height: size.height * 0.03),
                 Container(
                   width: size.width * 0.80,
@@ -123,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: RoundedButton(
                     text: "LOGIN",
+                    color: kPrimaryColor,
                   ),
                 ),
 
@@ -150,7 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: RoundedButton(
                     text: "Continue with google",
-                    color: kseagreen,
+                    color: kteagreen2,
+                    textColor: kerichblack,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -191,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
             color: kPrimaryColor,
           );
     return TextFieldContainer(
+      bgcolor: kcream,
       child: TextFormField(
         obscureText: visibility.isVisible,
         cursorColor: kPrimaryColor,

@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/profile_page/selectedProfile.dart';
+import 'package:artsvalley/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,8 @@ class DatabaseService with ChangeNotifier {
   CollectionReference _artists =
       FirebaseFirestore.instance.collection("artistswork");
 
+  CollectionReference _deleteUser =
+      FirebaseFirestore.instance.collection("deleteReviews");
   //initial data for stream
 
   Future pickProfileImage(BuildContext context, ImageSource source) async {
@@ -251,5 +255,36 @@ class DatabaseService with ChangeNotifier {
           artists,
           SetOptions(merge: true),
         );
+  }
+
+  //method to delete user account
+  Future<int> deleteUserAccount(
+      {String uid, String reason, String email}) async {
+    try {
+      await _deleteUser.doc(uid).set({
+        'uid': uid,
+        'email': email,
+        'reason': reason,
+      });
+
+      await FirebaseAuth.instance.currentUser
+          .delete()
+          .onError((error, stackTrace) {
+        // print(error.hashCode.toInt());
+        if (error.hashCode.toInt() == 277133790) {
+          // print("re- authenticate");
+          return 1;
+        }
+      });
+    } catch (e) {
+      print("error ${e.toString()}");
+    }
+    // try {
+    //   FirebaseAuth.instance.currentUser.delete();
+    // } catch (error) {
+    //   var _userCredentials = await AuthMethods(FirebaseAuth.instance.).signInWithGoogle();
+    //   FirebaseAuth.instance.currentUser.reauthenticateWithCredential(_userCredentials);
+
+    // }
   }
 }

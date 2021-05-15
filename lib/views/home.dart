@@ -41,30 +41,24 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
             brightness: Brightness.dark,
-            // title: Text(
-            //   "ArtsValley",
-            //   style: GoogleFonts.dancingScript(
-            //       textStyle:
-            //           TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-            // ),
             title: ColorizeAnimatedTextKit(
               speed: Duration(milliseconds: 1000),
               totalRepeatCount: 1,
               repeatForever: false,
               text: ["ArtsValley"],
-              textStyle: GoogleFonts.dancingScript(
+              //fonts : arizonia, italianno, sacramento, pacifico, niconne,alexbrush,  allura, marck script, tangerine, homemade apple, greatvibes,
+              textStyle: GoogleFonts.arizonia(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
               colors: [
-                Color(0xff85FFBD),
-                Color(0xFF3DDC97),
-                Color(0xFFF39C6B),
-                Color(0xFFFF495C),
+                krichblack,
+                kPrimaryColor,
+                kcrimson,
+                kseagreen,
                 Color(0xFFE8D33F),
-                Color(0xFFFFEA61),
-                Color(0xFFFFB7C3),
-                Color(0xFF2BFF88),
+                kpurpledark,
+                kpostBorderColor,
               ],
             ),
             centerTitle: true,

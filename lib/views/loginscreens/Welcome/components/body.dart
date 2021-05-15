@@ -53,7 +53,7 @@ class WelcomeBody extends StatelessWidget {
               },
               child: RoundedButton(
                 text: "SIGN UP",
-                color: kPrimaryLightColor,
+                color: kteagreen2,
                 textColor: Colors.black,
               ),
             ),

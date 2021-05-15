@@ -42,7 +42,7 @@ Widget customInputField1(
   double width,
 }) {
   return TextFieldContainer(
-    bgcolor: bgcolor,
+    bgcolor: kcream ?? bgcolor,
     child: TextFormField(
       controller: mycontroller,
       cursorColor: kPrimaryColor,
@@ -272,5 +272,24 @@ moveToPage(BuildContext context, Widget pageName) {
     MaterialPageRoute(
       builder: (context) => pageName,
     ),
+  );
+}
+
+BoxDecoration kboxDecoration() {
+  return BoxDecoration(
+    shape: BoxShape.circle,
+    gradient: LinearGradient(colors: [
+      Color(0xff4158D0),
+      Color(0xffC850C0),
+      Color(0xffFFCC70),
+      Color(0xff85FFBD),
+    ]),
+    boxShadow: <BoxShadow>[
+      BoxShadow(
+          blurRadius: 5,
+          spreadRadius: 2,
+          offset: Offset(2.0, 3.0),
+          color: Colors.grey.shade400),
+    ],
   );
 }

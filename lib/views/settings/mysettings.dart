@@ -1,7 +1,10 @@
+import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/settings/myaccount.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MySettingsPage extends StatelessWidget {
   final TextEditingController _replyController = new TextEditingController();
@@ -91,11 +94,26 @@ class MySettingsPage extends StatelessWidget {
                                     width: 20,
                                   ),
                                   TextButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       //TODO: delete User Account Method here
                                       //TODO: add method in databse services..
                                       // deleteUserAccount();
-                                      _replyController.text.trim();
+                                      var _user = Provider.of<User>(context,
+                                          listen: false);
+                                      String uid = _user.uid;
+                                      String email = _user.email;
+
+                                      String reason =
+                                          _replyController.text.trim();
+                                      int result =
+                                          await Provider.of<DatabaseService>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteUserAccount(
+                                                  uid: uid,
+                                                  email: email,
+                                                  reason: reason);
+                                      print("result is $result");
                                     },
                                     child: Text(
                                       "Delete",

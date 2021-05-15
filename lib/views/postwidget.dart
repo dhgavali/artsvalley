@@ -44,20 +44,32 @@ class _PostWidgetState extends State<PostWidget> {
   bool isLiked = false;
   final GlobalKey<PopupMenuItemState> _popupKey =
       GlobalKey<PopupMenuItemState>();
-  bool isSaved = false;
-  doSave(bool value, String postId) {
+  bool isSaved;
+
+  //save method here
+  doSave(bool isSavedDb) {
     DocumentReference _ref = FirebaseFirestore.instance
         .collection("favorites")
         .doc(Provider.of<User>(context, listen: false).uid);
-    if (value) {
-      // _ref.set(data)
+
+    String _currentUser = Provider.of<User>(context, listen: false).uid;
+    if (isSavedDb) {
+      _ref.set({'saved.$_currentUser': FieldValue.delete()});
+      setState(() {
+        // widget.likes[_currentUser] = false;
+        isSaved = false;
+      });
     } else {
-      // _ref.update('savedArts.$postId' : FieldValue.delete());
+      _ref.set({'saved.$_currentUser': true});
+      setState(() {
+        // widget.likes[_currentUser] = true;
+        isSaved = true;
+      });
     }
   }
 
   doLike() {
-    String _currentUser = Provider.of<User>(context, listen: false).uid;
+    var _currentUser = Provider.of<User>(context, listen: false);
     bool _isliked = widget.likes[_currentUser] == true;
     if (_isliked) {
       FirebaseFirestore.instance
@@ -83,7 +95,19 @@ class _PostWidgetState extends State<PostWidget> {
   }
 
   @override
+  void initState() {
+    // DocumentSnapshot ds = await FirebaseFirestore.instance
+    //     .collection("favorites")
+    //     .doc(Provider.of<User>(context, listen: false).uid)
+    //     .get();
+    // isSaved = ds.data()['favorites'].containsKey(widget.postId);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var _userProvider = Provider.of<User>(context, listen: false);
+    print(_userProvider.uid);
     double postHeight = (widget.caption.isEmpty) ? 425.0 : 450.0;
     if (widget.caption.length > 80) {
       postHeight += 15;
@@ -248,22 +272,36 @@ class _PostWidgetState extends State<PostWidget> {
                           )
                         ],
                       ),
-                      StreamBuilder(builder: (context, snapshot) {
-                        return InkWell(
-                          onTap: () {
-                            if (true) {
-//if true : then delete
-                            } else {
-                              //else: add
-                            }
-                          },
-                          child: Icon(
-                            Icons.bookmark_outlined,
-                            size: 35,
-                            color: Colors.white,
-                          ),
-                        );
-                      })
+
+                      ///
+                      ///
+                      ///TODO: save and unsave here
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("favorites")
+                              .doc(_userProvider.uid)
+                              .snapshots(),
+                          builder: (context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            return InkWell(
+                              onTap: () {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  if (snapshot.hasData) {
+                                  
+                                    doSave(true);
+                                  }
+                                }
+                              },
+                              child: Icon(
+                                isSaved
+                                    ? Icons.bookmark_outlined
+                                    : Icons.bookmark_border,
+                                size: 35,
+                                color: Colors.white,
+                              ),
+                            );
+                          })
                     ],
                   ),
                   Container(

@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DatabaseService()),
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
-        // ChangeNotifierProvider(create: (context) => UserDataProvider()),
       ],
       child: StreamProvider<ConnectivityStatus>(
         initialData: null,

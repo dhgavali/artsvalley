@@ -19,8 +19,8 @@ class EditProfile with ChangeNotifier {
 
   Future pickProfileImage(BuildContext context, ImageSource source) async {
     log("Pick Method was called");
-    final pickedUserProfileImage =
-        await picker.getImage(source: source, maxHeight: 500, maxWidth: 500);
+    final pickedUserProfileImage = await picker.getImage(
+        source: source, maxHeight: 1000, maxWidth: 1000, imageQuality: 100);
     pickedUserProfileImage == null
         ? print('Please select image')
         : userProfileImage = File(pickedUserProfileImage.path);

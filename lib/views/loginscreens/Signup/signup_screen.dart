@@ -124,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   child: RoundedButton(
                     text: "SIGN UP",
+                    color: kPrimaryColor,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -195,6 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: kPrimaryColor,
           );
     return TextFieldContainer(
+      bgcolor: kcream,
       child: TextFormField(
         obscureText: visibility.isVisible,
         cursorColor: kPrimaryColor,

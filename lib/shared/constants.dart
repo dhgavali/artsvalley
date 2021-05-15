@@ -9,7 +9,9 @@ const kpurpledark = Color(0xff2E1760);
 const kcrimson = Color(0xffFF1053);
 // const kPrimaryColorDark = Color(0xff2D232E);
 // const kPrimaryColorDark = Color(0xff570000);
-const kPrimaryColorDark = Color(0xffFCD581);
+// const kPrimaryColorDark = Color(0xffFCD581);
+const kPrimaryColorDark = Color(0xffD9F2B4);
+
 const kPrimaryLightColor = Color(0xFFFFECDF);
 // const kpostBorderColor = Color(0xff303030);
 const kpostBorderColor = Color(0xff370031);
@@ -19,6 +21,7 @@ const klightPink = Color(0xFFF39C6B);
 
 const keggshell = Color(0xFFF8F4E3);
 const kceladonBlue = Color(0xFF2978A0);
+const kcream = Color(0xffF4FEC1);
 const kmellowApricot = Color(0xFFFFC07F);
 const kforestGreen = Color(0xFF57A773);
 const kLightOrange = Color(0xFFFF7643);
