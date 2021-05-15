@@ -28,17 +28,12 @@ class DatabaseService with ChangeNotifier {
 
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
-<<<<<<< HEAD
-  CollectionReference _portraits =
-      FirebaseFirestore.instance.collection("artistswork");
-=======
   CollectionReference _users = FirebaseFirestore.instance.collection("users");
->>>>>>> b1bd3454e86d36e040baddaa8de1b657fb1fb09b
   CollectionReference _reports =
       FirebaseFirestore.instance.collection("reports");
   CollectionReference _merchants =
       FirebaseFirestore.instance.collection("merchants");
-  CollectionReference _artists =
+  CollectionReference _portraits =
       FirebaseFirestore.instance.collection("artistswork");
 
   CollectionReference _deleteUser =
@@ -258,15 +253,9 @@ class DatabaseService with ChangeNotifier {
   }
 
 //TODO
-<<<<<<< HEAD
   Future<void> addPortraitDetails(Map portraits) async {
     await _portraits.doc(portraits['userid']).set(
           portraits,
-=======
-  Future<void> addArtDetails(Map artists) async {
-    await _artists.doc(artists['userid']).set(
-          artists,
->>>>>>> b1bd3454e86d36e040baddaa8de1b657fb1fb09b
           SetOptions(merge: true),
         );
   }
