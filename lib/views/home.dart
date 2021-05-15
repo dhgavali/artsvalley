@@ -6,6 +6,7 @@ import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/services/networkdepend.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
+import 'package:artsvalley/views/potrait/form.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:artsvalley/views/slideshow.dart';
@@ -191,7 +192,8 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               moveToPage(
                 context,
-                ProductPage(),
+                //ProductPage(),
+                FormToGetPortait(),
               );
             },
             child: menuItem(

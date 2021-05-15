@@ -9,6 +9,7 @@ class AboutUsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Meet our Team"),
+        centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[

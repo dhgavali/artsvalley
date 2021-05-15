@@ -5,6 +5,7 @@ import 'package:artsvalley/shared/default_button.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
 
@@ -205,6 +206,11 @@ Widget customTile({String title, String subtitle, IconData icon}) {
 Widget headingtext(String title) {
   return Text(
     "$title",
-    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+    style: GoogleFonts.poppins(
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+      ),
+    ),
   );
 }

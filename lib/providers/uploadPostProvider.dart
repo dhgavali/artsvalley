@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/posts/selectedimage.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/potrait/form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,6 +37,51 @@ class UploadPost with ChangeNotifier {
         : print('Image Upload Error');
 
     notifyListeners();
+  }
+
+  //constants for portrait
+  File portraitImage;
+  File get getPortraitImage => portraitImage;
+  String portraitImageUrl;
+  String get getPortraitImageUrl => portraitImageUrl;
+  final portraitPicker = ImagePicker();
+  UploadTask portraitUploadTask;
+
+
+//
+  Future pickPortraitImage(BuildContext context) async {
+    final pickedPortraitImage =
+        await portraitPicker.getImage(source: ImageSource.gallery);
+    pickedPortraitImage == null
+        ? print('Please select image')
+        : portraitImage = File(pickedPortraitImage.path);
+    log(portraitImage.path);
+
+    // portraitImage != null
+    //     ? Navigator.push(
+    //         context,
+    //         CupertinoPageRoute(
+    //           builder: (context) => FormToGetPortait(),
+    //         ),
+    //       )
+    //     : print('Image Upload Error');
+
+    notifyListeners();
+  }
+
+  //for portrait upload
+  Future<String> uploadPotraitImage() async {
+    log('into portraitupload');
+    TaskSnapshot tasksnapshot = await FirebaseStorage.instance
+        .ref()
+        .child('PortraitImages/${portraitImage.path}/${TimeOfDay.now()}')
+        .putFile(portraitImage);
+    log(tasksnapshot.toString());
+
+    final String portraitDownloadUrl = await tasksnapshot.ref.getDownloadURL();
+    portraitImageUrl = portraitDownloadUrl;
+    notifyListeners();
+    return portraitDownloadUrl;
   }
 
   //for editing image (Crop Functionlity)
@@ -82,7 +129,7 @@ class UploadPost with ChangeNotifier {
   //     bucket: 'gs://art-valley.appspot.com',
   //   );
 
-  Future deleteImageFromDb() async{
+  Future deleteImageFromDb() async {
     /* final Reference ref = FirebaseStorage.instance.refFromURL(uploadPostImageUrl);
     try {
       log(ref.toString());
@@ -93,17 +140,23 @@ class UploadPost with ChangeNotifier {
       return e.toString();
     } */
 
-    if(uploadPostImage != null) {
-     //Reference reference =  FirebaseStorage.instance.ref(uploadPostImage.path);
-      String filePath = uploadPostImageUrl.replaceAll(new RegExp(r'https://firebasestorage.googleapis.com/v0/b/art-valley.appspot.com/o/posts%2Fdata%2Fuser%2F0%2Fcom.dhenterprises.artsvalley%2Fcache%2F'), '');
+    if (uploadPostImage != null) {
+      //Reference reference =  FirebaseStorage.instance.ref(uploadPostImage.path);
+      String filePath = uploadPostImageUrl.replaceAll(
+          new RegExp(
+              r'https://firebasestorage.googleapis.com/v0/b/art-valley.appspot.com/o/posts%2Fdata%2Fuser%2F0%2Fcom.dhenterprises.artsvalley%2Fcache%2F'),
+          '');
       filePath = filePath.replaceAll(new RegExp(r'%2F'), '/');
 
       filePath = filePath.replaceAll(new RegExp(r'(\?alt).*'), '');
 
       Reference reference = FirebaseStorage.instance.ref();
-      reference.child(filePath).delete().then((_) => print('Successfully deleted $filePath storage item' ));
+      reference
+          .child(filePath)
+          .delete()
+          .then((_) => print('Successfully deleted $filePath storage item'));
 
-     //FirebaseStorage.instance.ref().child(filepath).delete().then((_) => print("Successfully deleted $filepath storage item"));
+      //FirebaseStorage.instance.ref().child(filepath).delete().then((_) => print("Successfully deleted $filepath storage item"));
       //print(reference);
       //log(uploadPostImageUrl);
       //await reference.delete();
@@ -121,40 +174,32 @@ class UploadPost with ChangeNotifier {
     print('checkkkkk!!!!!');
     await photo.delete(); */
 
-   /*  try {
+    /*  try {
     var photo = FirebaseStorage.instance.ref(uploadPostImage.path).delete();
     log(photo.toString());
     } catch (e) {
       debugPrint('error deleting $e');
     }
  */
-    
-    
   }
 
-//TODO 
-  Future deleteFromCloudAndDb(String postid) async{
+  Future deleteFromCloudAndDb(String postid) async {
     try {
       FirebaseFirestore.instance.collection('posts').doc(postid).delete();
       print("post Deleted");
-      
     } catch (e) {
       e.toString();
     }
-    
   }
 
-   Future deleteAcheivementFromCloudAndDb(String uid) async{
+  Future deleteAcheivementFromCloudAndDb(String uid) async {
     try {
       FirebaseFirestore.instance.collection('acheivements').doc(uid).delete();
       print("Acheivement Deleted");
-      
     } catch (e) {
       e.toString();
     }
-    
   }
-
 
   selectPostImageType(BuildContext context) {
     return showModalBottomSheet(
@@ -186,7 +231,6 @@ class UploadPost with ChangeNotifier {
                             onPressed: () {
                               //Picking the image from gallary passing the context.
                               pickUploadPostImage(context, ImageSource.gallery);
-                              
                             },
                           ),
                           Text(

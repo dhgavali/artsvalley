@@ -1,54 +1,40 @@
+import 'dart:developer';
 import 'package:artsvalley/helper/validators.dart';
+import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/views/settings/myaccount.dart';
+import 'package:artsvalley/views/potrait/submitmsg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-
-import 'notifyingpage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:group_button/group_button.dart';
+import 'package:provider/provider.dart';
 
-class ShopForm extends StatefulWidget {
+class FormToGetPortait extends StatefulWidget {
   @override
-  _ShopFormState createState() => _ShopFormState();
+  _FormToGetPortaitState createState() => _FormToGetPortaitState();
 }
 
-class _ShopFormState extends State<ShopForm> {
+class _FormToGetPortaitState extends State<FormToGetPortait> {
   TextEditingController _fnameController = TextEditingController();
   TextEditingController _lnameController = TextEditingController();
-  TextEditingController _firmnameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _cityController = TextEditingController();
   TextEditingController _stateController = TextEditingController();
   TextEditingController _pincodeController = TextEditingController();
-  // TextEditingController _ = TextEditingController();
-  List<String> _productsList = <String>[
-    "Arts",
-    "Sketches",
-    "Pottery",
-    "DIY",
-    "Portrait Paintings",
-    "Other"
-  ];
-  // Map<String, bool> _selectedproducts = {};
-  List<String> _selectedProducts = [];
-  final GlobalKey<FormState> _merchantFormKey = GlobalKey<FormState>();
 
+  final GlobalKey<FormState> _portaitFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Shop open Form',
+          'Portrait Form',
           style: GoogleFonts.poppins(),
         ),
         centerTitle: true,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -57,7 +43,7 @@ class _ShopFormState extends State<ShopForm> {
             vertical: 12,
           ),
           child: Form(
-            key: _merchantFormKey,
+            key: _portaitFormKey,
             child: Column(
               children: [
                 Container(
@@ -66,7 +52,7 @@ class _ShopFormState extends State<ShopForm> {
                     top: 10,
                   ),
                   child: Text(
-                    'To join with our community, fill the following form.',
+                    'To get your own portrait from our best artists, fill the following form.',
                     style: GoogleFonts.poppins(
                       textStyle: TextStyle(
                         fontSize: 20.0,
@@ -78,6 +64,7 @@ class _ShopFormState extends State<ShopForm> {
                   height: 25,
                 ),
                 headingtext("Personal Information"),
+                SizedBox(height: 10),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   alignment: Alignment.centerLeft,
@@ -120,36 +107,6 @@ class _ShopFormState extends State<ShopForm> {
                       controller: _emailController,
                       validator: CustomFormValidators().emailValidator,
                     )),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: _formField(
-                    label: "Name of Firm / Organization / Company",
-                    controller: _firmnameController,
-                  ),
-                ),
-                Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Products',
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(fontSize: 18)),
-                    )),
-                GroupButton(
-                  buttons: _productsList,
-                  spacing: 10,
-                  isRadio: false,
-                  onSelected: (index, isSelected) {
-                    print("checked: ${isSelected.toString()}");
-                    if (isSelected) {
-                      // _selectedproducts.addEntries(newEntries)
-                      _selectedProducts.add(_productsList[index]);
-                    } else {
-                      _selectedProducts.remove(_productsList[index]);
-                    }
-                    // print(_selectedProducts);
-                  },
-                ),
                 SizedBox(height: 20),
                 headingtext("Address Information"),
                 SizedBox(height: 20),
@@ -200,6 +157,68 @@ class _ShopFormState extends State<ShopForm> {
                   ),
                 ),
                 SizedBox(
+                  height: 20,
+                ),
+                headingtext('Portrait Photo'),
+                SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 400,
+                    height: 300,
+                    color: Colors.grey[200],
+                    child: ClipRect(
+                      child: Consumer<UploadPost>(
+                          builder: (context, value, child) {
+                        return (value.portraitImage != null)
+                            ? Image.file(
+                                value.portraitImage,
+                                frameBuilder: (BuildContext context,
+                                        Widget child,
+                                        int frame,
+                                        bool wasSynchronouslyLoaded) =>
+                                    wasSynchronouslyLoaded
+                                        ? child
+                                        : AnimatedOpacity(
+                                            child: child,
+                                            opacity: frame == null ? 0 : 1,
+                                            duration:
+                                                const Duration(seconds: 2),
+                                            curve: Curves.easeOut,
+                                          ),
+                              )
+                            : Container();
+                      }),
+                    ),
+
+                    /* Text(
+                      'Click here to Select Picture ',
+                      style: GoogleFonts.poppins(),
+                      textAlign: TextAlign.center,
+                    ), */
+                  ),
+                  onTap: () {
+                    Provider.of<UploadPost>(context, listen: false)
+                        .pickPortraitImage(context);
+                    print('opened gallery');
+                  },
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  child: Text(
+                    'Tip :- For reselcting image , tap again on picture box.',
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
@@ -210,33 +229,34 @@ class _ShopFormState extends State<ShopForm> {
                       ),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     //FormSubmit here
-
-                    if (_merchantFormKey.currentState.validate()) {
-                      Map<String, dynamic> merchantdata = {
+                    await Provider.of<UploadPost>(context, listen: false)
+                        .uploadPotraitImage();
+                    if (_portaitFormKey.currentState.validate()) {
+                      log("inside validation");
+                      Map<String, dynamic> portraitdata = {
                         'First name': _fnameController.text.trim(),
                         'Last name': _lnameController.text.trim(),
                         'phone number': _phoneController.text.trim(),
                         'email': _emailController.text.toLowerCase().trim(),
-                        'company name': _firmnameController.text.trim() ?? '',
-                        'products': _selectedProducts,
                         'address': _addressController.text.trim(),
                         'city': _cityController.text.trim(),
                         'state': _stateController.text.trim(),
                         'pincode': _pincodeController.text.trim(),
+                        'portraitImageUrl': Provider.of<UploadPost>(context, listen: false).portraitImageUrl,
                         'userid': Provider.of<User>(context, listen: false).uid,
                       };
 
-                      Provider.of<DatabaseService>(context, listen: false)
-                          .addMerchantDetails(merchantdata);
+                      await Provider.of<DatabaseService>(context, listen: false)
+                          .addPortraitDetails(portraitdata);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SubmitMsgForPortraitForm(),
+                        ),
+                      );
                     }
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NoftifyUser(),
-                      ),
-                    );
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
