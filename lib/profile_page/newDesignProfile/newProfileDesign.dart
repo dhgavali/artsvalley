@@ -1,8 +1,6 @@
 import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/image_widget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
-import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,9 +39,9 @@ class ProfilePageNew extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: CustomBottomNavBar(
-          selectedMenu: MenuState.profile,
-        ),
+        // bottomNavigationBar: CustomBottomNavBar(
+        //   selectedMenu: MenuState.profile,
+        // ),
         body: StreamBuilder<UserProfileData>(
             stream: FetchUserData(userid: user.uid).userData,
             builder: (context, snapshot) {
@@ -67,11 +65,11 @@ class ProfilePageNew extends StatelessWidget {
                               padding: const EdgeInsets.all(5.0),
                               alignment: Alignment.center,
                               child: Container(
-                              padding: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: Colors.white),
-                                  shape: BoxShape.circle),
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.white),
+                                    shape: BoxShape.circle),
                                 child: CircleAvatar(
                                   radius: 65,
                                   backgroundImage: (userData.userProfile !=

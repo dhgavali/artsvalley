@@ -1,14 +1,14 @@
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-//TODO: changing the both checkboxes at the same time
-//post id is null
-//comment is also null
+//TODO: changing the both checkboxes at the same time//
+
+
 class ReportPage extends StatefulWidget {
   final String postId;
   ReportPage({this.postId});
@@ -37,9 +37,9 @@ class _ReportPageState extends State<ReportPage> {
             children: [
               Text(
                 "If you find any post is not related to Art or the art is violated the copyright policies then you can report it.",
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                     fontSize: 20,
-                    color: kPrimaryColorDark,
+                    color: Colors.grey.shade700,
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(
@@ -47,8 +47,10 @@ class _ReportPageState extends State<ReportPage> {
               ),
               Text(
                 "Our team will inspect the reports and will take a required action..",
-                style:
-                    GoogleFonts.poppins(fontSize: 18, color: kPrimaryColorDark),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey.shade700,
+                ),
               ),
               SizedBox(height: 10),
               CheckboxListTile(
@@ -65,8 +67,9 @@ class _ReportPageState extends State<ReportPage> {
                   }
                 },
                 title: Text("Is not an Art"),
-                checkColor: Color(0xffff00ff),
+                checkColor: kPrimaryColor,
                 tileColor: keggshell,
+                activeColor: keggshell,
               ),
               SizedBox(
                 height: 25,
@@ -85,8 +88,9 @@ class _ReportPageState extends State<ReportPage> {
                 },
                 key: GlobalKey(),
                 title: Text("It violates the copyrights"),
-                checkColor: Color(0xffff00ff),
                 tileColor: keggshell,
+                checkColor: kPrimaryColor,
+                activeColor: keggshell,
               ),
               SizedBox(
                 height: 25,
@@ -121,7 +125,7 @@ class _ReportPageState extends State<ReportPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomePage(),
+                        builder: (context) => DesignBTMMyHomePage(),
                       ),
                     );
                   });
@@ -131,7 +135,7 @@ class _ReportPageState extends State<ReportPage> {
                   height: 50,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: kPrimaryColorDark,
+                    color: kPrimaryColor,
                   ),
                   child: Text(
                     "Report",

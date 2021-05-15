@@ -1,6 +1,7 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:artsvalley/providers/visibilityprovider.dart';
@@ -87,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (BuildContext context) => HomePage(),
+                            builder: (BuildContext context) => DesignBTMMyHomePage(),
                           ),
                           (Route<dynamic> route) => false,
                         );
@@ -129,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HomePage(),
+                            builder: (context) => DesignBTMMyHomePage(),
                           ),
                         );
                       } else {

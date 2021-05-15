@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -90,7 +91,7 @@ class AuthMethods {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage(),
+              builder: (context) => DesignBTMMyHomePage(),
             ),
           );
 

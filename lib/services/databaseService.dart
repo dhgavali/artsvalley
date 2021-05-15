@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/profile_page/selectedProfile.dart';
-import 'package:artsvalley/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -127,7 +126,7 @@ class DatabaseService with ChangeNotifier {
   //   return userDataref.doc(userid).set(data);
   // }
 
-  //for accessing data fro, firestore
+  //for accessing data from, firestore
 
   notifyListeners();
 //

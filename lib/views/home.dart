@@ -1,7 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/services/networkdepend.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
@@ -28,11 +27,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var likeRef;
 
-  @override
-  void initState() {
-    // UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +63,6 @@ class _HomePageState extends State<HomePage> {
                     context: context,
                     delegate: SearchUser(),
                   );
-                  //Search();
                 },
                 icon: Icon(Icons.search),
               ),
@@ -80,9 +73,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          bottomNavigationBar: CustomBottomNavBar(
-            selectedMenu: MenuState.home,
-          ),
+          // bottomNavigationBar: CustomBottomNavBar(
+          //   selectedMenu: MenuState.home,
+          // ),
           drawer: Theme(
             data: Theme.of(context).copyWith(canvasColor: kerichblack),
             child: MyDrawer(),
