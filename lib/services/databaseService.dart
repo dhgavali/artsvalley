@@ -24,7 +24,7 @@ class DatabaseService with ChangeNotifier {
 
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
-  CollectionReference _artists = FirebaseFirestore.instance.collection("artistswork");
+  CollectionReference _portraits = FirebaseFirestore.instance.collection("artistswork");
   CollectionReference _reports =
       FirebaseFirestore.instance.collection("reports");
   CollectionReference _merchants =
@@ -205,10 +205,11 @@ class DatabaseService with ChangeNotifier {
   }
 
 //TODO
-   Future<void> addArtDetails(Map artists) async {
-    await _artists.doc(artists['userid']).set(
-          artists,
+   Future<void> addPortraitDetails(Map portraits) async {
+    await _portraits.doc(portraits['userid']).set(
+          portraits,
           SetOptions(merge: true),
         );
   }
 }
+
