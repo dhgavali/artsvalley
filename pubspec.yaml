@@ -32,7 +32,9 @@ dependencies:
   connectivity: ^3.0.3
   url_launcher: ^6.0.3
   animated_text_kit: ^4.2.1
-  group_button: ^2.1.2 
+  group_button: ^2.1.2
+  animated_bottom_navigation_bar: ^0.3.2
+  animated_splash_screen: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +56,7 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/team/
-    - assets/tutorials/elephant/ 
+    - assets/tutorials/elephant/
     - assets/tutorials/butterfly/
     - assets/tutorials/mickeyMouse/
     - assets/tutorials/home/

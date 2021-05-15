@@ -1,9 +1,10 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
-import 'package:artsvalley/providers/pass_visibility.dart';
+import 'package:artsvalley/providers/visibilityprovider.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -60,16 +61,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    "!! Welcome Back !!",
-                    style: GoogleFonts.lato(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
                 SizedBox(height: size.height * 0.03),
                 Container(
                   width: size.width * 0.80,
@@ -97,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (BuildContext context) => HomePage(),
+                            builder: (BuildContext context) => DesignBTMMyHomePage(),
                           ),
                           (Route<dynamic> route) => false,
                         );
@@ -123,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: RoundedButton(
                     text: "LOGIN",
+                    color: kPrimaryColor,
                   ),
                 ),
 
@@ -138,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HomePage(),
+                            builder: (context) => DesignBTMMyHomePage(),
                           ),
                         );
                       } else {
@@ -150,7 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: RoundedButton(
                     text: "Continue with google",
-                    color: kseagreen,
+                    color: kteagreen2,
+                    textColor: kerichblack,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -180,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _passwordRoundedField(String title, TextEditingController mycontroller,
       FormFieldValidator<String> validator) {
 // provider
-    var visibility = context.watch<PassVisibleState>();
+    var visibility = context.watch<VisibilityProvider>();
     Icon myIcon = visibility.isVisible
         ? Icon(
             Icons.visibility,
@@ -191,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
             color: kPrimaryColor,
           );
     return TextFieldContainer(
+      bgcolor: kcream,
       child: TextFormField(
         obscureText: visibility.isVisible,
         cursorColor: kPrimaryColor,

@@ -111,6 +111,8 @@ class ShowProfilePhoto extends StatelessWidget {
                             _uid,
                           )
                           .update({'photoUrl': _value});
+             
+                          
                       // Stream<QuerySnapshot> _postfetched = FirebaseFirestore
                       //     .instance
                       //     .collection(ProConstants.postsCollection)

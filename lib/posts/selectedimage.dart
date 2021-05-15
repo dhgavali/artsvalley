@@ -9,7 +9,7 @@ import 'captionpost.dart';
 class SelectedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var _loadProvider = Provider.of<LoadingProvider>(context, listen: false);
+    var _loadProvider = Provider.of<LoadingProvider>(context, listen: false,);
 
     return Scaffold(
       body: SafeArea(
@@ -72,7 +72,7 @@ class SelectedImage extends StatelessWidget {
 
               //buttons for uploading image or reselect
               Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
+                padding: const EdgeInsets.only(bottom: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -92,7 +92,6 @@ class SelectedImage extends StatelessWidget {
                         style: ProConstants.infoText,
                       ),
                       onPressed: () async {
-                 
                         _loadProvider.loadLinearProgress(true);
                         await Provider.of<UploadPost>(context, listen: false)
                             .uploadPostToStorage()
@@ -117,10 +116,13 @@ class SelectedImage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Provider.of<UploadPost>(context, listen: false).cropImage();
-          // cropImage(context);
         },
         tooltip: "Edit your photo",
-        child: Icon(Icons.edit),
+        child: Icon(
+          Icons.edit,
+          color: Colors.black,
+        ),
+        backgroundColor: kPrimaryColorDark,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );

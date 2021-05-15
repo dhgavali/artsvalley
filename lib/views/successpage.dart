@@ -1,6 +1,6 @@
 import 'package:artsvalley/components/rounded_button.dart';
-import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -50,12 +50,12 @@ class SuccessPage extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       CupertinoPageRoute(
-                        builder: (builder) => ProfilePageNew(),
+                        builder: (builder) => DesignBTMMyHomePage(),
                       ),
                     );
                   },
                   child: RoundedButton(
-                    color: Color(0xffB20D30),
+                    color: kPrimaryColor,
                     text: "Back to Profile",
                   ),
                 )

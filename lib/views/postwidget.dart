@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 
 class PostWidget extends StatefulWidget {
   final String profileurl;
-  // //either we will display a username or full name here
   final String username;
   final String posturl;
 //   //it may be string or int. we will use one which works easily and then typecast at server level or at UI level
@@ -40,22 +39,12 @@ class PostWidget extends StatefulWidget {
 
 class _PostWidgetState extends State<PostWidget> {
   int likescount = 0;
-  // DocumentSnapshot likeRef;
   bool isLiked = false;
   final GlobalKey<PopupMenuItemState> _popupKey =
       GlobalKey<PopupMenuItemState>();
-  bool isSaved = false;
-  doSave(bool value, String postId) {
-    DocumentReference  _ref = FirebaseFirestore.instance.collection("favorites").doc(Provider.of<User>(context, listen: false).uid);
-    if (value) {
-      // _ref.set(data)
-    } else {
-      // _ref.update('savedArts.$postId' : FieldValue.delete());   
-    }
-  }
 
   doLike() {
-    String _currentUser = Provider.of<User>(context, listen: false).uid;
+    var _currentUser = Provider.of<User>(context, listen: false).uid;
     bool _isliked = widget.likes[_currentUser] == true;
     if (_isliked) {
       FirebaseFirestore.instance
@@ -83,6 +72,9 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     double postHeight = (widget.caption.isEmpty) ? 425.0 : 450.0;
+    if (widget.caption.length > 80) {
+      postHeight += 15;
+    }
     return Container(
       width: MediaQuery.of(context).size.width - 50,
       height: postHeight,
@@ -243,22 +235,6 @@ class _PostWidgetState extends State<PostWidget> {
                           )
                         ],
                       ),
-                      StreamBuilder(builder: (context, snapshot) {
-                        return InkWell(
-                          onTap: () {
-                            if (true) {
-//if true : then delete
-                            } else {
-                              //else: add
-                            }
-                          },
-                          child: Icon(
-                            Icons.bookmark_outlined,
-                            size: 35,
-                            color: Colors.white,
-                          ),
-                        );
-                      })
                     ],
                   ),
                   Container(
@@ -266,7 +242,7 @@ class _PostWidgetState extends State<PostWidget> {
                     child: Text(
                       widget.caption,
                       style: TextStyle(color: Colors.white),
-                      maxLines: 2,
+                      maxLines: 3,
                       overflow: TextOverflow.fade,
                     ),
                   )

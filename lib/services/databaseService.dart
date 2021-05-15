@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:artsvalley/profile_page/selectedProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,21 @@ class DatabaseService with ChangeNotifier {
 
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
+<<<<<<< HEAD
   CollectionReference _portraits =
       FirebaseFirestore.instance.collection("artistswork");
+=======
+  CollectionReference _users = FirebaseFirestore.instance.collection("users");
+>>>>>>> b1bd3454e86d36e040baddaa8de1b657fb1fb09b
   CollectionReference _reports =
       FirebaseFirestore.instance.collection("reports");
   CollectionReference _merchants =
       FirebaseFirestore.instance.collection("merchants");
+  CollectionReference _artists =
+      FirebaseFirestore.instance.collection("artistswork");
 
+  CollectionReference _deleteUser =
+      FirebaseFirestore.instance.collection("deleteReviews");
   //initial data for stream
 
   Future pickProfileImage(BuildContext context, ImageSource source) async {
@@ -126,7 +135,7 @@ class DatabaseService with ChangeNotifier {
   //   return userDataref.doc(userid).set(data);
   // }
 
-  //for accessing data fro, firestore
+  //for accessing data from, firestore
 
   notifyListeners();
 //
@@ -173,6 +182,45 @@ class DatabaseService with ChangeNotifier {
             (error) => print("Failed to update user followers: $error"));
   }
 
+  //Method to udpate the user data from the settigns
+  Future<void> updateUserData(
+      {String uid, String mobileNumber, String address, String gender}) async {
+    await _users.doc(uid).update({
+      'mobileNumber': mobileNumber ?? '',
+      'address': address ?? '',
+      'gender': gender ?? '',
+    });
+  }
+
+  //method to update user email
+  Future<void> updateUserEmail({String uid, String email}) async {
+    await _users.doc(uid).update({
+      'useremail': email,
+    });
+  }
+
+  //method to update user mobile number
+  Future<void> updateUserMobileNumber({String uid, String mobileNumber}) async {
+    await _users.doc(uid).update({
+      'mobileNumber': mobileNumber,
+    });
+  }
+
+  //method to update user address
+  Future<void> updateUserAddress({String uid, String address}) async {
+    await _users.doc(uid).update({
+      'address': address,
+    });
+  }
+
+//method to update the gender
+  Future<void> updateUserGender({String uid, String gender}) async {
+    await _users.doc(uid).update({
+      'gender': gender,
+    });
+  }
+
+//method to add reports to the database
   Future<void> addReportToDb(
       {String postId,
       String uid,
@@ -210,10 +258,47 @@ class DatabaseService with ChangeNotifier {
   }
 
 //TODO
+<<<<<<< HEAD
   Future<void> addPortraitDetails(Map portraits) async {
     await _portraits.doc(portraits['userid']).set(
           portraits,
+=======
+  Future<void> addArtDetails(Map artists) async {
+    await _artists.doc(artists['userid']).set(
+          artists,
+>>>>>>> b1bd3454e86d36e040baddaa8de1b657fb1fb09b
           SetOptions(merge: true),
         );
+  }
+
+  //method to delete user account
+  Future<int> deleteUserAccount(
+      {String uid, String reason, String email}) async {
+    try {
+      await _deleteUser.doc(uid).set({
+        'uid': uid,
+        'email': email,
+        'reason': reason,
+      });
+
+      await FirebaseAuth.instance.currentUser
+          .delete()
+          .onError((error, stackTrace) {
+        // print(error.hashCode.toInt());
+        if (error.hashCode.toInt() == 277133790) {
+          // print("re- authenticate");
+          return 1;
+        }
+      });
+    } catch (e) {
+      print("error ${e.toString()}");
+    }
+    // try {
+    //   FirebaseAuth.instance.currentUser.delete();
+    // } catch (error) {
+    //   var _userCredentials = await AuthMethods(FirebaseAuth.instance.).signInWithGoogle();
+    //   FirebaseAuth.instance.currentUser.reauthenticateWithCredential(_userCredentials);
+
+    // }
   }
 }

@@ -55,10 +55,21 @@ class UserCardWidget extends StatelessWidget {
         vertical: 20,
       ),
       width: MediaQuery.of(context).size.width * 0.8,
-      height: MediaQuery.of(context).size.height * 0.40,
+      height: 325,
       decoration: BoxDecoration(
-        // color: Colors.white,
-        color: kteagreen2,
+        // color: kPrimaryLightColor,
+        gradient: LinearGradient(
+          begin: Alignment(-1.0, -2.0),
+          end: Alignment(1.0, 2.0),
+          colors: [
+            // Color(0xff85FFBD),
+            kteagreen,
+            Color(0xff74EBD5),
+            // Color(0xffFFFB7D),
+            // Color(0xffFBDA61),
+            // Color(0xffFF6BD2),
+          ],
+        ),
         borderRadius: BorderRadius.circular(10),
         boxShadow: <BoxShadow>[
           BoxShadow(

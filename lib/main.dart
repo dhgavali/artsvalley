@@ -3,14 +3,13 @@ import 'package:artsvalley/helper/sizeconfig.dart';
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
-import 'package:artsvalley/providers/pass_visibility.dart';
-import 'package:artsvalley/providers/usersdata.dart';
+import 'package:artsvalley/providers/visibilityprovider.dart';
 import 'package:artsvalley/routes.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/services/connectivityService.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/views/home.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +17,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'enum/connectivityStatus.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,12 +41,11 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               Provider.of<AuthMethods>(context, listen: false).authStateChanges,
         ),
-        ChangeNotifierProvider(create: (context) => PassVisibleState()),
+        ChangeNotifierProvider(create: (context) => VisibilityProvider()),
         ChangeNotifierProvider(create: (context) => LoadingProvider()),
         ChangeNotifierProvider(create: (context) => DatabaseService()),
         ChangeNotifierProvider(create: (context) => UploadPost()),
         ChangeNotifierProvider(create: (context) => EditProfile()),
-        ChangeNotifierProvider(create: (context) => UserDataProvider()),
       ],
       child: StreamProvider<ConnectivityStatus>(
         initialData: null,
@@ -62,13 +61,10 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(
                 color: Colors.black,
               ),
-              toolbarTextStyle: TextStyle(color: Colors.black),
               titleTextStyle: TextStyle(color: Colors.black),
             ),
             primaryColorDark: kPrimaryColorDark,
             primaryColor: kPrimaryColor,
-
-            // colorScheme: ColorScheme(primary: primary, primaryVariant: primaryVariant, secondary: secondary, secondaryVariant: secondaryVariant, surface: surface, background: background, error: error, onPrimary: onPrimary, onSecondary: onSecondary, onSurface: onSurface, onBackground: onBackground, onError: onError, brightness: brightness),
             primarySwatch: Colors.purple,
             visualDensity: VisualDensity.adaptivePlatformDensity,
             backgroundColor: Color(0xfff1f1f1),
@@ -89,7 +85,15 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-          home: AuthenticationWrapper(),
+          home: AnimatedSplashScreen(
+            splash: Image.asset('assets/images/logo.png'),
+            nextScreen: AuthenticationWrapper(),
+            splashIconSize: 200,
+            splashTransition: SplashTransition.fadeTransition,
+            backgroundColor: Colors.white,
+            duration: 3000,
+          ),
+          // home: AuthenticationWrapper(),
           debugShowCheckedModeBanner: false,
         ),
       ),
@@ -104,7 +108,7 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = Provider.of<User>(context);
 
     if (firebaseUser != null) {
-      return HomePage();
+      return DesignBTMMyHomePage();
     }
     return WelcomeScreen();
   }

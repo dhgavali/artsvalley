@@ -1,7 +1,6 @@
 //TODO: here we will show some notifications to the users.
 //Those will be the custom notification.
 
-import 'dart:developer';
 
 import 'package:artsvalley/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,8 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
-import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/shared/constants.dart';
-import 'package:artsvalley/shared/customBottomNav.dart';
 import 'package:artsvalley/services/networkdepend.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
@@ -13,7 +11,6 @@ import 'package:artsvalley/views/slideshow.dart';
 import 'package:artsvalley/views/store/notifyingpage.dart';
 import 'package:artsvalley/views/store/product_page.dart';
 import 'package:artsvalley/views/tutorials/tutorial_home.dart';
-import 'package:artsvalley/views/tutorials/tutorial_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,11 +29,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var likeRef;
 
-  @override
-  void initState() {
-    UserDataProvider().intializeUserData(FirebaseAuth.instance.currentUser.uid);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,30 +37,24 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
             brightness: Brightness.dark,
-            // title: Text(
-            //   "ArtsValley",
-            //   style: GoogleFonts.dancingScript(
-            //       textStyle:
-            //           TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-            // ),
             title: ColorizeAnimatedTextKit(
               speed: Duration(milliseconds: 1000),
               totalRepeatCount: 1,
               repeatForever: false,
               text: ["ArtsValley"],
-              textStyle: GoogleFonts.dancingScript(
+              //fonts : arizonia, italianno, sacramento, pacifico, niconne,alexbrush,  allura, marck script, tangerine, homemade apple, greatvibes,
+              textStyle: GoogleFonts.arizonia(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
               colors: [
-                Color(0xff85FFBD),
-                Color(0xFF3DDC97),
-                Color(0xFFF39C6B),
-                Color(0xFFFF495C),
+                krichblack,
+                kPrimaryColor,
+                kcrimson,
+                kseagreen,
                 Color(0xFFE8D33F),
-                Color(0xFFFFEA61),
-                Color(0xFFFFB7C3),
-                Color(0xFF2BFF88),
+                kpurpledark,
+                kpostBorderColor,
               ],
             ),
             centerTitle: true,
@@ -79,7 +65,6 @@ class _HomePageState extends State<HomePage> {
                     context: context,
                     delegate: SearchUser(),
                   );
-                  //Search();
                 },
                 icon: Icon(Icons.search),
               ),
@@ -90,9 +75,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          bottomNavigationBar: CustomBottomNavBar(
-            selectedMenu: MenuState.home,
-          ),
+          // bottomNavigationBar: CustomBottomNavBar(
+          //   selectedMenu: MenuState.home,
+          // ),
           drawer: Theme(
             data: Theme.of(context).copyWith(canvasColor: kerichblack),
             child: MyDrawer(),

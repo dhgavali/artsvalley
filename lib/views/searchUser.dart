@@ -1,7 +1,7 @@
 import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 
 class SearchUser extends SearchDelegate<String> {
   @override

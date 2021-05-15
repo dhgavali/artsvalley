@@ -1,5 +1,6 @@
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,8 @@ class ProfilePic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 115,
-      width: 125,
+      height: 130,
+      width: 135,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -29,10 +30,21 @@ class ProfilePic extends StatelessWidget {
               if (snapshot.hasError) {
                 return Icon(Icons.error_outline_outlined);
               }
-              return CircleAvatar(
-                backgroundImage: (snapshot.data['photoUrl'] != null)
-                    ? NetworkImage("${snapshot.data['photoUrl']}")
-                    : AssetImage("assets/images/Profile Image.png"),
+              return Container(
+                decoration: kboxDecoration(),
+                padding: const EdgeInsets.all(5.0),
+                child: Container(
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.white),
+                      shape: BoxShape.circle),
+                  child: CircleAvatar(
+                    backgroundImage: (snapshot.data['photoUrl'] != null)
+                        ? NetworkImage("${snapshot.data['photoUrl']}")
+                        : AssetImage("assets/images/Profile Image.png"),
+                  ),
+                ),
               );
             },
           ),

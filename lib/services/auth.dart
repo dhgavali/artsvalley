@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:artsvalley/helper/sharedpref.dart';
 import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,7 +55,10 @@ class AuthMethods {
               'displayname': firebaseUser.user.displayName,
               'photoUrl': firebaseUser.user.photoURL,
               'userid': firebaseUser.user.uid,
-              'followerList': {}
+              'followerList': {},
+              'address': '',
+              'gender': '',
+              'mobileNumber': '',
             },
             SetOptions(merge: true),
           );
@@ -82,14 +86,12 @@ class AuthMethods {
       SharedPrefsHelper _sharedpref = SharedPrefsHelper();
       _sharedpref.saveUserEmail(_user.user.email);
       _sharedpref.saveUserId(_user.user.uid);
-      UserDataProvider()
-          .intializeUserData(FirebaseAuth.instance.currentUser.uid);
-      FirebaseAuth.instance.authStateChanges().listen((User user) {
+     FirebaseAuth.instance.authStateChanges().listen((User user) {
         if (user != null) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage(),
+              builder: (context) => DesignBTMMyHomePage(),
             ),
           );
 
@@ -132,7 +134,10 @@ class AuthMethods {
         'displayname': fullname.trim(),
         'photoUrl': user.user.photoURL,
         'userid': user.user.uid,
-        'followerList': {}
+        'followerList': {},
+        'address': '',
+        'gender': '',
+        'mobileNumber': '',
       };
       FirebaseFirestore.instance
           .collection('users')

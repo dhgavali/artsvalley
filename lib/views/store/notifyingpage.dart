@@ -1,4 +1,5 @@
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,7 +65,7 @@ class _NoftifyUserState extends State<NoftifyUser> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
+                  MaterialPageRoute(builder: (context) => DesignBTMMyHomePage()),
                   (route) => false);
             },
             child: Text("Back To Profile"),

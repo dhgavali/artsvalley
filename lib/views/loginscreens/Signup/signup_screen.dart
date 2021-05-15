@@ -1,7 +1,7 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
-import 'package:artsvalley/providers/pass_visibility.dart';
+import 'package:artsvalley/providers/visibilityprovider.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -124,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   child: RoundedButton(
                     text: "SIGN UP",
+                    color: kPrimaryColor,
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -184,7 +185,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _passwordRoundedField(String title, TextEditingController mycontroller,
       FormFieldValidator<String> validator) {
 // provider
-    var visibility = context.watch<PassVisibleState>();
+    var visibility = context.watch<VisibilityProvider>();
     Icon myIcon = visibility.isVisible
         ? Icon(
             Icons.visibility,
@@ -195,6 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: kPrimaryColor,
           );
     return TextFieldContainer(
+      bgcolor: kcream,
       child: TextFormField(
         obscureText: visibility.isVisible,
         cursorColor: kPrimaryColor,
