@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class VisibilityProvider with ChangeNotifier {
- 
- //password fields
+  //password fields
   bool _isEnabled = false;
   bool _isVisible = true;
-
 
   bool get isEnabled => _isEnabled;
   set isEnabled(bool value) {
@@ -19,9 +17,8 @@ class VisibilityProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
 //for - myaccounts.dart - settings page
-   //boolean variables to show and hide edit options
+  //boolean variables to show and hide edit options
   bool _isEmailVisible = false;
   bool _isMobileVisible = false;
   bool _isAddressVisible = false;
@@ -51,6 +48,4 @@ class VisibilityProvider with ChangeNotifier {
     this._isGenderVisible = value;
     notifyListeners();
   }
-
- 
 }

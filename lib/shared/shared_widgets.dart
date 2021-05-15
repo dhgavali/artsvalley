@@ -42,7 +42,7 @@ Widget customInputField1(
   double width,
 }) {
   return TextFieldContainer(
-    bgcolor: kcream ?? bgcolor,
+    bgcolor: Colors.white,
     child: TextFormField(
       controller: mycontroller,
       cursorColor: kPrimaryColor,

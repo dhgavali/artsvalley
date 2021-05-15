@@ -1,5 +1,6 @@
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/helper/sizeconfig.dart';
+import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/views/loginscreens/reset/mailSent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,6 +50,15 @@ class _ResetPasswordState extends State<ResetPassword> {
           child: Center(
             child: Column(
               children: <Widget>[
+                Consumer<LoadingProvider>(
+                  builder: (context, value, child) {
+                    return value.isLoaded
+                        ? LinearProgressIndicator(
+                            minHeight: 5,
+                          )
+                        : Container(height: 5);
+                  },
+                ),
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
                   "Forgot Password",
@@ -64,6 +74,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 Text(
                   "Please enter your email and we will send \nyou a link to return to your account",
                   textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.1),
                 Padding(
@@ -80,9 +91,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                   onTap: () async {
                     if (_resetForm.currentState.validate()) {
                       try {
+                        Provider.of<LoadingProvider>(context, listen: false)
+                            .loadPage(true);
                         await context.read<AuthMethods>().resetPassword(
                               emailController.text.trim(),
                             );
+                        Provider.of<LoadingProvider>(context, listen: false)
+                            .loadPage(true);
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => MailSent(

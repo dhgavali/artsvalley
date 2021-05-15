@@ -27,7 +27,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var likeRef;
 
-
   @override
   Widget build(BuildContext context) {
     return NetworkDepend(
@@ -135,6 +134,8 @@ class MyDrawer extends StatelessWidget {
         children: [
           ListTile(
             onTap: () {
+              //show bottom navigation and close drawer.
+
               Navigator.of(context).pop();
             },
             leading: Icon(

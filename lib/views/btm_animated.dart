@@ -1,6 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
+import 'package:artsvalley/providers/visibilityprovider.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
 import 'package:flutter/cupertino.dart';

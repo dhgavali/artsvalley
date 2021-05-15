@@ -42,7 +42,7 @@ class ProfilePic extends StatelessWidget {
                   child: CircleAvatar(
                     backgroundImage: (snapshot.data['photoUrl'] != null)
                         ? NetworkImage("${snapshot.data['photoUrl']}")
-                        : AssetImage("assets/images/Profile Image.png"),
+                        : AssetImage("assets/images/profile.png"),
                   ),
                 ),
               );

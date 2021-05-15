@@ -1,16 +1,16 @@
 import 'package:artsvalley/components/already_have_an_account_acheck.dart';
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/components/text_field_container.dart';
+import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/views/btm_animated.dart';
-import 'package:artsvalley/views/home.dart';
 import 'package:artsvalley/views/loginscreens/Signup/signup_screen.dart';
 import 'package:artsvalley/providers/visibilityprovider.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/loginscreens/reset/resetPassword.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _signinkey = GlobalKey<FormState>();
 
+  
   String validateName(value) {
     var name = usernameController.text;
 
@@ -61,6 +62,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Consumer<LoadingProvider>(
+                  builder: (context, value, child) {
+                    return value.isLoaded
+                        ? LinearProgressIndicator(
+                            minHeight: 5,
+                          )
+                        : Container(height: 5);
+                  },
+                ),
                 SizedBox(height: size.height * 0.03),
                 Container(
                   width: size.width * 0.80,
@@ -86,11 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     widthFactor: 2.5,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (BuildContext context) => DesignBTMMyHomePage(),
+                            builder: (BuildContext context) => ResetPassword(),
                           ),
-                          (Route<dynamic> route) => false,
                         );
                       },
                       child: Text(
@@ -105,11 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 GestureDetector(
                   onTap: () async {
                     if (_signinkey.currentState.validate()) {
+                      Provider.of<LoadingProvider>(context, listen: false)
+                          .loadPage(true);
                       await context.read<AuthMethods>().signIn(
                             context: context,
                             email: usernameController.text.trim(),
                             password: pwdController.text.trim(),
                           );
+                 
                     }
                   },
                   child: RoundedButton(

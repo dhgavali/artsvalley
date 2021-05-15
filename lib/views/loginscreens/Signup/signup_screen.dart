@@ -152,7 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
               ],
             ),
@@ -170,7 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         color: Colors.white10,
         border: Border.all(
           width: 2,
-          color: kPrimaryLightColor,
+          color: kPrimaryColor,
         ),
         shape: BoxShape.circle,
       ),

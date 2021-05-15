@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'package:artsvalley/helper/sharedpref.dart';
-import 'package:artsvalley/providers/usersdata.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/views/btm_animated.dart';
-import 'package:artsvalley/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +15,8 @@ class AuthMethods {
   Stream<User> get authStateChanges => _auth.idTokenChanges();
 
 //Sign in method no need to add data.
-  Future<UserCredential> signInWithGoogle() async {
+  // Future<UserCredential> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     //first trigger authentication
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
     //obtain the auth details
@@ -28,7 +26,6 @@ class AuthMethods {
     final GoogleAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
     //saving the user data to shared preferences
-    SharedPrefsHelper _sharedpref = new SharedPrefsHelper();
 
     // // sign in method
     final _username =
@@ -64,9 +61,6 @@ class AuthMethods {
           );
         }
       }
-
-      _sharedpref.saveUserEmail(firebaseUser.user.email);
-      _sharedpref.saveUserId(firebaseUser.user.uid);
       return firebaseUser;
     } catch (error) {
       print(error);
@@ -78,24 +72,20 @@ class AuthMethods {
   Future<void> signIn(
       {BuildContext context, String email, String password}) async {
     //creating a provider
-    var load = context.read<LoadingProvider>();
 
     try {
       UserCredential _user = await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password.trim());
-      SharedPrefsHelper _sharedpref = SharedPrefsHelper();
-      _sharedpref.saveUserEmail(_user.user.email);
-      _sharedpref.saveUserId(_user.user.uid);
-     FirebaseAuth.instance.authStateChanges().listen((User user) {
+
+      FirebaseAuth.instance.authStateChanges().listen((User user) {
         if (user != null) {
+          Provider.of<LoadingProvider>(context, listen: false).loadPage(false);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => DesignBTMMyHomePage(),
             ),
           );
-
-          load.isLoaded = false;
         } else {
           return Center(
             child: Text("failed to login"),

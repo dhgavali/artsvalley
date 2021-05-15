@@ -1,5 +1,6 @@
 import 'package:artsvalley/components/rounded_button.dart';
 import 'package:artsvalley/helper/sizeconfig.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/loginscreens/Login/login_screen.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,79 +21,84 @@ class MailSent extends StatelessWidget {
         title: Text("Mail Sent"),
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 00.0, left: 17.0, right: 17.0),
-          child: Column(
-            children: <Widget>[
-             SizedBox(height: SizeConfig.screenHeight * 0.04),
-              Text(
-                "Password Resent Mail Sent",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(26),
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: SizeConfig.screenHeight * 0.04),
+            Text(
+              "Password Resent Mail Sent",
+              style: TextStyle(
+                fontSize: getProportionateScreenWidth(26),
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(
-                height: 20,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40,
               ),
-              Container(
-                alignment: Alignment.center,
-                child: RichText(
-                  text: TextSpan(
-                    text: 'We sent instructions to pick new password to ',
-                    style: Theme.of(context).textTheme.bodyText1,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '$email',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              RichText(
+              alignment: Alignment.center,
+              child: RichText(
                 text: TextSpan(
-                  text: "Didn't get the email? ",
-                  style: TextStyle(fontSize: 19.0, color: Colors.black),
+                  text: 'We sent instructions to pick new password to  ',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
                   children: <TextSpan>[
                     TextSpan(
-                        text: "Tap here to resend it.",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () async {
-                            await context
-                                .read<AuthMethods>()
-                                .resetPassword(email)
-                                .then((value) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Sent Sucessfully"),
-                              ));
-                            });
-                          }),
+                      text: '$email',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: size.height * 0.08),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pushReplacement(
-                      CupertinoPageRoute(builder: (context) => LoginScreen()));
-                },
-                child: RoundedButton(
-                  text: "Go to Login Page",
-                ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            RichText(
+              text: TextSpan(
+                text: "Didn't get the email? ",
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: "Tap here to resend it.",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          await context
+                              .read<AuthMethods>()
+                              .resetPassword(email)
+                              .then((value) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Sent Sucessfully"),
+                            ));
+                          });
+                        }),
+                ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: size.height * 0.06),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                    CupertinoPageRoute(builder: (context) => LoginScreen()));
+              },
+              child: RoundedButton(
+                text: "Go to Login Page",
+              ),
+            ),
+          ],
         ),
       ),
     );
