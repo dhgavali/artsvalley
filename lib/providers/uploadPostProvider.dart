@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:artsvalley/posts/selectedimage.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:artsvalley/views/potrait/form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,24 +46,15 @@ class UploadPost with ChangeNotifier {
   final portraitPicker = ImagePicker();
   UploadTask portraitUploadTask;
 
-
 //
   Future pickPortraitImage(BuildContext context) async {
+    
     final pickedPortraitImage =
         await portraitPicker.getImage(source: ImageSource.gallery);
     pickedPortraitImage == null
         ? print('Please select image')
         : portraitImage = File(pickedPortraitImage.path);
     log(portraitImage.path);
-
-    // portraitImage != null
-    //     ? Navigator.push(
-    //         context,
-    //         CupertinoPageRoute(
-    //           builder: (context) => FormToGetPortait(),
-    //         ),
-    //       )
-    //     : print('Image Upload Error');
 
     notifyListeners();
   }

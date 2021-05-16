@@ -1,6 +1,7 @@
 import 'package:artsvalley/profile_page/edit_Profile.dart';
 import 'package:artsvalley/services/auth.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/info/help_page.dart';
 import 'package:artsvalley/views/notifications.dart';
 import 'package:artsvalley/views/settings/myaccount.dart';
 import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
@@ -92,7 +93,7 @@ class Body extends StatelessWidget {
             text: "Help Center",
             icon: Icons.help,
             press: () {
-              moveToPage(context, HelpPage());
+              moveToPage(context, ExpansionPanelDemo());
             },
           ),
           SettingMenu(

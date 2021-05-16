@@ -26,6 +26,15 @@ class _FormToGetPortaitState extends State<FormToGetPortait> {
 
   final GlobalKey<FormState> _portaitFormKey = GlobalKey<FormState>();
 
+  var imagePath;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<UploadPost>(context, listen: false).portraitImage = null;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,7 +253,9 @@ class _FormToGetPortaitState extends State<FormToGetPortait> {
                         'city': _cityController.text.trim(),
                         'state': _stateController.text.trim(),
                         'pincode': _pincodeController.text.trim(),
-                        'portraitImageUrl': Provider.of<UploadPost>(context, listen: false).portraitImageUrl,
+                        'portraitImageUrl':
+                            Provider.of<UploadPost>(context, listen: false)
+                                .portraitImageUrl,
                         'userid': Provider.of<User>(context, listen: false).uid,
                       };
 

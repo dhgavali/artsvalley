@@ -14,9 +14,6 @@ class PotraitHomePage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               color: Colors.red,
-              // child: Image(
-              //   // image: ,
-              // ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -31,8 +28,3 @@ class PotraitHomePage extends StatelessWidget {
     );
   }
 }
-
-//
-// Text("A good handmade sketch, not only looks elegant but also makes for an amazing gift on any occasion! A portrait of your friend made into a sketch or a birthday gift for you dad! It just suits everyone and is the right pick to show how much you love them."),
-//A good handmade sketch, not only looks elegant but also makes for an amazing gift on any occasion! A portrait of your friend made into a sketch or a birthday gift for you dad! It just suits everyone and is the right pick to show how much you love them.
-// // A good handmade sketch, not only looks elegant but also makes for an amazing gift on any occasion! A portrait of your friend made into a sketch or a birthday gift for you dad! It just suits everyone and is the right pick to show how much you love them.
