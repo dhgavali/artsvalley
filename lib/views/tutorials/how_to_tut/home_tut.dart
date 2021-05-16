@@ -11,7 +11,7 @@ class HomeTutorial extends StatefulWidget {
 }
 
 class _HomeTutorialState extends State<HomeTutorial> {
-  int level = 3;
+  int level = 4;
   bool val = false;
 
   @override
@@ -21,7 +21,7 @@ class _HomeTutorialState extends State<HomeTutorial> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Tutorial Level 3',
+          'Tutorial Level 4',
           style: GoogleFonts.poppins(),
         ),
         centerTitle: true,
@@ -289,7 +289,7 @@ class _HomeTutorialState extends State<HomeTutorial> {
                 height: 15,
               ),
               steps(
-                  'Congratulations! You have just learned how to draw a butterfly , And you have acheived your Second acheivement.',
+                  'Congratulations! You have just learned how to draw a home , And you have acheived your fourth acheivement.',
                   FontWeight.w500,
                   18,
                   TextAlign.justify),

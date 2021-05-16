@@ -82,7 +82,7 @@ class _MickeyMouseTutorialState extends State<MickeyMouseTutorial> {
               ),
 
               
-              steps('Butterfly Drawing Instructions are as follows :- ',
+              steps('Mickey Mouse Drawing Instructions are as follows :- ',
                   FontWeight.w500, 17, TextAlign.justify),
               SizedBox(
                 height: 10,
@@ -306,7 +306,7 @@ class _MickeyMouseTutorialState extends State<MickeyMouseTutorial> {
                 height: 20,
               ),
               steps(
-                  'Congratulations! You have just learned how to draw a butterfly , And you have acheived your Second acheivement.',
+                  'Congratulations! You have just learned how to draw a Mickey Mouse , And you have acheived your fifth acheivement.',
                   FontWeight.w500,
                   18,
                   TextAlign.justify),
