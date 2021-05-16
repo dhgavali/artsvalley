@@ -82,7 +82,10 @@ class _HomePageState extends State<HomePage> {
             child: MyDrawer(),
           ),
           body: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection("posts")
+                .orderBy('timestamp', descending: true)
+                .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Center(
@@ -161,6 +164,7 @@ class MyDrawer extends StatelessWidget {
           GestureDetector(
             onTap: () {
               // moveToPage(context, Slideshow());
+<<<<<<< HEAD
               // Navigator.push(context, MaterialPageRoute(builder: (context) => SlideShow()));
               Navigator.push(
                 context,
@@ -168,6 +172,10 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) => CustomAlerts(),
                 ),
               );
+=======
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SlideShow()));
+>>>>>>> 1315afeef7a2ee34c6f7277c7de72579b81d86f5
             },
             child: menuItem("Explore", Icons.explore),
           ),

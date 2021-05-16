@@ -11,7 +11,7 @@ class CarTutorial extends StatefulWidget {
 }
 
 class _CarTutorialState extends State<CarTutorial> {
-  int level = 4;
+  int level = 3;
   bool val = false;
 
   @override
@@ -21,7 +21,7 @@ class _CarTutorialState extends State<CarTutorial> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Tutorial Level 4',
+          'Tutorial Level 3',
           style: GoogleFonts.poppins(),
         ),
         centerTitle: true,
@@ -351,7 +351,7 @@ class _CarTutorialState extends State<CarTutorial> {
                 height: 15,
               ),
               steps(
-                  'Congratulations! You have just learned how to draw a butterfly , And you have acheived your Second acheivement.',
+                  'Congratulations! You have just learned how to draw a car , And you have acheived your third acheivement.',
                   FontWeight.w500,
                   18,
                   TextAlign.justify),

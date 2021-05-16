@@ -162,6 +162,8 @@ class _CaptionPostState extends State<CaptionPost> {
                           'likes': {},
                           'username': _username,
                           'userProfile': _userProfile,
+                          'date': '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}',
+                          'timestamp': DateTime.now()
                         }, _postid).whenComplete(() {
                           Navigator.pushAndRemoveUntil(
                               context,

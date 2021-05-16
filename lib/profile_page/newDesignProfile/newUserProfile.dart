@@ -223,6 +223,7 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                             StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection("posts")
+                                    //.orderBy('timestamp', descending: true)
                                     .where("userId", isEqualTo: widget.userid)
                                     .snapshots(),
                                 builder: (context,

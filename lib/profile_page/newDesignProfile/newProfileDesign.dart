@@ -178,6 +178,7 @@ class ProfilePageNew extends StatelessWidget {
                             StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection("posts")
+                                    //.orderBy('timestamp', descending: true)
                                     .where("userId", isEqualTo: user.uid)
                                     .snapshots(),
                                 builder: (context,
