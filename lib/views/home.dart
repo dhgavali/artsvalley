@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
           //   selectedMenu: MenuState.home,
           // ),
           drawer: Theme(
-            data: Theme.of(context).copyWith(canvasColor: kerichblack),
+            data: Theme.of(context).copyWith(canvasColor: Colors.white),
             child: MyDrawer(),
           ),
           body: StreamBuilder(
@@ -146,7 +146,8 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(
               Icons.close,
               size: 32.0,
-              color: kteagreen,
+              // color: kteagreen,
+              color: kerichblack,
             ),
           ),
           SizedBox(
@@ -164,18 +165,8 @@ class MyDrawer extends StatelessWidget {
           GestureDetector(
             onTap: () {
               // moveToPage(context, Slideshow());
-<<<<<<< HEAD
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => SlideShow()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CustomAlerts(),
-                ),
-              );
-=======
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SlideShow()));
->>>>>>> 1315afeef7a2ee34c6f7277c7de72579b81d86f5
             },
             child: menuItem("Explore", Icons.explore),
           ),
@@ -230,11 +221,13 @@ class MyDrawer extends StatelessWidget {
 
   Widget menuItem(String value, IconData icons) {
     return Card(
-      color: kerichblack,
+      // color: kerichblack,
+      color: Colors.white,
       child: ListTile(
         leading: Icon(
           icons,
-          color: kteagreen,
+          // color: kerichblack,
+          color: kPrimaryColor,
           size: 28.0,
         ),
         contentPadding: const EdgeInsets.only(left: 20.0),
@@ -243,7 +236,9 @@ class MyDrawer extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             // color: Colors.white,
-            color: keggshell,
+            color: kerichblack,
+            // color: kerichblack,
+            // color: keggshell,
             letterSpacing: 0.5,
           ),
         ),

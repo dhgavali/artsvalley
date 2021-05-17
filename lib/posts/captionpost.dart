@@ -1,6 +1,7 @@
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/services/sharedPref.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/successpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CaptionPost extends StatefulWidget {
+  final List<String> selectedArts;
+  CaptionPost({this.selectedArts});
   @override
   _CaptionPostState createState() => _CaptionPostState();
 }
@@ -57,7 +60,6 @@ class _CaptionPostState extends State<CaptionPost> {
     final bottomOffset = mq.viewInsets.bottom + mq.padding.bottom;
     const curve = Curves.easeInOutCirc;
     const duration = 275;
-
 
     return WillPopScope(
       onWillPop: _backButtonPressed,
@@ -143,7 +145,7 @@ class _CaptionPostState extends State<CaptionPost> {
                           fontSize: 18.0,
                         ),
                       ),
-                      color: Colors.blueGrey,
+                      color: kPrimaryColor,
                       onPressed: () async {
                         String _username = await _prefs.getUsername();
                         String _userProfile = await _prefs.getUserProfile();
@@ -162,8 +164,10 @@ class _CaptionPostState extends State<CaptionPost> {
                           'likes': {},
                           'username': _username,
                           'userProfile': _userProfile,
-                          'date': '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}',
-                          'timestamp': DateTime.now()
+                          'date':
+                              '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}',
+                          'timestamp': DateTime.now(),
+                          'tags': widget.selectedArts ?? [],
                         }, _postid).whenComplete(() {
                           Navigator.pushAndRemoveUntil(
                               context,

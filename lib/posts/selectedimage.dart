@@ -1,15 +1,31 @@
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/settings/myaccount.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
 import 'captionpost.dart';
 
 class SelectedImage extends StatelessWidget {
+  final List<String> artList = <String>[
+    "Potrait",
+    "Pencil Sktech",
+    "Painting",
+    "Pottery",
+    "CraftWork",
+    "Illustration",
+    "Others",
+  ];
+
+  final List<String> selectArts = [];
   @override
   Widget build(BuildContext context) {
-    var _loadProvider = Provider.of<LoadingProvider>(context, listen: false,);
+    var _loadProvider = Provider.of<LoadingProvider>(
+      context,
+      listen: false,
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -21,7 +37,7 @@ class SelectedImage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                height: 10,
+                height: 7,
                 color: Colors.red,
                 child: Consumer<LoadingProvider>(
                   builder: (context, value, child) {
@@ -32,14 +48,14 @@ class SelectedImage extends StatelessWidget {
                             backgroundColor: Colors.grey,
                           )
                         : Container(
-                            height: 10.0,
+                            height: 7.0,
                             color: Colors.white,
                           );
                   },
                 ),
               ),
               Expanded(
-                child: Stack(
+                child: Column(
                   children: <Widget>[
                     Container(
                       height: MediaQuery.of(context).size.height * .60,
@@ -65,6 +81,23 @@ class SelectedImage extends StatelessWidget {
                           },
                         ),
                       ),
+                    ),
+                    headingtext("Select the type of Art"),
+                    GroupButton(
+                      buttons: artList,
+                      spacing: 15.0,
+                      isRadio: false,
+                      selectedColor: kPrimaryColor,
+                      selectedButtons: selectArts,
+                      onSelected: (index, isSelected) {
+                        if (isSelected) {
+                          selectArts.add(artList[index]);
+                          print(selectArts);
+                        } else {
+                          selectArts.remove(artList[index]);
+                        }
+                        print(selectArts);
+                      },
                     ),
                   ],
                 ),
@@ -100,7 +133,9 @@ class SelectedImage extends StatelessWidget {
                           Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => CaptionPost(),
+                                builder: (context) => CaptionPost(
+                                  selectedArts: selectArts,
+                                ),
                               ));
                           print("Image Uploaded");
                         });

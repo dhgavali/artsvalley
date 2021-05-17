@@ -69,7 +69,8 @@ class _MyHomePageState extends State<DesignBTMMyHomePage>
         scale: animation,
         child: FloatingActionButton(
           elevation: 8,
-          backgroundColor: kerichblack,
+          // backgroundColor: kerichblack,
+          backgroundColor: kPrimaryColor,
           child: Icon(
             Icons.add,
             color: Colors.white,
@@ -98,7 +99,8 @@ class _MyHomePageState extends State<DesignBTMMyHomePage>
             ],
           );
         },
-        backgroundColor: kteagreen,
+        // backgroundColor: kteagreen,
+        backgroundColor: Colors.white,
         activeIndex: _bottomNavIndex,
         splashColor: kPrimaryColor,
         notchAndCornersAnimation: animation,

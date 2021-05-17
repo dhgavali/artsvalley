@@ -1,5 +1,6 @@
 import 'package:artsvalley/helper/validators.dart';
 import 'package:artsvalley/services/databaseService.dart';
+import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/settings/myaccount.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -38,10 +39,9 @@ class _ShopFormState extends State<ShopForm> {
   List<String> _selectedProducts = [];
   final GlobalKey<FormState> _merchantFormKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text(
           'Shop open Form',
@@ -139,6 +139,7 @@ class _ShopFormState extends State<ShopForm> {
                   buttons: _productsList,
                   spacing: 10,
                   isRadio: false,
+                  selectedColor: kPrimaryColor,
                   onSelected: (index, isSelected) {
                     print("checked: ${isSelected.toString()}");
                     if (isSelected) {
@@ -146,6 +147,7 @@ class _ShopFormState extends State<ShopForm> {
                       _selectedProducts.add(_productsList[index]);
                     } else {
                       _selectedProducts.remove(_productsList[index]);
+
                     }
                     // print(_selectedProducts);
                   },

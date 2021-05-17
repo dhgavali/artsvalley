@@ -59,17 +59,20 @@ class ProfilePic extends StatelessWidget {
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.00),
-                      side: BorderSide(color: keggshell),
+                      // side: BorderSide(color: keggshell),
+                      // side: BorderSide(color: kPrimaryColorDark),
+                      side: BorderSide(color: kPrimaryColor),
                     ),
                   ),
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    keggshell,
-                  ),
+                      // keggshell,
+                      kPrimaryColor),
                 ),
                 onPressed: onEditClick,
                 child: Icon(
                   Icons.edit,
-                  color: Colors.black,
+                  // color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ),
