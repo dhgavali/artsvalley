@@ -29,20 +29,36 @@ class UserImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => ShowUserPost(
+        //       imageurl: posturl,
+        //       caption: caption ?? '',
+        //       likesCount: int.parse(likescount),
+        //       postid: postId,
+        //       name: userdisplayname,
+        //       profileimage: profileurl,
+        //       isLiked: isLiked,
+        //     ),
+        //   ),
+        // );
+        print("post opened");
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ShowUserPost(
-              imageurl: posturl,
-              caption: caption ?? '',
-              likesCount: int.parse(likescount),
-              postid: postId,
-              name: userdisplayname,
-              profileimage: profileurl,
-              isLiked: isLiked,
-            ),
-          ),
-        );
+            context,
+            MaterialPageRoute(
+                builder: (context) => ShowUserPost(
+                      caption: caption,
+                      likescount: int.parse(likescount),
+                      likes: this.likes,
+                      onLiked: () {},
+                      postId: postId,
+                      posturl: posturl,
+                      profileurl: profileurl,
+                      userId: userId,
+                      username: userdisplayname,
+                      isLiked: this.isLiked,
+                    )));
       },
       child: Container(
         height: 150,

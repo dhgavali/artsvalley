@@ -147,7 +147,6 @@ class _ShopFormState extends State<ShopForm> {
                       _selectedProducts.add(_productsList[index]);
                     } else {
                       _selectedProducts.remove(_productsList[index]);
-
                     }
                     // print(_selectedProducts);
                   },
@@ -204,6 +203,7 @@ class _ShopFormState extends State<ShopForm> {
                 SizedBox(
                   height: 30,
                 ),
+             
                 ElevatedButton(
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

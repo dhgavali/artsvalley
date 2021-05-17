@@ -56,8 +56,7 @@ class MyApp extends StatelessWidget {
           routes: routes,
           theme: ThemeData(
             appBarTheme: AppBarTheme(
-              // backgroundColor: kPrimaryColorDark,
-              backgroundColor: Colors.white,
+              backgroundColor: kPrimaryColorDark,
               elevation: 0.0,
               brightness: Brightness.dark,
               iconTheme: IconThemeData(
@@ -66,12 +65,9 @@ class MyApp extends StatelessWidget {
               titleTextStyle: TextStyle(color: Colors.black),
             ),
             primaryColorDark: kPrimaryColorDark,
-            // primaryColorDark: Colors.white,
             primaryColor: kPrimaryColor,
-            // primaryColor: Colors.white,
             primarySwatch: Colors.purple,
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            // canvasColor: Colors.white,
             backgroundColor: Color(0xfff1f1f1),
             primaryTextTheme: TextTheme(
               headline6: TextStyle(color: Colors.black),

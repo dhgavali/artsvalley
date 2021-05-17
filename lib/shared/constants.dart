@@ -7,10 +7,16 @@ const kPrimaryColor = Color(0xFF6F35A5);
 const kpurpledark = Color(0xff2E1760);
 // const kPrimaryColorDark = Color(0xffFF1053);
 const kcrimson = Color(0xffFF1053);
-// const kPrimaryColorDark = Color(0xff2D232E);
+// const kPrimaryColorDark = Color(0xff2D232E);/
 // const kPrimaryColorDark = Color(0xff570000);
 // const kPrimaryColorDark = Color(0xffFCD581);
-const kPrimaryColorDark = Color(0xffD9F2B4);
+// const kPrimaryColorDark = Color(0xffD9F2B4);
+// const kPrimaryColorDark = Color(0xFFFFECDF);
+// const kPrimaryColorDark = Color(0xFF7FC6A4);
+// const kPrimaryColorDark = Color(0xFF7FC6A4);
+
+// const kPrimaryColorDark = Color(0xffD9F2B4);
+const kPrimaryColorDark = Colors.white;
 
 const kPrimaryLightColor = Color(0xFFFFECDF);
 // const kpostBorderColor = Color(0xff303030);
