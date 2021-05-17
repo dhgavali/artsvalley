@@ -61,7 +61,7 @@ class _AccountsPageState extends State<AccountsPage> {
   Widget build(BuildContext context) {
     var _visibilityProvider =
         Provider.of<VisibilityProvider>(context, listen: false);
-    var _loadProvider = Provider.of<LoadingProvider>(context, listen: false);
+    // var _loadProvider = Provider.of<LoadingProvider>(context, listen: false);
     var _dbProvider = Provider.of<DatabaseService>(context, listen: false);
 
     return Scaffold(
@@ -216,7 +216,9 @@ class _AccountsPageState extends State<AccountsPage> {
                                     contentPadding:
                                         const EdgeInsets.only(left: 15),
                                     counterText: '',
-                                    hintText: "${userdata.mobileNumber}",
+                                    hintText: userdata.mobileNumber.length > 5
+                                        ? "${userdata.mobileNumber} "
+                                        : "Add mobile number",
                                     enabled: value.isMobileVisible,
                                     border: OutlineInputBorder(),
                                   ),
@@ -301,9 +303,9 @@ class _AccountsPageState extends State<AccountsPage> {
                                 return TextFormField(
                                   focusNode: _addressNode,
                                   decoration: InputDecoration(
-                                    hintText: value.isAddressVisible
-                                        ? " "
-                                        : "${userdata.address}",
+                                    hintText: userdata.address.length > 2
+                                        ? "${userdata.address}"
+                                        : "Add your city",
                                     hintStyle: TextStyle(color: Colors.black87),
                                     enabled: value.isAddressVisible,
                                     border: OutlineInputBorder(),
