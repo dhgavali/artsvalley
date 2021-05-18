@@ -97,8 +97,8 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                         return Column(
                                           children: [
                                             //TODO if possible go to below link download image and make it asset image
-                                            Image.network(
-                                              'https://purepng.com/public/uploads/large/purepng.com-gold-cup-trophygolden-cupgoldtrophymedal-1421526534849zfzh1.png',
+                                            Image.asset(
+                                              "trophy.png",
                                               width: 70,
                                               height: 50,
                                             ),
@@ -118,7 +118,11 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                                                       fontSize:
                                                                           14),
                                                             ))
-                                                        : Text('level 0',style: GoogleFonts.poppins(),),
+                                                        : Text(
+                                                            'level 0',
+                                                            style: GoogleFonts
+                                                                .poppins(),
+                                                          ),
                                                   )
                                                 : Text('level 0'),
                                           ],
