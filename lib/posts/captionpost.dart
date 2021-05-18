@@ -19,7 +19,6 @@ class CaptionPost extends StatefulWidget {
 
 class _CaptionPostState extends State<CaptionPost> {
   TextEditingController captionController = new TextEditingController();
-  SharedPrefHelper _prefs = new SharedPrefHelper();
 
   Future<bool> _backButtonPressed() {
     return showDialog(

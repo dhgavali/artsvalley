@@ -1,5 +1,4 @@
 import 'package:artsvalley/services/databaseService.dart';
-import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/btm_animated.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
