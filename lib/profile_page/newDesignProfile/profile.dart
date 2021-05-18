@@ -12,14 +12,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePageNew extends StatelessWidget {
+class ProfilePage extends StatelessWidget {
   static final String routeName = "/new_profile_page";
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Profile', style: TextStyle(color: Colors.black)),
+          title: Text(
+            'Profile',
+            style: TextStyle(color: Colors.black),
+          ),
           centerTitle: true,
           actions: [
             Padding(
@@ -238,16 +241,12 @@ class ProfilePageNew extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         DocumentSnapshot mypost =
                                             snapshot.data.docs[index];
-                                        Map likes = mypost['likes'];
+
                                         return ImageWidget(
                                           index: index,
                                           posturl: mypost['postUrl'],
                                           userId: mypost['userId'],
-                                          caption: mypost['caption'],
                                           postId: mypost['postId'],
-                                          profileurl: mypost['userProfile'],
-                                          userdisplayname: mypost['username'],
-                                          likescount: likes.length.toString(),
                                         );
                                       },
                                     );

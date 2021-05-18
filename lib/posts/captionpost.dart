@@ -4,6 +4,7 @@ import 'package:artsvalley/services/sharedPref.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/btm_animated.dart';
 import 'package:artsvalley/views/successpage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -147,8 +148,13 @@ class _CaptionPostState extends State<CaptionPost> {
                       ),
                       color: kPrimaryColor,
                       onPressed: () async {
-                        String _username = await _prefs.getUsername();
-                        String _userProfile = await _prefs.getUserProfile();
+                        DocumentSnapshot userdata = await FirebaseFirestore
+                            .instance
+                            .collection("users")
+                            .doc(user.uid)
+                            .get();
+                        String _username = userdata.data()['username'];
+                        String _userProfileurl = userdata.data()['photoUrl'];
                         var uid =
                             Provider.of<UploadPost>(context, listen: false)
                                 .uuid;
@@ -163,7 +169,7 @@ class _CaptionPostState extends State<CaptionPost> {
                           'postId': _postid,
                           'likes': {},
                           'username': _username,
-                          'userProfile': _userProfile,
+                          'userProfile': _userProfileurl,
                           'date':
                               '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}',
                           'timestamp': DateTime.now(),

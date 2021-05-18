@@ -1,5 +1,4 @@
 import 'package:artsvalley/models/userdata_model.dart';
-import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -23,12 +22,14 @@ class _AccountsPageState extends State<AccountsPage> {
   final GlobalKey<FormFieldState> _cityKey = GlobalKey<FormFieldState>();
 
   String gender;
+  String privacy;
 
   FocusNode _emailNode = FocusNode();
   FocusNode _mobileNode = FocusNode();
   FocusNode _addressNode = FocusNode();
 
   List<String> genderList = <String>["Male", "Female"];
+  List<String> privacylist = <String>["Everyone", "Nobody"];
 
   String emailValidator(String value) {
     if (value.isEmpty) return "Email can't be empty";
@@ -389,14 +390,13 @@ class _AccountsPageState extends State<AccountsPage> {
                                   ? GroupButton(
                                       buttons: genderList,
                                       spacing: 20.0,
-                                      selectedButtons:
-                                          (userdata.gender.length > 2)
-                                              ? [
-                                                  userdata.gender == 'Male'
-                                                      ? genderList[0]
-                                                      : genderList[1],
-                                                ]
-                                              : [],
+                                      selectedButtons: (userdata.gender != null)
+                                          ? [
+                                              userdata.gender == 'Male'
+                                                  ? genderList[0]
+                                                  : genderList[1],
+                                            ]
+                                          : [],
                                       onSelected: (index, isSelected) async {
                                         switch (index) {
                                           case 0:
@@ -451,6 +451,104 @@ class _AccountsPageState extends State<AccountsPage> {
                                               onPressed: () {
                                                 _visibilityProvider
                                                     .setGenderVisibility(false);
+                                              },
+                                              child: Text("cancel"),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : Container();
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      //TODO: gender field
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                headingtext("Who Can Contact you on email"),
+                                SizedBox(width: 10),
+                                TextButton(
+                                    onPressed: () {
+                                      _visibilityProvider.setEmailPrivacy(true);
+                                    },
+                                    child: Icon(Icons.edit))
+                              ],
+                            ),
+                            Consumer<VisibilityProvider>(
+                                builder: (context, value, child) {
+                              return value.isEmailPrivate
+                                  ? GroupButton(
+                                      buttons: privacylist,
+                                      spacing: 20.0,
+                                      selectedButtons:
+                                          (userdata.privacy != null)
+                                              ? [
+                                                  userdata.privacy == 'Everyone'
+                                                      ? privacylist[0]
+                                                      : privacylist[1],
+                                                ]
+                                              : [],
+                                      onSelected: (index, isSelected) async {
+                                        switch (index) {
+                                          case 0:
+                                            privacy = "Everyone";
+                                            break;
+
+                                          case 1:
+                                            privacy = "Nobody";
+                                            break;
+                                        }
+                                      },
+                                    )
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey[300],
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 15),
+                                      child: headingtext(userdata.privacy),
+                                    );
+                            }),
+                            Consumer<VisibilityProvider>(
+                              builder: (context, value, child) {
+                                return value.isEmailPrivate
+                                    ? Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        width: 200,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Provider.of<DatabaseService>(
+                                                        context,
+                                                        listen: false)
+                                                    .updateContactPrivacy(
+                                                        privacy: this.privacy,
+                                                        uid: userdata.useruid);
+                                                _visibilityProvider
+                                                    .setEmailPrivacy(false);
+                                              },
+                                              child: Text("save"),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: kerichblack,
+                                              ),
+                                              onPressed: () {
+                                                _visibilityProvider
+                                                    .setEmailPrivacy(false);
                                               },
                                               child: Text("cancel"),
                                             ),

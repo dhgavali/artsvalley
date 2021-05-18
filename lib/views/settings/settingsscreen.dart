@@ -8,9 +8,8 @@ import 'package:artsvalley/views/loginscreens/Welcome/welcome_screen.dart';
 import 'package:artsvalley/views/settings/settings_menu.dart';
 import 'package:artsvalley/views/settings/profile_pic.dart';
 import 'package:artsvalley/views/settings/mysettings.dart';
-import 'package:artsvalley/views/settings/help_page.dart';
 import 'package:artsvalley/views/settings/achievements.dart';
-import 'package:artsvalley/views/settings/savedarts.dart';
+import 'package:artsvalley/views/settings/businessprofile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        title: Text("Settings"),
       ),
       body: Body(),
     );
@@ -63,12 +62,12 @@ class Body extends StatelessWidget {
             },
           ),
           SettingMenu(
-            text: "Saved Arts",
+            text: "Business Profile",
             icon: Icons.bookmark,
             press: () {
               moveToPage(
                 context,
-                SavedArts(),
+                BusinessProfile(),
               );
             },
           ),

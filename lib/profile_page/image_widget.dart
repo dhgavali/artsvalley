@@ -1,4 +1,5 @@
-import 'package:artsvalley/views/showpost.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
+import 'package:artsvalley/views/posts/showpost.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,60 +8,37 @@ class ImageWidget extends StatelessWidget {
   final String posturl;
   final String postId;
   final String userId;
-  final String caption;
-  final String likescount;
-  final String profileurl;
-  final String userdisplayname;
 
-  ImageWidget(
-      {@required this.index,
-      this.postId,
-      this.posturl,
-      this.userId,
-      this.caption,
-      this.likescount,
-      this.profileurl,
-      this.userdisplayname
-      });
+  ImageWidget({
+    @required this.index,
+    this.postId,
+    this.posturl,
+    this.userId,
+  });
 
   @override
   Widget build(BuildContext context) {
- 
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ShowPost(
-              imageurl: posturl,
-              caption: caption ?? '',
-              likesCount: int.parse(likescount),
-              postid: postId,
-              profileimage: profileurl,
-              name: userdisplayname,
-            ),
-          ),
-        );
+        moveToPage(
+            context,
+            ShowPost(
+              postId: postId,
+            ));
       },
-      
       child: Container(
         height: 150,
         child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(color: Colors.black26, width: 1),
-            borderRadius: BorderRadius.all(
-              Radius.circular(10)
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          
           child: FadeInImage(
-           
             image: (posturl.isNotEmpty)
                 ? NetworkImage(this.posturl)
                 : AssetImage("assets/images/painter.png"),
             placeholder: AssetImage("assets/images/painter.png"),
           ),
-          
         ),
       ),
     );

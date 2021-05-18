@@ -37,7 +37,7 @@ class AuthMethods {
         // Check is already sign up
         final QuerySnapshot result = await FirebaseFirestore.instance
             .collection('users')
-            .where('id', isEqualTo: firebaseUser.user.uid)
+            .where('userid', isEqualTo: firebaseUser.user.uid)
             .get();
         final List<DocumentSnapshot> documents = result.docs;
         if (documents.length == 0) {
@@ -56,6 +56,7 @@ class AuthMethods {
               'address': '',
               'gender': '',
               'mobileNumber': '',
+              'privacy': "Everyone",
             },
             SetOptions(merge: true),
           );
@@ -128,6 +129,7 @@ class AuthMethods {
         'address': '',
         'gender': '',
         'mobileNumber': '',
+        'privacy': "Everyone",
       };
       FirebaseFirestore.instance
           .collection('users')

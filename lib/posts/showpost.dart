@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
 
-class PostWidget extends StatefulWidget {
+class ShowUsersPost extends StatefulWidget {
   final String profileurl;
   final String username;
   final String posturl;
@@ -21,7 +21,7 @@ class PostWidget extends StatefulWidget {
   final bool isLiked;
   final Map likes;
 
-  PostWidget(
+  ShowUsersPost(
       {this.profileurl,
       this.username,
       this.posturl,
@@ -34,10 +34,10 @@ class PostWidget extends StatefulWidget {
       this.isLiked});
 
   @override
-  _PostWidgetState createState() => _PostWidgetState();
+  _ShowPostState createState() => _ShowPostState();
 }
 
-class _PostWidgetState extends State<PostWidget> {
+class _ShowPostState extends State<ShowUsersPost> {
   int likescount = 0;
   bool isLiked = false;
   final GlobalKey<PopupMenuItemState> _popupKey =
@@ -153,6 +153,7 @@ class _PostWidgetState extends State<PostWidget> {
                             Icons.more_vert,
                             color: Colors.white,
                           ),
+                          // onCanceled: () {},
                           onSelected: (value) {
                             if (value == 0) {
                               // print(value);
@@ -207,29 +208,42 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          doLike();
-                        },
-                        child: Icon(
-                          widget.isLiked
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          size: 40,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      Text(
-                        "${widget.likescount}",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
+                  Container(
+                    height: 60,
+                    child: StreamBuilder(
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasData) {
+                            return Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    doLike();
+                                    print("there it si");
+                                  },
+                                  child: Icon(
+                                    widget.isLiked
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    size: 50,
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                                Text(
+                                  "${widget.likescount}",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            );
+                          }
+                        }
+                        return Container();
+                      },
+                    ),
                   ),
                   Container(
                     alignment: Alignment.topLeft,

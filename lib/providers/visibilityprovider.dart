@@ -23,11 +23,13 @@ class VisibilityProvider with ChangeNotifier {
   bool _isMobileVisible = false;
   bool _isAddressVisible = false;
   bool _isGenderVisible = false;
+  bool _isEmailPrivate = false;
 
   get isEmailVisible => this._isEmailVisible;
   get isMobileVisible => this._isMobileVisible;
   get isAddressVisible => this._isAddressVisible;
   get isGenderVisible => this._isGenderVisible;
+  get isEmailPrivate => this._isEmailPrivate;
 
   void setEmailVisibility(bool value) {
     this._isEmailVisible = value;
@@ -46,6 +48,11 @@ class VisibilityProvider with ChangeNotifier {
 
   void setGenderVisibility(bool value) {
     this._isGenderVisible = value;
+    notifyListeners();
+  }
+
+  void setEmailPrivacy(bool value) {
+    this._isEmailPrivate = value;
     notifyListeners();
   }
 }

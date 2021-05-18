@@ -1,10 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/profile.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/services/networkdepend.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/info/about_us.dart';
-import 'package:artsvalley/views/info/alerts.dart';
 import 'package:artsvalley/views/potrait/form.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
@@ -154,15 +153,7 @@ class MyDrawer extends StatelessWidget {
             height: 100,
           ),
           menuItem("Home", Icons.home),
-          GestureDetector(
-              onTap: () {
-                moveToPage(
-                  context,
-                  ProfilePageNew(),
-                );
-              },
-              child: menuItem("Profile", Icons.person)),
-          GestureDetector(
+        GestureDetector(
             onTap: () {
               // moveToPage(context, Slideshow());
               Navigator.push(context,
@@ -223,6 +214,7 @@ class MyDrawer extends StatelessWidget {
     return Card(
       // color: kerichblack,
       color: Colors.white,
+      // color: kPrimaryColorDark,
       child: ListTile(
         leading: Icon(
           icons,

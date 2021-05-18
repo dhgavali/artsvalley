@@ -9,8 +9,11 @@
 // 8. Upload10 pic: "After clicking on upload your photo has been successfully upload on ArtsValley"
 // 9.Upload11,12 pic: "Here you can check your arts uploaded...Congrastulations"
 
+import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/settings/myaccount.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemModel {
   bool expanded;
@@ -50,9 +53,57 @@ class _ExpansionPanelDemoState extends State<ExpansionPanelDemo> {
         padding: EdgeInsets.all(10),
         child: ListView(
           children: [
+            ListTile(
+              leading: Icon(Icons.help),
+              title: Text("Frequently asked Questions (FAQ) "),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             faq1("1. What is arts valley", 0),
+            SizedBox(
+              height: 10,
+            ),
             faq2("2. How to upload image on ArtsValley", 1, isImage: true),
+            SizedBox(
+              height: 10,
+            ),
             faq3("3. How to change password", 2, isImage: true),
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Text(
+                      "Contact Us",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Container(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.email,
+                        size: 35,
+                        color: kPrimaryColor,
+                      ),
+                      onPressed: () async {
+                        //send mail
+
+                        // Android and iOS
+                        String uri =
+                            'mailto:arstvalley.536@gmail.com?subject=Need Help&body=Hello Artsvalley, \n';
+                        if (await canLaunch(uri)) {
+                          await launch(uri);
+                        } else {
+                          throw 'Could not launch $uri';
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -62,8 +113,8 @@ class _ExpansionPanelDemoState extends State<ExpansionPanelDemo> {
   List<ItemModel> itemData = <ItemModel>[
     ItemModel(
       discription:
-          "ArtsValley is mobile sharing platform particularly for sharing artwork. Here the artist can send their artwork and the viewers will like their artwork.",
-      img: 'assets/images/av_info.png',
+          "ArtsValley is Art sharing platform. It is built for the artists and for the people who want to get connected with artworks and explore about it. The software consists various features that enables the artists grow digitally. Artists can share their art works to inspire others. The software is not limited to paintings and drawings but it also offers a e-commerce platform for the other artists and for rare arts to. We provide e-commerce store where artists can sell their pottery works, craftworks, paintings and other type of arts. \n Our get potrait features generates a great medium of income for the sketchers and artists related to sketches & potraits. The user can get their picture drawn on high quality canvas with the charcoal, or acrylic or even with watercolor. Explore our application for more info. ",
+      img: 'assets/images/logo.png',
       uploadImg1: 'assets/images/flame.png',
     ),
     ItemModel(

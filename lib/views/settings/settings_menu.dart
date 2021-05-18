@@ -22,10 +22,11 @@ class SettingMenu extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             // color: keggshell,
             // color: kdarkpurple
-            color: kteagreen2,
+            // color: kteagreen2,
+            color: kPrimaryColorDark,
           ),
           child: Row(
             children: [
