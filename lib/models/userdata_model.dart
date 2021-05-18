@@ -7,6 +7,7 @@ class UserProfileData {
   final String mobileNumber;
   final String address;
   final String gender;
+  final String privacy;
   final Map followerList;
 
   UserProfileData({
@@ -19,5 +20,6 @@ class UserProfileData {
     this.mobileNumber,
     this.address,
     this.gender,
+    this.privacy
   });
 }

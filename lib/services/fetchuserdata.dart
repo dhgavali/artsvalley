@@ -24,11 +24,10 @@ class FetchUserData {
       followerList: snapshot.data()['followerList'],
       address: snapshot.data()['address'],
       gender: snapshot.data()['gender'],
-      mobileNumber: snapshot.data()['mobileNumber']
+      mobileNumber: snapshot.data()['mobileNumber'],
+      privacy: snapshot.data()['privacy'] ?? "Everyone",
     );
   }
-
-  
 
 //method for fetchiing the data user data
 //
@@ -40,5 +39,4 @@ class FetchUserData {
   Future<DocumentSnapshot> get userProfileUrl {
     return _users.doc(userid).get();
   }
-  
 }

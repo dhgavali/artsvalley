@@ -213,6 +213,13 @@ class DatabaseService with ChangeNotifier {
     });
   }
 
+//method to update the privacy of contact
+  Future<void> updateContactPrivacy({String uid, String privacy}) async {
+    await _users.doc(uid).update({
+      'privacy': privacy,
+    });
+  }
+
 //method to add reports to the database
   Future<void> addReportToDb(
       {String postId,

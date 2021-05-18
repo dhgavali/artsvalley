@@ -56,6 +56,7 @@ class AuthMethods {
               'address': '',
               'gender': '',
               'mobileNumber': '',
+              'privacy': "Everyone",
             },
             SetOptions(merge: true),
           );
@@ -128,6 +129,7 @@ class AuthMethods {
         'address': '',
         'gender': '',
         'mobileNumber': '',
+        'privacy': "Everyone",
       };
       FirebaseFirestore.instance
           .collection('users')

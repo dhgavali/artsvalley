@@ -163,24 +163,3 @@ class SelectedImage extends StatelessWidget {
     );
   }
 }
-
-//TODO : Code to retrieve lost data
-//
-//Future<void> retrieveLostData() async {
-//   final LostData response =
-//       await picker.getLostData();
-//   if (response.isEmpty) {
-//     return;
-//   }
-//   if (response.file != null) {
-//     setState(() {
-//       if (response.type == RetrieveType.video) {
-//         _handleVideo(response.file);
-//       } else {
-//         _handleImage(response.file);
-//       }
-//     });
-//   } else {
-//     _handleError(response.exception);
-//   }
-// }

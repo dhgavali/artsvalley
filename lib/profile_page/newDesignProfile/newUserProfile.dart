@@ -160,7 +160,17 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                _sendMail(userData.email, userData.displayName);
+                                if (userData.privacy == "Everyone") {
+                                  _sendMail(
+                                      userData.email, userData.displayName);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          "User has turned off contact option"),
+                                    ),
+                                  );
+                                }
                               },
                               child: Container(
                                 alignment: Alignment.center,
