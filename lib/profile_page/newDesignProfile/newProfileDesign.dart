@@ -204,16 +204,12 @@ class ProfilePageNew extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         DocumentSnapshot mypost =
                                             snapshot.data.docs[index];
-                                        Map likes = mypost['likes'];
+
                                         return ImageWidget(
                                           index: index,
                                           posturl: mypost['postUrl'],
                                           userId: mypost['userId'],
-                                          caption: mypost['caption'],
                                           postId: mypost['postId'],
-                                          profileurl: mypost['userProfile'],
-                                          userdisplayname: mypost['username'],
-                                          likescount: likes.length.toString(),
                                         );
                                       },
                                     );

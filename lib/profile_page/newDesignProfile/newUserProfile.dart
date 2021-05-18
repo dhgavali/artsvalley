@@ -244,24 +244,10 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                                       itemBuilder: (context, index) {
                                         DocumentSnapshot mypost =
                                             snapshot.data.docs[index];
-                                        Map likes = mypost['likes'];
-                                        String currentUser = Provider.of<User>(
-                                                context,
-                                                listen: false)
-                                            .uid;
-                                        bool isLiked =
-                                            likes[currentUser] == true;
                                         return UserImageWidget(
                                           index: index,
                                           postId: mypost['postId'],
                                           posturl: mypost['postUrl'],
-                                          userId: mypost['userId'],
-                                          likescount: likes.length.toString(),
-                                          caption: mypost['caption'],
-                                          profileurl: mypost['userProfile'],
-                                          userdisplayname: mypost['username'],
-                                          likes: likes,
-                                          isLiked: isLiked,
                                         );
                                       },
                                     );

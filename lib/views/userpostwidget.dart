@@ -1,14 +1,9 @@
-import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
-import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
-import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:artsvalley/views/report_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/widgets.dart';
 
-class PostWidget extends StatefulWidget {
+class UsersPostWidget extends StatefulWidget {
   final String profileurl;
   final String username;
   final String posturl;
@@ -21,7 +16,7 @@ class PostWidget extends StatefulWidget {
   final bool isLiked;
   final Map likes;
 
-  PostWidget(
+  UsersPostWidget(
       {this.profileurl,
       this.username,
       this.posturl,
@@ -34,14 +29,12 @@ class PostWidget extends StatefulWidget {
       this.isLiked});
 
   @override
-  _PostWidgetState createState() => _PostWidgetState();
+  _UsersPostWidgetState createState() => _UsersPostWidgetState();
 }
 
-class _PostWidgetState extends State<PostWidget> {
-  int likescount = 0;
-  bool isLiked = false;
-  final GlobalKey<PopupMenuItemState> _popupKey =
-      GlobalKey<PopupMenuItemState>();
+class _UsersPostWidgetState extends State<UsersPostWidget> {
+  int likescount;
+  bool isLiked;
 
   doLike() {
     var _currentUser = Provider.of<User>(context, listen: false).uid;
@@ -67,6 +60,14 @@ class _PostWidgetState extends State<PostWidget> {
         widget.likes[_currentUser] = true;
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    likescount = widget.likescount;
+    isLiked = widget.isLiked;
+    super.initState();
   }
 
   @override
@@ -103,78 +104,23 @@ class _PostWidgetState extends State<PostWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
-                  onTap: () {
-                    if (Provider.of<User>(context, listen: false).uid ==
-                        widget.userId) {
-                      moveToPage(context, ProfilePageNew());
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewUserProfilePage(
-                            userid: widget.userId,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          backgroundImage:
-                              (widget.profileurl.startsWith("assets/"))
-                                  ? AssetImage(
-                                      widget.profileurl,
-                                    )
-                                  : NetworkImage(widget.profileurl),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(widget.username ?? "username",
-                            style:
-                                TextStyle(fontSize: 20.0, color: Colors.white)),
-                      ),
-                    ],
-                  ),
-                ),
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: PopupMenuButton(
-                          color: Colors.white,
-                          iconSize: 30,
-                          key: _popupKey,
-                          icon: Icon(
-                            Icons.more_vert,
-                            color: Colors.white,
-                          ),
-                          onSelected: (value) {
-                            if (value == 0) {
-                              // print(value);
-                              Navigator.push(
-                                context,
-                                moveToPage(
-                                  context,
-                                  ReportPage(
-                                    postId: widget.postId,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          itemBuilder: (context) {
-                            return [
-                              PopupMenuItem<int>(
-                                child: Text("Report"),
-                                value: 0,
-                              ),
-                            ];
-                          }),
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundImage: (widget.profileurl == null)
+                            ? AssetImage(
+                                "assets/images/profile.png",
+                              )
+                            : NetworkImage(widget.profileurl),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(widget.username ?? "username",
+                          style:
+                              TextStyle(fontSize: 20.0, color: Colors.white)),
                     ),
                   ],
                 ),
@@ -214,15 +160,14 @@ class _PostWidgetState extends State<PostWidget> {
                           doLike();
                         },
                         child: Icon(
-                          widget.isLiked
-                              ? Icons.favorite
-                              : Icons.favorite_border,
+                          isLiked ? Icons.favorite : Icons.favorite_border,
                           size: 40,
                           color: Colors.redAccent,
                         ),
                       ),
                       Text(
-                        "${widget.likescount}",
+                        // "${widget.likescount}",
+                        likescount.toString(),
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w600,
