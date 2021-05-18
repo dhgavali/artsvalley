@@ -153,15 +153,7 @@ class MyDrawer extends StatelessWidget {
             height: 100,
           ),
           menuItem("Home", Icons.home),
-          GestureDetector(
-              onTap: () {
-                moveToPage(
-                  context,
-                  ProfilePage(),
-                );
-              },
-              child: menuItem("Profile", Icons.person)),
-          GestureDetector(
+        GestureDetector(
             onTap: () {
               // moveToPage(context, Slideshow());
               Navigator.push(context,

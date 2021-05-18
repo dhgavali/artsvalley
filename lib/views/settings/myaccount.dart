@@ -389,14 +389,13 @@ class _AccountsPageState extends State<AccountsPage> {
                                   ? GroupButton(
                                       buttons: genderList,
                                       spacing: 20.0,
-                                      selectedButtons:
-                                          (userdata.gender.length > 2)
-                                              ? [
-                                                  userdata.gender == 'Male'
-                                                      ? genderList[0]
-                                                      : genderList[1],
-                                                ]
-                                              : [],
+                                      selectedButtons: (userdata.gender != null)
+                                          ? [
+                                              userdata.gender == 'Male'
+                                                  ? genderList[0]
+                                                  : genderList[1],
+                                            ]
+                                          : [],
                                       onSelected: (index, isSelected) async {
                                         switch (index) {
                                           case 0:

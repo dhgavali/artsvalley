@@ -15,8 +15,8 @@ const kcrimson = Color(0xffFF1053);
 // const kPrimaryColorDark = Color(0xFF7FC6A4);
 // const kPrimaryColorDark = Color(0xFF7FC6A4);
 
-// const kPrimaryColorDark = Color(0xffD9F2B4);
-const kPrimaryColorDark = Colors.white;
+const kPrimaryColorDark = Color(0xffD9F2B4);
+// const kPrimaryColorDark = Colors.white;
 
 const kPrimaryLightColor = Color(0xFFFFECDF);
 // const kpostBorderColor = Color(0xff303030);
