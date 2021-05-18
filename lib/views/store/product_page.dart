@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:artsvalley/models/product.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -5,6 +7,9 @@ import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/store/already_registered.dart';
 import 'package:artsvalley/views/store/detailsScreen.dart';
 import 'package:artsvalley/views/store/item_card.dart';
+import 'package:artsvalley/views/store/pages/diy.dart';
+import 'package:artsvalley/views/store/pages/pottery.dart';
+import 'package:artsvalley/views/store/pages/sketches.dart';
 import 'package:artsvalley/views/store/shopform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +30,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  List<String> categories = ["#Art", "#Pottery", "#DIY", "Sketches"];
+  List<String> categories = ["#Paintings", "#Pottery", "#DIY", "Sketches"];
   int selectedIndex = 0;
 
   @override
@@ -88,6 +93,28 @@ class _ProductPageState extends State<ProductPage> {
                         onTap: () {
                           setState(() {
                             selectedIndex = index;
+                            
+                            /* switch (index) {
+                              case 1:
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pottery()));
+                                break;
+                              case 2:
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DIY()));
+                                break;
+                              case 3:
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Sketches()));
+                                break;
+                              default:
+                            } */
                           });
                         },
                         child: Padding(
@@ -127,8 +154,10 @@ class _ProductPageState extends State<ProductPage> {
           //images cards
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-              child: GridView.builder(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+                child: PageView(
+                  children: <Widget>[
+                    GridView.builder(
                 itemCount: products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -146,8 +175,35 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       )),
                 ),
+                
               ),
-            ),
+              //TODO
+              //another gridview for pottery here 
+                  ],
+                )
+
+                /* GridView.builder(
+                itemCount: products.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: kDefaultPaddin,
+                  crossAxisSpacing: kDefaultPaddin,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) => ItemCard(
+                  product: products[index],
+                  press: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailsScreen(
+                          product: products[index],
+                        ),
+                      )),
+                ),
+                
+              ), */
+
+                ),
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:artsvalley/models/userdata_model.dart';
 import 'package:artsvalley/profile_page/userimagewidget.dart';
 import 'package:artsvalley/services/fetchuserdata.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -71,15 +72,86 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                 children: [
                   Column(
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 20),
-                        alignment: Alignment.center,
-                        child: CircleAvatar(
-                          radius: 65,
-                          backgroundImage: (userData.userProfile != null)
-                              ? NetworkImage(userData.userProfile)
-                              : AssetImage('assets/images/profile.png'),
-                          backgroundColor: Colors.white38,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                child: FutureBuilder(
+                                    future: FirebaseFirestore.instance
+                                        .collection('acheivements')
+                                        .doc(widget.userid)
+                                        .get(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError) {
+                                        return Center(
+                                          child: Text(
+                                              'Opps!! Something Went Wrong'),
+                                        );
+                                      }
+                                      if (snapshot.hasData) {
+                                        DocumentSnapshot level = snapshot.data;
+                                        // log(level.data()['level'].toString());
+                                        return Column(
+                                          children: [
+                                            //TODO if possible go to below link download image and make it asset image
+                                            Image.network(
+                                              'https://purepng.com/public/uploads/large/purepng.com-gold-cup-trophygolden-cupgoldtrophymedal-1421526534849zfzh1.png',
+                                              width: 70,
+                                              height: 50,
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            level.exists
+                                                ? Container(
+                                                    child: '${level.data()['level']}' !=
+                                                            null
+                                                        ? Text(
+                                                            "Level ${level.data()['level'].toString()} ",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              textStyle:
+                                                                  TextStyle(
+                                                                      fontSize:
+                                                                          14),
+                                                            ))
+                                                        : Text('level 0',style: GoogleFonts.poppins(),),
+                                                  )
+                                                : Text('level 0'),
+                                          ],
+                                        );
+                                      }
+                                      return CircularProgressIndicator();
+                                    }),
+                              ),
+                              Container(
+                                decoration: kboxDecoration(),
+                                padding: const EdgeInsets.all(5.0),
+                                alignment: Alignment.center,
+                                child: Container(
+                                  padding: const EdgeInsets.all(5.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.white),
+                                      shape: BoxShape.circle),
+                                  child: CircleAvatar(
+                                    radius: 65,
+                                    backgroundImage:
+                                        (userData.userProfile != null)
+                                            ? NetworkImage(userData.userProfile)
+                                            : AssetImage(
+                                                'assets/images/profile.png'),
+                                    backgroundColor: Colors.white38,
+                                  ),
+                                ),
+                              ),
+                              dataColumn('${userData.followerList.length}',
+                                  'Followers'),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -100,43 +172,6 @@ class _NewUserProfilePageState extends State<NewUserProfilePage> {
                           textStyle: TextStyle(
                             fontSize: 15,
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        //padding: EdgeInsets.only(left: 30, right: 30),
-                        margin: EdgeInsets.only(left: 40, right: 40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            dataColumn("0", "arts"),
-                            // dataColumn("$artcount", "Total Arts"),
-                            SizedBox(
-                              width: 50,
-                              height: 40,
-                              child: VerticalDivider(
-                                color: Colors.grey,
-                                thickness: 0.5,
-                              ),
-                            ),
-                            dataColumn('100', 'Friends'),
-                            SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: VerticalDivider(
-                                color: Colors.grey,
-                                thickness: 0.5,
-                              ),
-                            ),
-                            dataColumn(
-                                '${userData.followerList.length}', 'Followers'),
-                          ],
                         ),
                       ),
                       SizedBox(
