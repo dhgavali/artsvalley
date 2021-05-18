@@ -35,10 +35,10 @@ class ItemCard extends StatelessWidget {
               ),
               child: Hero(
                 tag: "${product.id}",
-                //child: Image.asset(product.image)//From here we will acess image from assest or firebase first we have to declare that in product.dart file 
+               // child: Image.asset("{$product.image}")//From here we will acess image from assest or firebase first we have to declare that in product.dart file 
                //just randoly accessing image beacause its not loading from assests so
                 child: Image.network('https://images.unsplash.com/photo-1588874133473-d6d9c9dd4f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fHZhc2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
-                
+               // child: AssetImage('{$product.image}'),
               ),
             ),
           ),

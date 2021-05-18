@@ -47,17 +47,20 @@ class ProductTitleWithImage extends StatelessWidget {
               Expanded(
                 child: Hero(
                   tag: "${product.id}",
-                  child: /* Image.asset(
-                    product.image,
+                  /* child: Image.asset(
+                    '${product.image}',
                     fit: BoxFit.fill,
                     height: 30,
                     width: 30,
                   ), */
-                  Image.network('https://png.pngtree.com/png-clipart/20190903/original/pngtree-flowers-in-a-vase-png-image_4438169.jpg',
+                         
+
+                  child:Image.network('https://png.pngtree.com/png-clipart/20190903/original/pngtree-flowers-in-a-vase-png-image_4438169.jpg',
+                  //child: Image.asset("assets/store/paints/1.jpg",
                   fit: BoxFit.fill,
                  width: MediaQuery.of(context).size.width *0.2,
                  height: MediaQuery.of(context).size.height *0.2,
-                  )
+                  ) 
                 ),
               )
             ],

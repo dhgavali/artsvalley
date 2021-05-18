@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:artsvalley/models/product.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
@@ -5,6 +7,9 @@ import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/store/already_registered.dart';
 import 'package:artsvalley/views/store/detailsScreen.dart';
 import 'package:artsvalley/views/store/item_card.dart';
+import 'package:artsvalley/views/store/pages/diy.dart';
+import 'package:artsvalley/views/store/pages/pottery.dart';
+import 'package:artsvalley/views/store/pages/sketches.dart';
 import 'package:artsvalley/views/store/shopform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +30,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  List<String> categories = ["#Art", "#Pottery", "#DIY", "Sketches"];
+  List<String> categories = ["#Paintings", "#Pottery", "#DIY", "Sketches"];
   int selectedIndex = 0;
 
   @override
@@ -86,8 +91,29 @@ class _ProductPageState extends State<ProductPage> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          setState(() {
-                            selectedIndex = index;
+                          setState((){
+                          // selectedIndex == index;
+                            switch (index) {
+                              case 1:
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pottery()));
+                                break;
+                              case 2:
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DIY()));
+                                break;
+                              case 3:
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Sketches()));
+                                break;
+                              default:
+                            }
                           });
                         },
                         child: Padding(
