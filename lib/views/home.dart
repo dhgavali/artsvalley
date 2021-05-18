@@ -1,5 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/profile.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/services/networkdepend.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
@@ -157,7 +157,7 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 moveToPage(
                   context,
-                  ProfilePageNew(),
+                  ProfilePage(),
                 );
               },
               child: menuItem("Profile", Icons.person)),

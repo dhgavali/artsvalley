@@ -1,4 +1,4 @@
-import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/profile.dart';
 import 'package:artsvalley/profile_page/newDesignProfile/newUserProfile.dart';
 import 'package:artsvalley/shared/shared_widgets.dart';
 import 'package:artsvalley/views/report_page.dart';
@@ -107,7 +107,7 @@ class _PostWidgetState extends State<PostWidget> {
                   onTap: () {
                     if (Provider.of<User>(context, listen: false).uid ==
                         widget.userId) {
-                      moveToPage(context, ProfilePageNew());
+                      moveToPage(context, ProfilePage());
                     } else {
                       Navigator.push(
                         context,

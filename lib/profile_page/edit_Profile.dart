@@ -101,24 +101,4 @@ class EditProfile with ChangeNotifier {
         });
   }
 
-  // showImage(BuildContext context, String imageUrl) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return Container(
-  //           width: 200,
-  //           height: 200,
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //           ),
-  //           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-  //           child: FadeInImage(
-  //             width: 250,
-  //             height: 250,
-  //             image: NetworkImage(imageUrl) ?? CircularProgressIndicator(),
-  //             placeholder: AssetImage("assets/images/spinner.gif"),
-  //           ),
-  //         );
-  //       });
-  // }
 }

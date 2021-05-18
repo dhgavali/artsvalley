@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePageNew extends StatelessWidget {
+class ProfilePage extends StatelessWidget {
   static final String routeName = "/new_profile_page";
   @override
   Widget build(BuildContext context) {

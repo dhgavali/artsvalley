@@ -5,18 +5,18 @@ import 'package:artsvalley/services/fetchpostdata.dart';
 import 'package:artsvalley/models/postmodel.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:artsvalley/views/userpostwidget.dart';
+import 'package:artsvalley/views/posts/custompostwidget.dart';
 
-class ShowUserPost extends StatefulWidget {
+class ShowPost extends StatefulWidget {
   final String postId;
 
-  ShowUserPost({this.postId});
+  ShowPost({this.postId});
 
   @override
-  _ShowUserPostState createState() => _ShowUserPostState();
+  _ShowPostState createState() => _ShowPostState();
 }
 
-class _ShowUserPostState extends State<ShowUserPost> {
+class _ShowPostState extends State<ShowPost> {
   int likescount = 0;
   bool isLiked = false;
 
@@ -41,7 +41,6 @@ class _ShowUserPostState extends State<ShowUserPost> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
-                  // PostDataModel postdata = snapshot.data;
                   PostDataModel postdata =
                       FetchPostData().convertDocument(snapshot.data);
 
@@ -50,7 +49,7 @@ class _ShowUserPostState extends State<ShowUserPost> {
                   String currentUser =
                       Provider.of<User>(context, listen: false).uid;
                   bool isLiked = likescount[currentUser] == true;
-                  return UsersPostWidget(
+                  return CustomPostWidget(
                     caption: postdata.caption,
                     username: postdata.username,
                     userId: postdata.userId,

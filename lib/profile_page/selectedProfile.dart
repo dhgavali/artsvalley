@@ -1,10 +1,11 @@
 //this class will dispaly a profile photo selected
 
 import 'package:artsvalley/profile_page/edit_Profile.dart';
-import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/profile.dart';
 import 'package:artsvalley/providers/loading_provider.dart';
 import 'package:artsvalley/services/databaseService.dart';
 import 'package:artsvalley/shared/constants.dart';
+import 'package:artsvalley/views/btm_animated.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class ShowProfilePhoto extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              height: 10,
+              height: 7.0,
               color: Colors.red,
               child: Consumer<LoadingProvider>(
                 builder: (context, value, child) {
@@ -35,7 +36,7 @@ class ShowProfilePhoto extends StatelessWidget {
                           backgroundColor: Colors.grey,
                         )
                       : Container(
-                          height: 10.0,
+                          height: 7.0,
                           color: Colors.white,
                         );
                 },
@@ -59,12 +60,14 @@ class ShowProfilePhoto extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            CircleAvatar(
-              radius: MediaQuery.of(context).size.width * 0.3,
-              backgroundColor: Colors.transparent,
-              backgroundImage: FileImage(
-                  Provider.of<EditProfile>(context, listen: false)
-                      .userProfileImage),
+            Consumer<EditProfile>(
+              builder: (context, value, child) {
+                return CircleAvatar(
+                  radius: MediaQuery.of(context).size.width * 0.3,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: FileImage(value.userProfileImage),
+                );
+              },
             ),
             SizedBox(
               height: 50,
@@ -111,22 +114,23 @@ class ShowProfilePhoto extends StatelessWidget {
                             _uid,
                           )
                           .update({'photoUrl': _value});
-             
-                          
-                      // Stream<QuerySnapshot> _postfetched = FirebaseFirestore
-                      //     .instance
-                      //     .collection(ProConstants.postsCollection)
-                      //     .where("userid", isEqualTo: _uid)
-                      //     .snapshots();
 
-                      // _postfetched.forEach((element) {
-                      //   element.docs.setAll(index, iterable)
-                      // });
+                      await FirebaseFirestore.instance
+                          .collection("posts")
+                          .where("userId", isEqualTo: _uid)
+                          .get()
+                          .then((QuerySnapshot snapshot) {
+                        snapshot.docs.forEach((element) {
+                          element.reference.update({'userProfile': _value});
+                        });
+                        print(_value);
+                        print("Done replaceing");
+                      });
                       _loadProvider.loadLinearProgress(false);
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfilePageNew()),
+                              builder: (context) => DesignBTMMyHomePage()),
                           (route) => false);
                     },
                   ),

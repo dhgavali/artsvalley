@@ -1,5 +1,5 @@
 import 'package:artsvalley/shared/shared_widgets.dart';
-import 'package:artsvalley/views/showuserpost.dart';
+import 'package:artsvalley/views/posts/showpost.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,7 +22,7 @@ class ImageWidget extends StatelessWidget {
       onTap: () {
         moveToPage(
             context,
-            ShowUserPost(
+            ShowPost(
               postId: postId,
             ));
       },

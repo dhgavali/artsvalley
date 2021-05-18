@@ -25,7 +25,6 @@ class DatabaseService with ChangeNotifier {
 
   //constants for portrait
 
-
 //database constatns
   CollectionReference _posts = FirebaseFirestore.instance.collection("posts");
   CollectionReference _users = FirebaseFirestore.instance.collection("users");
@@ -56,7 +55,6 @@ class DatabaseService with ChangeNotifier {
         : print('Image Upload Eroor');
     notifyListeners();
   }
- 
 
   //crop profile image
   Future<void> cropImage(BuildContext context) async {
@@ -258,6 +256,15 @@ class DatabaseService with ChangeNotifier {
           portraits,
           SetOptions(merge: true),
         );
+  }
+
+//delete user post
+  deletePost(String postid) async {
+    try {
+      await _posts.doc(postid).delete();
+    } catch (e) {
+      print("error occuered $e");
+    }
   }
 
   //method to delete user account

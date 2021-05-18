@@ -1,5 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:artsvalley/profile_page/newDesignProfile/newProfileDesign.dart';
+import 'package:artsvalley/profile_page/newDesignProfile/profile.dart';
 import 'package:artsvalley/providers/uploadPostProvider.dart';
 import 'package:artsvalley/shared/constants.dart';
 import 'package:artsvalley/views/home.dart';
@@ -31,7 +31,7 @@ class _MyHomePageState extends State<DesignBTMMyHomePage>
     Icons.person,
   ];
 
-  var _pages = [HomePage(), ProfilePageNew()];
+  var _pages = [HomePage(), ProfilePage()];
 
   @override
   void initState() {
