@@ -91,9 +91,10 @@ class _ProductPageState extends State<ProductPage> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          setState((){
-                          // selectedIndex == index;
-                            switch (index) {
+                          setState(() {
+                            selectedIndex = index;
+                            
+                            /* switch (index) {
                               case 1:
                                 Navigator.push(
                                     context,
@@ -113,7 +114,7 @@ class _ProductPageState extends State<ProductPage> {
                                         builder: (context) => Sketches()));
                                 break;
                               default:
-                            }
+                            } */
                           });
                         },
                         child: Padding(
@@ -153,8 +154,10 @@ class _ProductPageState extends State<ProductPage> {
           //images cards
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-              child: GridView.builder(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+                child: PageView(
+                  children: <Widget>[
+                    GridView.builder(
                 itemCount: products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -172,8 +175,35 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       )),
                 ),
+                
               ),
-            ),
+              //TODO
+              //another gridview for pottery here 
+                  ],
+                )
+
+                /* GridView.builder(
+                itemCount: products.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: kDefaultPaddin,
+                  crossAxisSpacing: kDefaultPaddin,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) => ItemCard(
+                  product: products[index],
+                  press: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailsScreen(
+                          product: products[index],
+                        ),
+                      )),
+                ),
+                
+              ), */
+
+                ),
           ),
         ],
       ),
