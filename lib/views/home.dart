@@ -8,7 +8,7 @@ import 'package:artsvalley/views/potrait/form.dart';
 import 'package:artsvalley/views/searchUser.dart';
 import 'package:artsvalley/views/settings/settingsscreen.dart';
 import 'package:artsvalley/views/slideshow.dart';
-import 'package:artsvalley/views/store/product_page.dart';
+import 'package:artsvalley/views/store/productHomePage.dart';
 import 'package:artsvalley/views/tutorials/tutorial_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artsvalley/views/postwidget.dart';
@@ -165,7 +165,7 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               moveToPage(
                 context,
-                ProductPage(),
+                ProductHomePage(),
               );
             },
             child: menuItem("Art Store", Icons.store),

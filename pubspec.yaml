@@ -61,3 +61,8 @@ flutter:
     - assets/tutorials/home/
     - assets/tutorials/car/
     - assets/tutorials/
+    - assets/store/paints/
+    - assets/store/sketches/
+    - assets/store/pots/
+    - assets/store/diy/
+    - assets/

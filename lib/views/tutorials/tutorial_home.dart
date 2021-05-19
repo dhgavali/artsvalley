@@ -16,9 +16,9 @@ class TutorialHomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
             children: [
-              ListTile(
+             /*  ListTile(
                 title: Text(
-                  '"Every Artist was first and Amature"',
+                  '"Every Artist was first an Amature"',
                   style: GoogleFonts.caveat(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -34,7 +34,8 @@ class TutorialHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              ), */
+              Image.asset('assets/tp/back.jpg'),
             ],
           ),
         ),

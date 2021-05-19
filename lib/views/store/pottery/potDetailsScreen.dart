@@ -1,16 +1,16 @@
-import 'package:artsvalley/models/product.dart';
-import 'package:artsvalley/views/store/item_card.dart';
-import 'package:artsvalley/views/store/product_title_with_image.dart';
+import 'package:artsvalley/views/store/pottery/potProducts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:artsvalley/views/store/pottery/potimagewithtitle.dart';
+const kDefaultPaddin = 20.0;
 
-class DetailsScreen extends StatelessWidget {
-  final Product product;
-  DetailsScreen({Key key, this.product}) : super(key: key);
-  int noOfItems = 1;
- 
+class PotDetailsScreen extends StatelessWidget {
+  final PotteryProducts product;
+  PotDetailsScreen({Key key, this.product}) : super(key: key);
+  
+  
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       // each product have a color
@@ -128,7 +128,7 @@ class DetailsScreen extends StatelessWidget {
                     //no need for colors dot
                   ),
                   //after clicking on product it will navigate to description page with image 
-                  ProductTitleWithImage(product: product),
+                  PotwithImage(product: product),
                 ],
               ),
             ),
@@ -169,8 +169,6 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 }
-
-//counter for cart
 
 class CartCounter extends StatefulWidget {
   @override

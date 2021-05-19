@@ -1,5 +1,7 @@
-import 'package:artsvalley/models/product.dart';
+
+import 'package:artsvalley/views/store/paintings/products.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const kTextColor = Color(0xFF535353);
 const kTextLightColor = Color(0xFFACACAC);
@@ -17,6 +19,8 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return GestureDetector(
       onTap: press,
       child: Column(
@@ -24,21 +28,21 @@ class ItemCard extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(kDefaultPaddin),
-              // For  demo we use fixed height  and width
-              // Now we dont need them
-              // height: 180,
-              // width: 160,
+              padding: EdgeInsets.all(12),
+               height: size.height * 0.2,
+               width: size.width * 0.4,
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: product.color,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Hero(
                 tag: "${product.id}",
-               // child: Image.asset("{$product.image}")//From here we will acess image from assest or firebase first we have to declare that in product.dart file 
-               //just randoly accessing image beacause its not loading from assests so
-                child: Image.network('https://images.unsplash.com/photo-1588874133473-d6d9c9dd4f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fHZhc2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
-               // child: AssetImage('{$product.image}'),
+               child: Container(
+                  child: Image(
+                    image: AssetImage(product.image),
+
+                    ),
+                ),
               ),
             ),
           ),
@@ -47,12 +51,20 @@ class ItemCard extends StatelessWidget {
             child: Text(
               // products is out demo list
               product.title,
-              style: TextStyle(color: kTextLightColor),
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  color: kTextLightColor
+                ),
+              ),
             ),
           ),
           Text(
             "\$${product.price}",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           )
         ],
       ),
