@@ -34,7 +34,7 @@ Artsvalley -
  
  Contributors: 
  1. Dhananjay Gavali (Project leader & Mainainer) - https://github.com/dhgavali 
- 2. Abhishek Tavhare - https://github.com/abhiTavhare
+ 2. Abhishek Tavhare (Backend Developer) - https://github.com/abhiTavhare
  3. Upendra Taral - 
 
 
